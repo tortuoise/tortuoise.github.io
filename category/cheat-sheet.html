@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Wattwerks Notes — Tags </title>
+    <title>Wattwerks Notes — Articles in the category «Cheat Sheet»</title>
     <link rel="stylesheet" type="text/css" href="/theme/css/skeleton.css" />
     <link rel="stylesheet" type="text/css" href="/theme/css/main.css" />
     <link rel="shortcut icon" type="text/css" href="/favicon.ico" />
@@ -11,17 +11,6 @@
                            href="/" /> 
     <!--[if lte IE 8]><script src="/theme/js/html5shiv.js"></script><![endif]-->
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no" />
-
-    <script type="text/javascript" src="/theme/js/microTags.js"></script>
-    <script>
-      function tag_cloud_init() {
-        var el = document.getElementById("tagslist");
-        window._tagcloud = new µTags(el);
-      }
-      if (window.addEventListener) window.addEventListener("load", tag_cloud_init, false);
-      else if (window.attachEvent) window.attachEvent("onload", tag_cloud_init);
-      else window.onload = tag_cloud_init;
-    </script>
   </head>
   <body>
     <div class="page">
@@ -33,32 +22,51 @@
 
       <div class="page-content">
     <section class="content">
-      <h1>Tags</h1>
-      <ul id="tagslist">
-      <li data-count="1"><a href="/tag/battery.html">battery</a></li>
-      <li data-count="1"><a href="/tag/linux.html">linux</a></li>
-      <li data-count="4"><a href="/tag/inverter.html">inverter</a></li>
-      <li data-count="1"><a href="/tag/microinverter.html">microinverter</a></li>
-      <li data-count="2"><a href="/tag/pv.html">pv</a></li>
-      <li data-count="1"><a href="/tag/dice.html">dice</a></li>
-      <li data-count="2"><a href="/tag/arduino.html">arduino</a></li>
-      <li data-count="2"><a href="/tag/internet.html">internet</a></li>
-      <li data-count="3"><a href="/tag/electronics.html">electronics</a></li>
-      <li data-count="2"><a href="/tag/atmel.html">atmel</a></li>
-      <li data-count="2"><a href="/tag/xbee.html">xbee</a></li>
-      <li data-count="2"><a href="/tag/nginx.html">nginx</a></li>
-      <li data-count="6"><a href="/tag/solar.html">solar</a></li>
-      <li data-count="1"><a href="/tag/study-lamp.html">study lamp</a></li>
-      <li data-count="1"><a href="/tag/debian.html">debian</a></li>
-      <li data-count="1"><a href="/tag/c.html">c</a></li>
-      <li data-count="1"><a href="/tag/roulette.html">roulette</a></li>
-      <li data-count="1"><a href="/tag/zeromq.html">zeromq</a></li>
-      <li data-count="1"><a href="/tag/modules.html">modules</a></li>
-      <li data-count="1"><a href="/tag/messaging.html">messaging</a></li>
-      <li data-count="1"><a href="/tag/ups.html">ups</a></li>
-      <li data-count="5"><a href="/tag/software.html">software</a></li>
-      </ul>
-    </section>
+      <h1 id="page-title">Articles in the category <i>«Cheat Sheet»</i> :</h1>
+     
+        
+      <article class="post">
+        <header class="post-header">
+          <time datetime="2012-12-30T00:00:00+00:00" pubdate="pubdate">
+            Sun 30 December 2012
+          </time>
+          <h1>
+            <a rel="bookmark"
+               href="/linux-cheatsheet.html"
+               title="Lien permanent vers «Linux Cheatsheet»">
+               Linux Cheatsheet
+            </a>
+          </h1>
+          <div class="meta">
+              In «<a href="/category/cheat-sheet.html">Cheat Sheet</a>» 
+              by <a href="/author/sridhar-chandramouli.html">Sridhar Chandramouli</a>
+          </div>
+        </header>
+        <div class="post-content"> 
+          <p><strong>USER/PASSWORD/ADMIN</strong><br />
+/etc/passwd /etc/groups<br />
+echo $PATH<br />
+export PATH = $PATH:/new_path/to_add/  </p>
+<p><strong>NETWORK</strong><br />
+arp -a // find mac address of router<br />
+ifconfig<br />
+/etc/network/interfaces<br />
+ifdown<br />
+ifup<br />
+iptables<br />
+kill -9 pid //find pid of open tcp/udp connection using netstat -atp<br />
+netstat -at //list all tcp connections -au //udp ...</p>
+        </div>
+        <footer class="post-footer">
+          <a class="readmore" href="/linux-cheatsheet.html">Read more...</a>
+        </footer>
+      </article>
+      <nav id="pagination">   <!-- <span id="first_page" class="a inactive">&#60;&#60;</span>
+        <span id="first_page" class="a inactive">&#60;</span> -->
+        <span class="a active">1</span>
+   <!-- <span id="next_page" class="a inactive">&#62;</span>
+        <span id="next_page" class="a inactive">&#62;&#62;</span> -->
+</nav>    </section>
       </div>
     <aside class="page-sidebar">
       <nav class="widget">

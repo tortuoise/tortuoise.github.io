@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="utf-8" />
+    <title>Madowatt Wireless E-Meter Maker Manual — Wattwerks Notes</title>
+    <link rel="stylesheet" type="text/css" href="/theme/css/skeleton.css" />
+    <link rel="stylesheet" type="text/css" href="/theme/css/main.css" />
+    <link rel="shortcut icon" type="text/css" href="/favicon.ico" />
+    <link rel="alternate" type="application/atom+xml"
+                           title="Wattwerks Notes — Flux Atom"
+                           href="/" /> 
+    <!--[if lte IE 8]><script src="/theme/js/html5shiv.js"></script><![endif]-->
+    <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no" />
+
+    <meta name="author"   content="Sridhar Chandramouli" />
+    <meta name="keywords" content="arduino, xbee, atmel, electronics" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="page-head">
+        <h1>
+          <a href="/index.html">Wattwerks Notes</a>
+        </h1>
+      </header>
+
+      <div class="page-content">
+     <article class="post content">
+      <header class="post-header">
+        <time datetime="2013-08-18T00:00:00+01:00" pubdate="pubdate">
+          Sun 18 August 2013
+        </time>
+        <h1>
+          <a rel="bookmark"
+             href="/madowatt-wireless-e-meter-maker-manual.html"
+             title="Lien permanent vers «Madowatt Wireless E-Meter Maker Manual»">
+             Madowatt Wireless E-Meter Maker Manual
+          </a>
+        </h1>
+        <div class="meta">
+            In «<a href="/category/manual.html">Manual</a>» 
+            by <a href="/author/sridhar-chandramouli.html">Sridhar Chandramouli</a>
+        </div>
+      </header>
+      <div class="post-content"> 
+        <p><strong>Madowatt Meter: a current transformer based internet connected meter</strong>  </p>
+<p>Bill Of Materials:<br />
+1. Atmel ATmega328PU with Arduino Optiboot<br />
+2. Crystal: 1 x 16MHz<br />
+3. Voltage regulators: 1 x LD7805, 1 x <a href="https://www.sparkfun.com/products/526">LD33V</a><br />
+4. Stripboard  <br />
+5. XBee S2 
+6. XBee USB Adapter 
+7. <a href="https://www.sparkfun.com/products/8276">XBee Module Breakout</a>.<br />
+7. Capacitors: 3 x 10uF, 2 x 22pF<br />
+8. Resistors: 2 x 1.7k, 2 x 2.2k, 2 x 3.3k, 2 x 10k<br />
+9. 12VDC 500mA Power Adapter<br />
+10. LEDs: 2<br />
+11. SCT 030 current transformer<br />
+12. <a href="https://www.sparkfun.com/products/11570">TRRS 3.5mm Jack Breakout</a>  </p>
+<p><em>Circuit Diagram</em><br />
+The circuit diagram is shown below. Solder all the components onto stripboard. Use a socket for the ATMEGA328-PU and a breadboard adapter for the XBee S2, i.e. don't solder these directly onto the stripboard as they're sensitive devices and may be destroyed while soldering. The rest of the devices can be soldered directly onto the board.  </p>
+<p><img alt="Circuit Diagram" src="mado_meter_circuit.png" />  </p>
+<p>Current transformer circuit: the current transformer circuit is the simplest part of the meter. Simply connect the +ive end of the SCT-030 to A1 on the Uno and the -ive to GND. Then connect a 10kohm resistor and a 10uF capacitor in series from 5V on the Uno to GND on the Uno. Then connect another 10kohm resistor in parallel with the capacitor and in series with the first resistor. See diagram above and prototype below:   </p>
+<p>Atmel / Arduino circuit: an Arduino Uno board can be replicated on stripboard as described <a href="http://www.arduino.cc/en/Main/Standalone">here</a>.   </p>
+<p>XBee circuit: a 5V power supply is used with the Atmel ATMEGA328 while the XBee has a reference voltage of 3.3V. So the connections from the Atmel RX/TX to the XBee Dout/Din have to made using a voltage divider to correspond with the XBee's Vref=3.3V.  </p>
+<p><em>Atmel ATMEGA328PU</em> <br />
+1. Burn bootloader: if the ATMEGA doesn't already have a Arduino bootloader on it it will have to be loaded.<br />
+2. Upload the following sketch (current only) onto the micro-controller using an Arduino Uno. Power is calculated assuming voltage of 230V and written to serial port.  </p>
+<p>#include "EmonLib.h"    // Include Emon Library<br />
+EnergyMonitor emon1;    // Create an instance<br />
+void setup(){<br />
+  Serial.begin(9600);<br />
+  emon1.current(1, 30); // Current: input pin, calibration.<br />
+}<br />
+void loop(){<br />
+  double Irms = emon1.calcIrms(1480);  // Calculate Irms only<br />
+  Serial.println(Irms*230.0);          // Apparent power<br />
+  delay(10000);<br />
+}  </p>
+<p><em>XBee RF wireless network</em>   </p>
+<ol>
+<li>Prepare the radios for configuration: use X-CTU on Windows or Wine on Linux. See p33 in <a href="http://www.amazon.com/Building-Wireless-Sensor-Networks-Processing/dp/0596807732/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1389273217&amp;sr=1-1&amp;keywords=wireless+sensor+networks">WirelessSensorNetworks</a> for instructions on how to install Wine and run X-CTU in Wine on Linux:  </li>
+<li>If Linux, create a symbolic link in ~/.wine/dosdevices to /dev/ttyUSB0 and call it something like com10: ln -s /dev/ttyUSB0 ~/.wine/dosdevices/com10  </li>
+<li>
+<p>Then create a 'User COM Port' in X-CTU by choosing the appropriate com port number (10 in this case). </p>
+</li>
+<li>
+<p>Use an XBee USB adapter to connect a radio to the USB port selected as com10. Test/Query the radio to ensure it's working. A dialog box with the type and firmware version should appear.  </p>
+</li>
+<li>
+<p>Pressing 'Read' will give current parameter values. For a Digi International XBee S2 choose XB24-ZB as 'Modem'. Configure one co-ordinator radio by choosing the 'Modem Configuration' tab and choosing 'ZIGBEE COORDINATOR AT' function set. Values can be changed by either entering values into the box next to the parameter name and pressing 'Write' OR by clicking on the 'Terminal' tab and manually setting the parameter values using AT commands as follows: </p>
+<ol>
+<li>+++ (3 pluses without pressing enter) will result in OK from the radio and set it in AT mode. eg. +++OK  </li>
+<li>ATID will read and output the PAN ID of the network. This can be left 0 if there are no other co-ordinator radios around. The co-ordinator will randomly choose a PAN ID which can be read using ATOI.  </li>
+<li>ATMY will read and output the 16-bit network address of the module. A value of 0xFFFE means the module hasn't joined a ZigBee network. The co-ordinator will have an ATMY of 0. </li>
+<li>ATBD will read and output the baud rate. Set it to 9600 using ATBD3. </li>
+<li>ATOI reads and outputs the 16-bit PAN ID. The OI value reflects the actial 16-bit PAN ID the module is running on.  </li>
+<li>ATCN exits command mode. </li>
+</ol>
+</li>
+<li>
+<p>Configure one or more router radios by inserting another XBee S2 into the USB adapater and choose XB24-ZB as 'Modem'. Configure a router radio by choosing 'Zigbee Router AT' under 'Modem Configuration':  </p>
+<ol>
+<li>If ATID is not set (left at 0), a router/end device will join any extended PAN ID. </li>
+<li>If ATID has been set on the co-ordinator radio then the same value should be set as ATID on the router radio so the router can join the network created by the co-ordinator.  </li>
+<li>Changes to ID, eg. ATID2612 should be written to non-volatile memory using ATWR command to preserve the ID setting if a power cycle occurs.  </li>
+<li>More details can be found in the <a href="http://www.digi.com/products/wireless-wired-embedded-solutions/zigbee-rf-modules/zigbee-mesh-module/xbee-zb-module#docs">product manual</a> on Digi's website.  </li>
+</ol>
+</li>
+<li>
+<p>In case X-CTU is not at hand the radios can also be configured using an Arduino Uno and an XBee wireless shield.  </p>
+<ol>
+<li>Upload a 'blank' sketch onto the ATMega328. A black sketch (bare minimum) is one with nothing in the loop() function.  </li>
+<li>Connect the XBee radio to the XBee shield and connect the shield to the Arduino Uno (Uno). </li>
+<li>To configure the radio, the XBee shield should be in USB mode. In this mode, commands from your serial port on the computer are sent to the XBee radio.  </li>
+<li>The XBee radio can be configured using either the Arduino XBee shield or a XBee adapter. </li>
+<li>Connect the XBee adapter to the USB port of a computer using a USB to USB mini B cable.  </li>
+<li>Use a serial emulator like screen. After finding the port that the XBee adapter has been connected, type screen /dev/ttyUSB0 9600  </li>
+<li>The XBee radio can be put into configuration mode by typing +++ and waiting for a second. The expected response from the XBee radio is OK.  </li>
+<li>Use the commands described in the previous section to change parameters of the radios. Note the radios must already be configured using X-CTU at some point in the past.  </li>
+</ol>
+</li>
+<li>
+<p>Notes </p>
+</li>
+<li>If the XBee shield is being used in a production meter then it should be in MICRO mode.  </li>
+<li>Uploading the current sketch: if you want to upload the current sketch without removing the XBee shield, disconnect the Uno+XBee shield from the power supply and switch the XBee shield to MICRO mode. In this mode, you can upload sketches to the ATMega328. Note that in this mode whatever is sent to the ATMega328 is also transmitted by the XBee radio if it's already configured. So you're likely to see a stream of rubbish if there's another XBee radio with the same (or no) PAN ID.   </li>
+</ol>
+<p><img alt="Prototype" src="mado_meter_proto.png" />  </p>
+<p><strong>Madowatt Portal</strong><br />
+1. Client: the MadowattClient connects to the MadowattServer, reads the serial port of the computer and transmits the readings to the MadowattServer. The MadowattClient is run by downloading the jar and running: java -jar Madowatt.jar <meter_id><br />
+2. Server:  The MadowattServer is a multi-threaded Java application which listens for connections from clients on a single port and stores the data the clients send in a postgresql database. Complile and run the server using: <br />
+javac -d . -cp .:postgresql-9.3-1100.jdbc41.jar:c3p0-0.9.1.jar MadowattServer.java MadowattServerThread.java MadowattProtocol.java MadowattData.java<br />
+java -cp .:postgresql-9.3-1100.jdbc41.jar:c3p0-0.9.1.jar madowatt.MadowattServer <br />
+3. Servlet: the ChartServlet is a Java HttpServlet which displays the data sent by the Client to the Server. See <a href="http://meter.madowatt.in">this</a> for instance.  </p>
+      </div>
+      <footer class="post-footer">
+        <div class="meta">
+            Posted in «<a href="/category/manual.html">Manual</a>» 
+            by <a href="/author/sridhar-chandramouli.html">Sridhar Chandramouli</a><br />
+            Tags:  #<a href="/tag/arduino.html">arduino</a> #<a href="/tag/xbee.html">xbee</a> #<a href="/tag/atmel.html">atmel</a> #<a href="/tag/electronics.html">electronics</a>        </div>
+      </footer>
+    </article>
+      </div>
+    <aside class="page-sidebar">
+      <nav class="widget">
+      <h3>Site</h3>
+        <ul>
+          <li><a href="">Home</a></li>
+          <li><a href="/archives.html">Archives</a></li>
+          <li><a href="/tags.html">Tags</a></li>
+        </ul>
+      </nav>
+
+      <nav class="widget">
+        <h3>Categories</h3>
+        <ul>
+          <li><a href="/category/chatter.html">Chatter</a></li>
+          <li><a href="/category/cheat-sheet.html">Cheat Sheet</a></li>
+          <li><a href="/category/detailed.html">Detailed</a></li>
+          <li><a href="/category/events.html">Events</a></li>
+          <li><a href="/category/manual.html">Manual</a></li>
+          <li><a href="/category/review.html">Review</a></li>
+          <li><a href="/category/teaser.html">Teaser</a></li>
+        </ul>
+      </nav>
+
+      <nav class="widget">
+        <h3>Social</h3>
+        <ul>
+          <li><a href="You can add links in your config file">#</a></li>
+          <li><a href="Another social link">#</a></li>
+          <li><a href="/" rel="alternate">Flux Atom</a></li>
+        </ul>
+      </nav>
+    </aside> 
+
+      <footer class="page-footer">
+        <p> Powered by <a href="http://pelican.readthedocs.org">Pelican</a></p>
+      </footer>
+    </div>
+  </body>
+</html>

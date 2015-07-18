@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="utf-8" />
+    <title>Installing core Debian — Wattwerks Notes</title>
+    <link rel="stylesheet" type="text/css" href="/theme/css/skeleton.css" />
+    <link rel="stylesheet" type="text/css" href="/theme/css/main.css" />
+    <link rel="shortcut icon" type="text/css" href="/favicon.ico" />
+    <link rel="alternate" type="application/atom+xml"
+                           title="Wattwerks Notes — Flux Atom"
+                           href="/" /> 
+    <!--[if lte IE 8]><script src="/theme/js/html5shiv.js"></script><![endif]-->
+    <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no" />
+
+    <meta name="author"   content="Sridhar Chandramouli" />
+    <meta name="keywords" content="software, debian" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="page-head">
+        <h1>
+          <a href="/index.html">Wattwerks Notes</a>
+        </h1>
+      </header>
+
+      <div class="page-content">
+     <article class="post content">
+      <header class="post-header">
+        <time datetime="2013-12-15T00:00:00+00:00" pubdate="pubdate">
+          Sun 15 December 2013
+        </time>
+        <h1>
+          <a rel="bookmark"
+             href="/installing-core-debian.html"
+             title="Lien permanent vers «Installing core Debian»">
+             Installing core Debian
+          </a>
+        </h1>
+        <div class="meta">
+            In «<a href="/category/manual.html">Manual</a>» 
+            by <a href="/author/sridhar-chandramouli.html">Sridhar Chandramouli</a>
+        </div>
+      </header>
+      <div class="post-content"> 
+        <p>Easiest method is to write the iso image onto a cd and boot the machine from the cd. Once finished with basic configuration tasks, the installer will ask you to pick a mirror. The following command will help in deciding on the server with least latency.  </p>
+<p>netselect hostname1 hostname2 hostname3   </p>
+<p>Surprisingly, the server with least latency is in the US!  </p>
+<p>During pre-installation the installer will prompt for disk partitioning. Software RAID on Linux needs to be configured before Debian is installed. Follow the procedure <a href="http://www.iprobot.net/linux-tutorial/how-to-setup-software-raid-in-debian-ubuntu/">here</a>. The steps in brief for 2 hard disk RAID1 array are:    </p>
+<ol>
+<li>Choose manual partitioning and create 3 partitions on each disk:  </li>
+<li>Boot(1GB): Primary, beginning, Physical volume for RAID, bootable flag ON.  </li>
+<li>Swap (2xRAM): Primary, beginning, Physical volume for RAID, bootable flag OFF.  </li>
+<li>
+<p>Root(remainder): Primary, Beginning, Physical volume for RAID, bootable flag OFF.  </p>
+</li>
+<li>
+<p>Configure Software RAID -&gt; Create 3 new MD (multi-disk) devices with 2 active and 0 spare devices per MD device using the partitions created in step 1. So select the 2 boot partitions on the two disks as the active devices in one of the RAID1 MD devices. Then select the two Swap partitions as the active devices in the next RAID1 MD device and so on.  </p>
+</li>
+<li>
+<p>Configure the MD RAID1 devices to be used appropriately:  </p>
+</li>
+<li>MD device 1 with 2 boot partitions: Use as EXT4 Journaling File System with Mount point /boot  </li>
+<li>MD device 2 with 2 swap partitions: Use as Swap Area  </li>
+<li>MD device 3 with 2 root partitions: Use as EXT4 Journaling File System with Mount point /root   </li>
+</ol>
+<p>Once the partitioning and software RAID 1 is configured continue with the Debian installation.  </p>
+<p>After installing the core system, the installer will give you the choice of installing a desktop environment, a web server, database, file server etc. You can choose not to install anything further. The bootloader will then be installed and the machine restarted to complete installation.  </p>
+      </div>
+      <footer class="post-footer">
+        <div class="meta">
+            Posted in «<a href="/category/manual.html">Manual</a>» 
+            by <a href="/author/sridhar-chandramouli.html">Sridhar Chandramouli</a><br />
+            Tags:  #<a href="/tag/software.html">software</a> #<a href="/tag/debian.html">debian</a>        </div>
+      </footer>
+    </article>
+      </div>
+    <aside class="page-sidebar">
+      <nav class="widget">
+      <h3>Site</h3>
+        <ul>
+          <li><a href="">Home</a></li>
+          <li><a href="/archives.html">Archives</a></li>
+          <li><a href="/tags.html">Tags</a></li>
+        </ul>
+      </nav>
+
+      <nav class="widget">
+        <h3>Categories</h3>
+        <ul>
+          <li><a href="/category/chatter.html">Chatter</a></li>
+          <li><a href="/category/cheat-sheet.html">Cheat Sheet</a></li>
+          <li><a href="/category/detailed.html">Detailed</a></li>
+          <li><a href="/category/events.html">Events</a></li>
+          <li><a href="/category/manual.html">Manual</a></li>
+          <li><a href="/category/review.html">Review</a></li>
+          <li><a href="/category/teaser.html">Teaser</a></li>
+        </ul>
+      </nav>
+
+      <nav class="widget">
+        <h3>Social</h3>
+        <ul>
+          <li><a href="You can add links in your config file">#</a></li>
+          <li><a href="Another social link">#</a></li>
+          <li><a href="/" rel="alternate">Flux Atom</a></li>
+        </ul>
+      </nav>
+    </aside> 
+
+      <footer class="page-footer">
+        <p> Powered by <a href="http://pelican.readthedocs.org">Pelican</a></p>
+      </footer>
+    </div>
+  </body>
+</html>

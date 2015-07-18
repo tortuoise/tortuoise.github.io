@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="utf-8" />
+    <title>Linux Cheatsheet — Wattwerks Notes</title>
+    <link rel="stylesheet" type="text/css" href="/theme/css/skeleton.css" />
+    <link rel="stylesheet" type="text/css" href="/theme/css/main.css" />
+    <link rel="shortcut icon" type="text/css" href="/favicon.ico" />
+    <link rel="alternate" type="application/atom+xml"
+                           title="Wattwerks Notes — Flux Atom"
+                           href="/" /> 
+    <!--[if lte IE 8]><script src="/theme/js/html5shiv.js"></script><![endif]-->
+    <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no" />
+
+    <meta name="author"   content="Sridhar Chandramouli" />
+    <meta name="keywords" content="linux, software" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="page-head">
+        <h1>
+          <a href="/index.html">Wattwerks Notes</a>
+        </h1>
+      </header>
+
+      <div class="page-content">
+     <article class="post content">
+      <header class="post-header">
+        <time datetime="2012-12-30T00:00:00+00:00" pubdate="pubdate">
+          Sun 30 December 2012
+        </time>
+        <h1>
+          <a rel="bookmark"
+             href="/linux-cheatsheet.html"
+             title="Lien permanent vers «Linux Cheatsheet»">
+             Linux Cheatsheet
+          </a>
+        </h1>
+        <div class="meta">
+            In «<a href="/category/cheat-sheet.html">Cheat Sheet</a>» 
+            by <a href="/author/sridhar-chandramouli.html">Sridhar Chandramouli</a>
+        </div>
+      </header>
+      <div class="post-content"> 
+        <p><strong>USER/PASSWORD/ADMIN</strong><br />
+/etc/passwd /etc/groups<br />
+echo $PATH<br />
+export PATH = $PATH:/new_path/to_add/  </p>
+<p><strong>NETWORK</strong><br />
+arp -a // find mac address of router<br />
+ifconfig<br />
+/etc/network/interfaces<br />
+ifdown<br />
+ifup<br />
+iptables<br />
+kill -9 pid //find pid of open tcp/udp connection using netstat -atp<br />
+netstat -at //list all tcp connections -au //udp  -ax //unix  -ar //raw <br />
+nmap -v -sS localhost //half-open scanning of localhost<br />
+nmap -v -sS 192.168.0.0/24 //half-open scanning of local network<br />
+traceroute <host><br />
+ufw default deny <br />
+ufw enable  </p>
+<p><strong>UTILITIES</strong><br />
+. ./.profile  //sources profile file without restart<br />
+chmod o=rx dir/ OR u=rwx dir/ OR g=rx dir/<br />
+chown -R sridhar dir/  <br />
+chgrp -R sridhar dir/ <br />
+cp -r source_dir/ target_dir/<br />
+dmesg  //print kernel ring buffer - can be used for boot up message <br />
+fdisk -l //list all partitions<br />
+find /path -name file_name -type d/f<br />
+find ./ -type f -name <em>.class -exec rm -rf {} \;      // remove all files recursively named </em>.class under ./<br />
+gstreamer-properties //multi-media settings<br />
+ls -a (include hidden) -F (dirs with trailing / and exes with trailing *) -l (long listing) -t (sort by time modified) -R (all subdirs)<br />
+lspci -v <br />
+lsb_release -rd<br />
+lsof -i -n -P //list all open files &amp; ports <br />
+lsof -i tcp:8888 /// lists services running on 8888 <br />
+lsusb //list usb devices<br />
+ps -ef //list all running processes<br />
+scp sridhar@192.168.1.72:/usr/local/bin/iptables /usrlocal/bin/iptables    // need to 'sudo start ssh' on server before trying to connect<br />
+ssh -C 192.168.1.72 -l sridhar   // ssh on port 22 (tcp)<br />
+ssh -C sridhar@192.168.1.72   // ssh on port 22 (tcp)<br />
+screen ctrl-a then c for new terminal. ctrl-a, 0 or 1 to toggle between terminal // not used much since byobu<br />
+tail <file> //lists last few entires in file<br />
+tar -xvzf file.tar.gz<br />
+tar xfJ scala-docs-2.10.2.txz<br />
+xxd //make hexdump or reverse hexdump<br />
+xrandr //used to set size, orientation and output for screens  </p>
+<p><strong>APPLICATIONS</strong><br />
+evince file.pdf<br />
+pdftk in.pdf cat 1-12 14-end output out1.pdf //removes page 13<br />
+pdftohtml file.pdf  //saves html as file.html // lynx file.pdf does the same thing<br />
+pdftotext file.pdf //saves text as file.txt<br />
+display boy.jpg // imagemagick command line tool
+enscript -p foo.ps foo.txt<br />
+ghostscript: ps2pdf foo.ps, pdf2ps foo.pdf<br />
+texi2pdf file.tex  </p>
+      </div>
+      <footer class="post-footer">
+        <div class="meta">
+            Posted in «<a href="/category/cheat-sheet.html">Cheat Sheet</a>» 
+            by <a href="/author/sridhar-chandramouli.html">Sridhar Chandramouli</a><br />
+            Tags:  #<a href="/tag/linux.html">linux</a> #<a href="/tag/software.html">software</a>        </div>
+      </footer>
+    </article>
+      </div>
+    <aside class="page-sidebar">
+      <nav class="widget">
+      <h3>Site</h3>
+        <ul>
+          <li><a href="">Home</a></li>
+          <li><a href="/archives.html">Archives</a></li>
+          <li><a href="/tags.html">Tags</a></li>
+        </ul>
+      </nav>
+
+      <nav class="widget">
+        <h3>Categories</h3>
+        <ul>
+          <li><a href="/category/chatter.html">Chatter</a></li>
+          <li><a href="/category/cheat-sheet.html">Cheat Sheet</a></li>
+          <li><a href="/category/detailed.html">Detailed</a></li>
+          <li><a href="/category/events.html">Events</a></li>
+          <li><a href="/category/manual.html">Manual</a></li>
+          <li><a href="/category/review.html">Review</a></li>
+          <li><a href="/category/teaser.html">Teaser</a></li>
+        </ul>
+      </nav>
+
+      <nav class="widget">
+        <h3>Social</h3>
+        <ul>
+          <li><a href="You can add links in your config file">#</a></li>
+          <li><a href="Another social link">#</a></li>
+          <li><a href="/" rel="alternate">Flux Atom</a></li>
+        </ul>
+      </nav>
+    </aside> 
+
+      <footer class="page-footer">
+        <p> Powered by <a href="http://pelican.readthedocs.org">Pelican</a></p>
+      </footer>
+    </div>
+  </body>
+</html>

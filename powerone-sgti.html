@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="utf-8" />
+    <title>Powerone SGTI — Wattwerks Notes</title>
+    <link rel="stylesheet" type="text/css" href="/theme/css/skeleton.css" />
+    <link rel="stylesheet" type="text/css" href="/theme/css/main.css" />
+    <link rel="shortcut icon" type="text/css" href="/favicon.ico" />
+    <link rel="alternate" type="application/atom+xml"
+                           title="Wattwerks Notes — Flux Atom"
+                           href="/" /> 
+    <!--[if lte IE 8]><script src="/theme/js/html5shiv.js"></script><![endif]-->
+    <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no" />
+
+    <meta name="author"   content="Sridhar Chandramouli" />
+    <meta name="keywords" content="inverter, solar" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="page-head">
+        <h1>
+          <a href="/index.html">Wattwerks Notes</a>
+        </h1>
+      </header>
+
+      <div class="page-content">
+     <article class="post content">
+      <header class="post-header">
+        <time datetime="2013-12-20T00:00:00+00:00" pubdate="pubdate">
+          Fri 20 December 2013
+        </time>
+        <h1>
+          <a rel="bookmark"
+             href="/powerone-sgti.html"
+             title="Lien permanent vers «Powerone SGTI»">
+             Powerone SGTI
+          </a>
+        </h1>
+        <div class="meta">
+            In «<a href="/category/review.html">Review</a>» 
+            by <a href="/author/sridhar-chandramouli.html">Sridhar Chandramouli</a>
+        </div>
+      </header>
+      <div class="post-content"> 
+        <p>This inverter sold by Powerone in Bengaluru is imported from China where it's manufactured by <a href="http://kstarpower.manufacturer.globalsources.com/si/6008803910630/pdtl/Solar-grid/1064496182/Grid-Connected-Solar-Inverter.htm">Kstar Power</a>  </p>
+<p>The DC isolator switch and WLAN are optional so as expected the inverter arrived without either of them.  </p>
+<p>Cost Rs 40k for a 3KW inverter plus 12.5% excise (excise is meant to be a manufacturing tax - it's not manufactured in India) and 5.5% KVAT on that.   </p>
+<p>Installation is straight forward.<br />
+1. Make sure mains are off.<br />
+2. Test series open circuit voltage of solar array - shouldn't exceed 500VDC (rated 360VDC) but must exceed 150VDC for the MPPT to work. Connect array of solar modules to DC input ensuring correct polarity. Absolute minimum is 120VDC below which inverter turns off. Maximum short circuit current is 19A (rated 17A).<br />
+3. Connect AC output to mains and turn mains on.<br />
+4. Disconnect AC side before DC side during disconnection.  </p>
+<p>Note:<br />
+1. The inverter comes with it's own custom connectors for the solar module array. Though these look like MC4 connectors they are not. They can be easily crimped onto some 4mm^2 or 6mm^2 wire using the clip mechanism on the connector's inside metallic part.<br />
+2. The inverter has a maximum continunous output current of 15A so can easily be plugged into a 15A socket.<br />
+3. The inverter's lcd lists the current power being output and the runnning total of the energy (in Kwh) generated.  </p>
+<p>Due to limited roof space and also some shading issues, connected only 6 x 250Wp Emmvee Polycrystalline modules (Voc = 37V) to get above the minimum MPPT voltage for this inverter (150V). The inverter is generating about 3A AC (~700W) at mid-day in December at 15 degrees north latitude. Not enough load available to consume all the power being generated so some of it is being lost to the grid. Need to consume more of it - time to mine some bitcoin.   </p>
+      </div>
+      <footer class="post-footer">
+        <div class="meta">
+            Posted in «<a href="/category/review.html">Review</a>» 
+            by <a href="/author/sridhar-chandramouli.html">Sridhar Chandramouli</a><br />
+            Tags:  #<a href="/tag/inverter.html">inverter</a> #<a href="/tag/solar.html">solar</a>        </div>
+      </footer>
+    </article>
+      </div>
+    <aside class="page-sidebar">
+      <nav class="widget">
+      <h3>Site</h3>
+        <ul>
+          <li><a href="">Home</a></li>
+          <li><a href="/archives.html">Archives</a></li>
+          <li><a href="/tags.html">Tags</a></li>
+        </ul>
+      </nav>
+
+      <nav class="widget">
+        <h3>Categories</h3>
+        <ul>
+          <li><a href="/category/chatter.html">Chatter</a></li>
+          <li><a href="/category/cheat-sheet.html">Cheat Sheet</a></li>
+          <li><a href="/category/detailed.html">Detailed</a></li>
+          <li><a href="/category/events.html">Events</a></li>
+          <li><a href="/category/manual.html">Manual</a></li>
+          <li><a href="/category/review.html">Review</a></li>
+          <li><a href="/category/teaser.html">Teaser</a></li>
+        </ul>
+      </nav>
+
+      <nav class="widget">
+        <h3>Social</h3>
+        <ul>
+          <li><a href="You can add links in your config file">#</a></li>
+          <li><a href="Another social link">#</a></li>
+          <li><a href="/" rel="alternate">Flux Atom</a></li>
+        </ul>
+      </nav>
+    </aside> 
+
+      <footer class="page-footer">
+        <p> Powered by <a href="http://pelican.readthedocs.org">Pelican</a></p>
+      </footer>
+    </div>
+  </body>
+</html>

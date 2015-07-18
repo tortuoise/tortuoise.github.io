@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <title>Wattwerks Notes — Catégories</title>
+        <meta charset="utf-8" />
+    <title>TI MSP430 — Wattwerks Notes</title>
     <link rel="stylesheet" type="text/css" href="/theme/css/skeleton.css" />
     <link rel="stylesheet" type="text/css" href="/theme/css/main.css" />
     <link rel="shortcut icon" type="text/css" href="/favicon.ico" />
@@ -11,6 +11,9 @@
                            href="/" /> 
     <!--[if lte IE 8]><script src="/theme/js/html5shiv.js"></script><![endif]-->
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no" />
+
+    <meta name="author"   content="Sridhar Chandramouli" />
+    <meta name="keywords" content="nginx, internet, software" />
   </head>
   <body>
     <div class="page">
@@ -21,18 +24,50 @@
       </header>
 
       <div class="page-content">
-    <section class="content">
-      <h1>Catégories</h1>
-      <ul id="category-list">
-      <li><a href="/category/chatter.html">Chatter</a> (3 articles)</li>
-      <li><a href="/category/cheat-sheet.html">Cheat Sheet</a> (1 articles)</li>
-      <li><a href="/category/detailed.html">Detailed</a> (1 articles)</li>
-      <li><a href="/category/events.html">Events</a> (1 articles)</li>
-      <li><a href="/category/manual.html">Manual</a> (7 articles)</li>
-      <li><a href="/category/review.html">Review</a> (3 articles)</li>
-      <li><a href="/category/teaser.html">Teaser</a> (1 articles)</li>
-      </ul>
-    </section>
+     <article class="post content">
+      <header class="post-header">
+        <time datetime="2013-12-22T00:00:00+00:00" pubdate="pubdate">
+          Sun 22 December 2013
+        </time>
+        <h1>
+          <a rel="bookmark"
+             href="/ti-msp430.html"
+             title="Lien permanent vers «TI MSP430»">
+             TI MSP430
+          </a>
+        </h1>
+        <div class="meta">
+            In «<a href="/category/manual.html">Manual</a>» 
+            by <a href="/author/sridhar-chandramouli.html">Sridhar Chandramouli</a>
+        </div>
+      </header>
+      <div class="post-content"> 
+        <p>Installation is straight forward : apt-get install nginx  </p>
+<p>Main configuration file is /etc/nginx/nginx.conf which is has includes to other config files such as /etc/nginx/sites-enabled/default. Added the proxy_pass entry in the location block to the first server and added the second server block to have nginx listen on 8080. So the first server listening at 80 is a proxy for the second listening at 8080 (or vice versa ?)  </p>
+<p>http {<br />
+  server {<br />
+    #server_name localhost;<br />
+    location / {<br />
+      proxy_pass http://localhost:8080;<br />
+    }<br />
+  }<br />
+  server {<br />
+    server_name www.hostname.com;<br />
+    listen 8080;<br />
+    root /path/to/root/dir;<br />
+    location /{<br />
+    }  <br />
+  }<br />
+...  <br />
+}  </p>
+      </div>
+      <footer class="post-footer">
+        <div class="meta">
+            Posted in «<a href="/category/manual.html">Manual</a>» 
+            by <a href="/author/sridhar-chandramouli.html">Sridhar Chandramouli</a><br />
+            Tags:  #<a href="/tag/nginx.html">nginx</a> #<a href="/tag/internet.html">internet</a> #<a href="/tag/software.html">software</a>        </div>
+      </footer>
+    </article>
       </div>
     <aside class="page-sidebar">
       <nav class="widget">

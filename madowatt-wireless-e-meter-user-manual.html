@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="utf-8" />
+    <title>Madowatt Wireless E-Meter User Manual — Wattwerks Notes</title>
+    <link rel="stylesheet" type="text/css" href="/theme/css/skeleton.css" />
+    <link rel="stylesheet" type="text/css" href="/theme/css/main.css" />
+    <link rel="shortcut icon" type="text/css" href="/favicon.ico" />
+    <link rel="alternate" type="application/atom+xml"
+                           title="Wattwerks Notes — Flux Atom"
+                           href="/" /> 
+    <!--[if lte IE 8]><script src="/theme/js/html5shiv.js"></script><![endif]-->
+    <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no" />
+
+    <meta name="author"   content="Sridhar Chandramouli" />
+    <meta name="keywords" content="arduino, xbee, atmel, electronics" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="page-head">
+        <h1>
+          <a href="/index.html">Wattwerks Notes</a>
+        </h1>
+      </header>
+
+      <div class="page-content">
+     <article class="post content">
+      <header class="post-header">
+        <time datetime="2013-08-25T00:00:00+01:00" pubdate="pubdate">
+          Sun 25 August 2013
+        </time>
+        <h1>
+          <a rel="bookmark"
+             href="/madowatt-wireless-e-meter-user-manual.html"
+             title="Lien permanent vers «Madowatt Wireless E-Meter User Manual»">
+             Madowatt Wireless E-Meter User Manual
+          </a>
+        </h1>
+        <div class="meta">
+            In «<a href="/category/manual.html">Manual</a>» 
+            by <a href="/author/sridhar-chandramouli.html">Sridhar Chandramouli</a>
+        </div>
+      </header>
+      <div class="post-content"> 
+        <p><strong>Madowatt Meter: a current transformer based internet connected meter.</strong>  </p>
+<p>Connecting meter to inverter 
+1. Clip current transformer onto output of inverter.<br />
+2. Connect current transformer to meter via 2.3mm audio jack.<br />
+3. Connect 12V DC power supply adapter to meter and mains. Red LED should light up.   </p>
+<p>Connect XBee adapter to USB port of computer<br />
+1. If running Linux can use screen to check readings on serial port.  </p>
+<p>Download java and madowatt jar 
+0. Download librxtxSerial.so and save in /usr/lib/jvm/java-7-openjdk-amd64/jre/lib/amd64 (Linux) or in C:\Program Files\Java\jre7\bin (Windoze) 
+1. Download <a href="Madowatt.jar">jar</a> and <a href="RXTXcomm.jar">rxtx</a> and save in classpath.<br />
+2. Run jar from command prompt: java -jar Madowatt.jar <client_id>   <br />
+3. Application will connect to server and transmit data from serial port.  </p>
+<p>Monitor Production<br />
+1. Connect to <a href="http://meter.madowatt.com">Portal</a><br />
+2. Register as new user and select password.<br />
+3. Enter meter number as part of registration process.<br />
+4. View Production.  </p>
+      </div>
+      <footer class="post-footer">
+        <div class="meta">
+            Posted in «<a href="/category/manual.html">Manual</a>» 
+            by <a href="/author/sridhar-chandramouli.html">Sridhar Chandramouli</a><br />
+            Tags:  #<a href="/tag/arduino.html">arduino</a> #<a href="/tag/xbee.html">xbee</a> #<a href="/tag/atmel.html">atmel</a> #<a href="/tag/electronics.html">electronics</a>        </div>
+      </footer>
+    </article>
+      </div>
+    <aside class="page-sidebar">
+      <nav class="widget">
+      <h3>Site</h3>
+        <ul>
+          <li><a href="">Home</a></li>
+          <li><a href="/archives.html">Archives</a></li>
+          <li><a href="/tags.html">Tags</a></li>
+        </ul>
+      </nav>
+
+      <nav class="widget">
+        <h3>Categories</h3>
+        <ul>
+          <li><a href="/category/chatter.html">Chatter</a></li>
+          <li><a href="/category/cheat-sheet.html">Cheat Sheet</a></li>
+          <li><a href="/category/detailed.html">Detailed</a></li>
+          <li><a href="/category/events.html">Events</a></li>
+          <li><a href="/category/manual.html">Manual</a></li>
+          <li><a href="/category/review.html">Review</a></li>
+          <li><a href="/category/teaser.html">Teaser</a></li>
+        </ul>
+      </nav>
+
+      <nav class="widget">
+        <h3>Social</h3>
+        <ul>
+          <li><a href="You can add links in your config file">#</a></li>
+          <li><a href="Another social link">#</a></li>
+          <li><a href="/" rel="alternate">Flux Atom</a></li>
+        </ul>
+      </nav>
+    </aside> 
+
+      <footer class="page-footer">
+        <p> Powered by <a href="http://pelican.readthedocs.org">Pelican</a></p>
+      </footer>
+    </div>
+  </body>
+</html>
