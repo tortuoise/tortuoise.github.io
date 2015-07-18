@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
         <meta charset="utf-8" />
-    <title>Games — Wattwerks</title>
+    <title>FFT — Wattwerks</title>
     <link rel="stylesheet" type="text/css" href="/theme/css/skeleton.css" />
     <link rel="stylesheet" type="text/css" href="/theme/css/main.css" />
     <link rel="shortcut icon" type="text/css" href="/favicon.ico" />
@@ -13,7 +13,7 @@
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no" />
 
     <meta name="author"   content="Sridhar" />
-    <meta name="keywords" content="roulette, dice" />
+    <meta name="keywords" content="roulette, dic" />
   </head>
   <body>
     <div class="page">
@@ -26,44 +26,62 @@
       <div class="page-content">
      <article class="post content">
       <header class="post-header">
-        <time datetime="2015-06-22T00:00:00+01:00" pubdate="pubdate">
-          Mon 22 June 2015
+        <time datetime="2015-07-02T00:00:00+01:00" pubdate="pubdate">
+          Thu 02 July 2015
         </time>
         <h1>
           <a rel="bookmark"
-             href="/games.html"
-             title="Lien permanent vers «Games»">
-             Games
+             href="/fft.html"
+             title="Lien permanent vers «FFT»">
+             FFT
           </a>
         </h1>
         <div class="meta">
-            In «<a href="/category/teaser.html">Teaser</a>» 
+            In «<a href="/category/detailed.html">Detailed</a>» 
             by <a href="/author/sridhar.html">Sridhar</a>
         </div>
       </header>
       <div class="post-content"> 
-        <h3>Russian Roulette</h3>
-<p>Q. What's the probability of winning (surviving) a game of Russian Roulette by volunteering to go first (pull the trigger with gun at your head) where each player spins the barrel before pulling the trigger ?</p>
-<p>A. Let x be the probability of surviving by going first. The probability of surviving going first is 5/6 multiplied by the probability that the other player loses (which is 1-x because the other player faces the same game).   </p>
-<div class="math">$$
-\begin{eqnarray}
-x = \frac{5}{6} (1-x) \\\
-x = \frac{5}{11}
-\end{eqnarray}
-$$</div>
-<p>So a little less than half!</p>
-<h3>Dice throws</h3>
-<p>Q. What's the fair value of a game where you get x$ for a throw of a dice where x is the number (1-6) that results from the throw of the dice ?</p>
-<p>A. 3.5 which is the expected value (mean) of the numbers 1-6.</p>
-<p>Q. What's the fair value of a game where you have the option of throwing again if you don't like your first throw, but have to accept the outcome of the second throw ?</p>
-<p>A. You're only going to go for a second throw if your first throws up &lt; 3.5. You'll keep the result of your first throw if it's 4,5 or 6 (probability of which is 0.5). You're only going to go for a second throw if your first throws up &lt; 3.5 which also has probability 0.5. The expected value of the second throw still remains 3.5.</p>
-<div class="math">$$
-\begin{eqnarray}
-x = \frac{1}{2} (4+5+6)/3 + \frac{1}{2} (3.5) \\\
-x = \frac{1}{2} (5) + \frac{1}{2} (3.5) \\\
-x =  4.25
-\end{eqnarray}
-$$</div>
+        <p><strong>Background</strong>
+I used the FFT algorithm all through my undergraduate and graduate physics courses without ever looking at the details. So I decided to go back and have another look to see if I can get any further than in my youth. It's a divide and conquer algorithm that speeds up matrix multiplication of an input array of size n and an nxn <span class="math">\(M_n(\omega)\)</span> matrix which has (j,k)th entry <span class="math">\(\omega^{jk}\)</span> where 1, <span class="math">\(\omega\)</span>, <span class="math">\(\omega^{2}\)</span>, ..., <span class="math">\(\omega^{n-1}\)</span> are the complex nth roots of unity.</p>
+<p><strong>Continued</strong>
+The code below works (the results are correct) though there's a memory leak. </p>
+<div class="highlight"><pre><span class="sb">``</span>`C
+float <span class="kt">complex</span> <span class="o">*</span>fft<span class="p">(</span>float <span class="kt">complex</span> <span class="o">*</span><span class="kp">in</span><span class="p">,</span> int n<span class="p">,</span> float <span class="kt">complex</span> w<span class="p">)</span> <span class="p">{</span>
+  int i<span class="p">,</span>j<span class="p">;</span>
+  <span class="kr">if</span><span class="p">(</span>fabs<span class="p">(</span>crealf<span class="p">(</span>w<span class="p">)</span><span class="m">-1.00</span>f<span class="p">)</span><span class="o">&lt;</span><span class="m">.0001</span>f <span class="o">&amp;&amp;</span> fabs<span class="p">(</span>cimagf<span class="p">(</span>w<span class="p">)</span><span class="m">-0.00</span>f<span class="p">)</span><span class="o">&lt;</span><span class="m">0.0001</span>f<span class="p">)</span> <span class="p">{</span>
+<span class="o">//</span>printf<span class="p">(</span><span class="s">&quot;Edge return %d \n&quot;</span><span class="p">,</span> n<span class="p">);</span>
+<span class="kr">return</span> <span class="kp">in</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="o">//</span><span class="kr">if</span><span class="p">(</span>crealf<span class="p">(</span>w<span class="p">)</span><span class="o">&gt;</span><span class="m">1.0</span> <span class="o">||</span> crealf<span class="p">(</span>w<span class="p">)</span><span class="o">&lt;-</span><span class="m">1.0</span><span class="p">)</span> <span class="kr">return</span> <span class="kp">in</span><span class="p">;</span>
+  <span class="o">//</span><span class="kr">if</span> <span class="p">(</span>stack <span class="o">&gt;</span> <span class="m">3</span><span class="p">)</span> <span class="kr">return</span> <span class="kp">in</span><span class="p">;</span>
+  stack<span class="o">++</span><span class="p">;</span>
+  float <span class="kt">complex</span> <span class="o">*</span>ine <span class="o">=</span> malloc<span class="p">(</span>n<span class="o">/</span><span class="m">2</span><span class="o">*</span>sizeof<span class="p">(</span>float <span class="kt">complex</span><span class="p">));</span>
+  float <span class="kt">complex</span> <span class="o">*</span>ino <span class="o">=</span> malloc<span class="p">(</span>n<span class="o">/</span><span class="m">2</span><span class="o">*</span>sizeof<span class="p">(</span>float <span class="kt">complex</span><span class="p">));</span>
+  <span class="kr">for</span><span class="p">(</span>i<span class="o">=</span><span class="m">0</span><span class="p">,</span>j<span class="o">=</span><span class="m">0</span><span class="p">;</span>i<span class="o">&lt;</span>n<span class="p">;</span>i<span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<span class="kr">if</span><span class="p">(</span>i<span class="o">%2==0){ </span>
+<span class="o">  ine[j]=in[i];</span>
+<span class="o">}</span>
+<span class="o">else {</span>
+<span class="o">  ino[j++]=in[i];   </span>
+<span class="o">}</span>
+<span class="o">  }</span>
+<span class="o">  float complex *s = fft(ine,n/2,cpow(w,2));</span>
+<span class="o">  float complex *s1 = fft(ino,n/2,cpow(w,2));</span>
+
+<span class="o">  float complex *bad = malloc(n*sizeof(float complex));</span>
+<span class="o">  for (j=0; j&lt;n/2; j++){</span>
+<span class="o">    bad[j] = s[j] + cpow(w,j) * s1[j];</span>
+<span class="o">bad[j+n/2] = s[j] - cpow(w,j) * s1[j];</span>
+<span class="o">  }</span>
+<span class="o">  free(ine); free(ino); //free(s); free(s1);</span>
+<span class="o">  //printf(&quot;End return %</span>d \n<span class="s">&quot;</span><span class="err">, n);</span>
+  <span class="kr">return</span> bad<span class="p">;</span>
+<span class="p">}</span>
+<span class="sb">``</span>`
+</pre></div>
+
+
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
         indent = "0em",
@@ -121,9 +139,9 @@ $$</div>
       </div>
       <footer class="post-footer">
         <div class="meta">
-            Posted in «<a href="/category/teaser.html">Teaser</a>» 
+            Posted in «<a href="/category/detailed.html">Detailed</a>» 
             by <a href="/author/sridhar.html">Sridhar</a><br />
-            Tags:  #<a href="/tag/roulette.html">roulette</a> #<a href="/tag/dice.html">dice</a>        </div>
+            Tags:  #<a href="/tag/roulette.html">roulette</a> #<a href="/tag/dic.html">dic</a>        </div>
       </footer>
     </article>
       </div>
