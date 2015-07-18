@@ -44,8 +44,8 @@
         </header>
         <div class="post-content"> 
           <h3>Russian Roulette</h3>
-<p>What's the probability of winning (surviving) a game of Russian Roulette by volunteering to go first (pull the trigger with gun at your head) where each player spins the barrel before pulling the trigger ?</p>
-<p>A. Let x be the probability of surviving by going first. The probability ...</p>
+<p>Q. What's the probability of winning (surviving) a game of Russian Roulette by volunteering to go first (pull the trigger with gun at your head) where each player spins the barrel before pulling the trigger ?</p>
+<p>A. Let x be the probability of surviving by going first. The ...</p>
         </div>
         <footer class="post-footer">
           <a class="readmore" href="/games.html">Read more...</a>
@@ -70,8 +70,21 @@
           </div>
         </header>
         <div class="post-content"> 
-          <p>In my effort to develop a little device which connects directly to a rou I found the need for a simple messaging system 
-The plan is to use as small as possible cpu to run a basic version of linux and zeromq, read the serial data arriving from a wireless ...</p>
+          <p>A quick summary of ZeroMQ setup, problems encountered and solutions. </p>
+<h3>libzmq</h3>
+<p>git clone https://github.com/tortuoise/libzmq
+apt-get install libtool
+apt-get install build-essential
+apt-get install uuid-dev
+cd libzmq
+sh autogen.sh
+./configure --without-libsodium
+su root
+make install
+ldconfig</p>
+<h3>czmq</h3>
+<p>git clone git://github.com/zeromq/czmq.git
+cd czmq ...</p>
         </div>
         <footer class="post-footer">
           <a class="readmore" href="/zeromq-setup.html">Read more...</a>
