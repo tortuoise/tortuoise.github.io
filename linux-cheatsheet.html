@@ -2,24 +2,24 @@
 <html lang="en">
   <head>
         <meta charset="utf-8" />
-    <title>Linux Cheatsheet — Wattwerks Notes</title>
+    <title>Linux Cheatsheet — Wattwerks</title>
     <link rel="stylesheet" type="text/css" href="/theme/css/skeleton.css" />
     <link rel="stylesheet" type="text/css" href="/theme/css/main.css" />
     <link rel="shortcut icon" type="text/css" href="/favicon.ico" />
     <link rel="alternate" type="application/atom+xml"
-                           title="Wattwerks Notes — Flux Atom"
+                           title="Wattwerks — Flux Atom"
                            href="/" /> 
     <!--[if lte IE 8]><script src="/theme/js/html5shiv.js"></script><![endif]-->
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no" />
 
-    <meta name="author"   content="Sridhar Chandramouli" />
+    <meta name="author"   content="Sridhar" />
     <meta name="keywords" content="linux, software" />
   </head>
   <body>
     <div class="page">
       <header class="page-head">
         <h1>
-          <a href="/index.html">Wattwerks Notes</a>
+          <a href="/index.html">Wattwerks</a>
         </h1>
       </header>
 
@@ -38,15 +38,46 @@
         </h1>
         <div class="meta">
             In «<a href="/category/cheat-sheet.html">Cheat Sheet</a>» 
-            by <a href="/author/sridhar-chandramouli.html">Sridhar Chandramouli</a>
+            by <a href="/author/sridhar.html">Sridhar</a>
         </div>
       </header>
       <div class="post-content"> 
-        <p><strong>USER/PASSWORD/ADMIN</strong><br />
+        <p><strong>STARTUP</strong>
+GRUB: hold shift key down as soon as bios loads<br />
+/etc/default/grub //for grub settings - tried adding vga=0x0369 to this file to fix boot issues and it hasn't worked.<br />
+sudo update-grub // after making any changes to /etc/default/grub - writes to /boot/grub/grub.cfg  </p>
+<p><strong>STARTUP ON BOOT</strong>
+For non-upstart services:<br />
+sudo update-rc.d tomcat6 enable 2 //changes symlink in /etc/rc2.d/ from K08tomcat6 to S92tomcat6<br />
+sudo update-rc.d tomcat6 disable 2 //changes symlink in /etc/rc2.d/ from S92tomcat6 to K08tomcat6<br />
+For upstart services:<br />
+ls /etc/init/*.conf // lists all upstart services<br />
+/etc/gdm/Init/Default //this is where you 'can' put some xrandr to apply on startup<br />
+/etc/init.d //this folder has start-up scripts<br />
+/etc/default //this folder has default values  </p>
+<p><strong>UPSTART SERVICES</strong> 
+initctl list //lists all services with status <br />
+service --status-all //same as 'ls /etc/init.d' <br />
+start/stop/restart/status <service> // same as initctl start/stop/restart/status <service><br />
+halt/poweroff/shutdown/reboot<br />
+halt -p // when halting the system switch off the power<br />
+/etc/init/mysql.override //edit to contain word 'manual' to override startup instructions in mysql.conf - same for all other startup services<br />
+added cups.override, mysql.override, ssh.override, smbd.override to override startup instructions in respective /etc/init/*.conf files  </p>
+<p><strong>USER/PASSWORD/ADMIN</strong>
 /etc/passwd /etc/groups<br />
 echo $PATH<br />
-export PATH = $PATH:/new_path/to_add/  </p>
-<p><strong>NETWORK</strong><br />
+export PATH = $PATH:/new_path/to_add/<br />
+adduser chetan<br />
+usermod -g users chetan<br />
+stat chetan<br />
+chmod 0700 chetan/  // rwx------  </p>
+<p><strong>INSTALLTION/REPOSITORIES</strong>
+/etc/apt/sources.list or /etc/apt/sources.list.d/* //repository list<br />
+sudo add-apt-repository ppa:<repo path><br />
+/home/sridhar/.local/share/Trash // Rubbish<br />
+update-alternatives --config java //then choose number from list<br />
+apt-get --simulate purge popularity-contest //remove popularity-contest and related packages altogether   </p>
+<p><strong>NETWORK</strong>
 arp -a // find mac address of router<br />
 ifconfig<br />
 /etc/network/interfaces<br />
@@ -60,47 +91,105 @@ nmap -v -sS 192.168.0.0/24 //half-open scanning of local network<br />
 traceroute <host><br />
 ufw default deny <br />
 ufw enable  </p>
-<p><strong>UTILITIES</strong><br />
-. ./.profile  //sources profile file without restart<br />
+<p><strong>MEMORY</strong>
+cat /proc/sys/kernel/threads-max //=62274<br />
+cat /proc/sys/fs/file_max //=401408<br />
+cat /proc/mdstats<br />
+ulimit -v //for virtual = unlimited<br />
+ulimit -s //for stack = 8192  </p>
+<p><strong>SHORTCUTS</strong>
+Alt-F2 //type xkill and click on hung app<br />
+Ctrl-Alt-F1 // go to virtual terminal - can do sudo reboot from there<br />
+.bash_aliases<br />
+alias ssh1='ssh 192.168.0.133' <br />
+alias grepxsvn='grep -r --exclude=*.svn-base'<br />
+alias grephtml='grep -r --include=*.html'  </p>
+<p><strong>UTILITIES</strong>
+. ./.profile  //sources profile file without restart <br />
+acpi -V // battery status <br />
+arch  // possible output is i686 (32 bit) or x86_64 (64 bit)  <br />
 chmod o=rx dir/ OR u=rwx dir/ OR g=rx dir/<br />
-chown -R sridhar dir/  <br />
+chown -R sridhar dir/ <br />
 chgrp -R sridhar dir/ <br />
 cp -r source_dir/ target_dir/<br />
-dmesg  //print kernel ring buffer - can be used for boot up message <br />
+curl 'http://www.gnu.org/software/coreutils/manual/coreutils.html' 2&gt;/dev/null |<br />
+    grep 'h3 class' |<br />
+    grep 'class="command"' |<br />
+    sed 's/.<em>class="command"&gt;//' |<br />
+    sed 's|</span></samp>||' |<br />
+    sed 's|</h3>||' |<br />
+    grep ':' |<br />
+    sort<br />
+dmesg  //print kernel ring buffer - can be used for boot up message<br />
+dpkg-reconfigure popularity-contest  //can toggle whether package usage data is sent to debian<br />
+exec -l $SHELL   //restarts shell<br />
 fdisk -l //list all partitions<br />
 find /path -name file_name -type d/f<br />
-find ./ -type f -name <em>.class -exec rm -rf {} \;      // remove all files recursively named </em>.class under ./<br />
+find ./ -type f -name </em>.class -exec rm -rf {} \;            // remove all files recursively named <em>.class under ./<br />
+find ./ -type f -name </em>.class -exec grep -H "string" {} +  // search for string in files recursively named <em>.class under ./ (multi-threaded)<br />
+find ./ -type f -name </em>.class -print0 | xargs -0 -n1 -P8 grep -H "string" //search for string in files recursively named <em>.class under ./ use xargs<br />
+find . -name '</em>.c' | sort | xargs head -1<br />
+grep -r search_term dir/<br />
 gstreamer-properties //multi-media settings<br />
+gunzip &lt; coreutils-8.13.tar.gz | tar -vx<br />
+locate<br />
 ls -a (include hidden) -F (dirs with trailing / and exes with trailing *) -l (long listing) -t (sort by time modified) -R (all subdirs)<br />
+ls -1 | wc -l  //counts the number of line entries in ls command <br />
 lspci -v <br />
 lsb_release -rd<br />
 lsof -i -n -P //list all open files &amp; ports <br />
 lsof -i tcp:8888 /// lists services running on 8888 <br />
 lsusb //list usb devices<br />
 ps -ef //list all running processes<br />
-scp sridhar@192.168.1.72:/usr/local/bin/iptables /usrlocal/bin/iptables    // need to 'sudo start ssh' on server before trying to connect<br />
+rm -rf ./dir  ///// for dirs with special chars in name<br />
+rsync -anv ./dir sridhar@192.168.0.9:/home/sridhar/dev   //simulate<br />
+rsync -az ./dir sridhar@192.168.0.9:/home/sridhar/dev     //do it for real using compression<br />
+rsync -a --exclude=pattern_to_exclude ./dir sridhar@192.168.0.9:/home/sridhar/dev     //do it for real<br />
+scp sridhar@192.168.1.72:/usr/local/bin/iptables /usrlocal/bin/iptables    // need to 'sudo start ssh' on server before trying to connect <br />
 ssh -C 192.168.1.72 -l sridhar   // ssh on port 22 (tcp)<br />
 ssh -C sridhar@192.168.1.72   // ssh on port 22 (tcp)<br />
 screen ctrl-a then c for new terminal. ctrl-a, 0 or 1 to toggle between terminal // not used much since byobu<br />
 tail <file> //lists last few entires in file<br />
 tar -xvzf file.tar.gz<br />
 tar xfJ scala-docs-2.10.2.txz<br />
+tar -zvcf file.tar.gz directory/      //compress directory into file.tar.gz<br />
+time ./program //real: real time, user: how long program was running on cpu, sys: how long the program was waiting for os to perform tasks for it<br />
+uname -a     // 32 or 64 bit i686 is 32 bit, x86_64 is 64 bit<br />
+unrar e file.rar<br />
+wget 'http://ftp.gnu.org/gnu/coreutils/coreutils-8.13.tar.gz'<br />
+whereis<br />
 xxd //make hexdump or reverse hexdump<br />
 xrandr //used to set size, orientation and output for screens  </p>
-<p><strong>APPLICATIONS</strong><br />
+<p><strong>APPLICATIONS</strong>
 evince file.pdf<br />
 pdftk in.pdf cat 1-12 14-end output out1.pdf //removes page 13<br />
+pdftk in.pdf cat 1E output out1.pdf //rotates p1 anti-clockwise<br />
+pdftk A=in1.pdf B=in2.pdf cat A1-12 B3 A14-end output out1.pdf //add p3(B) after p12(A) &amp; remove page 13(A)<br />
 pdftohtml file.pdf  //saves html as file.html // lynx file.pdf does the same thing<br />
 pdftotext file.pdf //saves text as file.txt<br />
-display boy.jpg // imagemagick command line tool
+display boy.jpg // imagemagick command line tool<br />
 enscript -p foo.ps foo.txt<br />
 ghostscript: ps2pdf foo.ps, pdf2ps foo.pdf<br />
 texi2pdf file.tex  </p>
+<p><strong>Ubuntu One</strong><br />
+u1sdtool --help<br />
+u1sdtool --list-folders<br />
+u1sdtool --waiting<br />
+u1sdtool --current-transfers  </p>
+<p><strong>Byobu</strong>
+F9 for menu<br />
+F12 escape<br />
+byobu-ctrl-a to change behaviour of ctrl-a<br />
+developed in python  </p>
+<p><strong>wacom</strong>
+sudo add-apt-repository ppa:lekensteyn/wacom-tablet<br />
+sudo apt-get update<br />
+sudo apt-get install dkms wacom-dkms  </p>
       </div>
       <footer class="post-footer">
         <div class="meta">
             Posted in «<a href="/category/cheat-sheet.html">Cheat Sheet</a>» 
-            by <a href="/author/sridhar-chandramouli.html">Sridhar Chandramouli</a><br />
+            by <a href="/author/sridhar.html">Sridhar</a><br />
             Tags:  #<a href="/tag/linux.html">linux</a> #<a href="/tag/software.html">software</a>        </div>
       </footer>
     </article>
@@ -131,7 +220,7 @@ texi2pdf file.tex  </p>
       <nav class="widget">
         <h3>Social</h3>
         <ul>
-          <li><a href="You can add links in your config file">#</a></li>
+          <li><a href="">#</a></li>
           <li><a href="Another social link">#</a></li>
           <li><a href="/" rel="alternate">Flux Atom</a></li>
         </ul>

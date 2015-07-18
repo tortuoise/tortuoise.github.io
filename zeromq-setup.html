@@ -2,24 +2,24 @@
 <html lang="en">
   <head>
         <meta charset="utf-8" />
-    <title>Zeromq setup — Wattwerks Notes</title>
+    <title>Zeromq setup — Wattwerks</title>
     <link rel="stylesheet" type="text/css" href="/theme/css/skeleton.css" />
     <link rel="stylesheet" type="text/css" href="/theme/css/main.css" />
     <link rel="shortcut icon" type="text/css" href="/favicon.ico" />
     <link rel="alternate" type="application/atom+xml"
-                           title="Wattwerks Notes — Flux Atom"
+                           title="Wattwerks — Flux Atom"
                            href="/" /> 
     <!--[if lte IE 8]><script src="/theme/js/html5shiv.js"></script><![endif]-->
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no" />
 
-    <meta name="author"   content="Sridhar Chandramouli" />
+    <meta name="author"   content="Sridhar" />
     <meta name="keywords" content="zeromq, messaging, c" />
   </head>
   <body>
     <div class="page">
       <header class="page-head">
         <h1>
-          <a href="/index.html">Wattwerks Notes</a>
+          <a href="/index.html">Wattwerks</a>
         </h1>
       </header>
 
@@ -38,43 +38,43 @@
         </h1>
         <div class="meta">
             In «<a href="/category/manual.html">Manual</a>» 
-            by <a href="/author/sridhar-chandramouli.html">Sridhar Chandramouli</a>
+            by <a href="/author/sridhar.html">Sridhar</a>
         </div>
       </header>
       <div class="post-content"> 
         <p>A quick summary of ZeroMQ setup, problems encountered and solutions. </p>
 <h3>libzmq</h3>
-<p>git clone https://github.com/tortuoise/libzmq
-apt-get install libtool
-apt-get install build-essential
-apt-get install uuid-dev
-cd libzmq
-sh autogen.sh
-./configure --without-libsodium
-su root
-make install
-ldconfig</p>
-<h3>czmq</h3>
-<p>git clone git://github.com/zeromq/czmq.git
-cd czmq
-sh autogen.sh
-./configure
-make all
-su root
-make install
-ldconfig</p>
+<p>git clone https://github.com/tortuoise/libzmq<br />
+apt-get install libtool<br />
+apt-get install build-essential<br />
+apt-get install uuid-dev<br />
+cd libzmq<br />
+sh autogen.sh<br />
+./configure --without-libsodium<br />
+su root<br />
+make install<br />
+ldconfig  </p>
+<h3>czmq ###</h3>
+<p>git clone git://github.com/zeromq/czmq.git<br />
+cd czmq<br />
+sh autogen.sh<br />
+./configure <br />
+make all<br />
+su root<br />
+make install<br />
+ldconfig  </p>
 <h3>Problems encountered</h3>
-<p>Setup errors:
-zguide/examples/C: Could not find libtool : change libtool to libtoolize in autogen.sh</p>
-<p>./build all: Cannot find -luuid:  apt-get install uuid-dev
-apt-cache search libuuid</p>
+<p>Setup errors:<br />
+zguide/examples/C: Could not find libtool : change libtool to libtoolize in autogen.sh  </p>
+<p>./build all: Cannot find -luuid:  apt-get install uuid-dev<br />
+apt-cache search libuuid  </p>
 <h3>Why ?</h3>
 <p>The current device that we use for monitoring PV systems sends data to a receiver which is connected to a serial port of a laptop or desktop. The application running on the computer uses Java. The plan is to replace the laptop/desktop with a small device that runs a basic version of linux and something like zeromq, read the serial data arriving from a wireless device (Zigbee/ANT) and transmit it to a server via a direct connection to the router/modem.</p>
       </div>
       <footer class="post-footer">
         <div class="meta">
             Posted in «<a href="/category/manual.html">Manual</a>» 
-            by <a href="/author/sridhar-chandramouli.html">Sridhar Chandramouli</a><br />
+            by <a href="/author/sridhar.html">Sridhar</a><br />
             Tags:  #<a href="/tag/zeromq.html">zeromq</a> #<a href="/tag/messaging.html">messaging</a> #<a href="/tag/c.html">c</a>        </div>
       </footer>
     </article>
@@ -105,7 +105,7 @@ apt-cache search libuuid</p>
       <nav class="widget">
         <h3>Social</h3>
         <ul>
-          <li><a href="You can add links in your config file">#</a></li>
+          <li><a href="">#</a></li>
           <li><a href="Another social link">#</a></li>
           <li><a href="/" rel="alternate">Flux Atom</a></li>
         </ul>
