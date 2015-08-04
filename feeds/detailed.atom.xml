@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wattwerks</title><link href="/" rel="alternate"></link><link href="/feeds/detailed.atom.xml" rel="self"></link><id>/</id><updated>2015-07-02T00:00:00+01:00</updated><entry><title>FFT</title><link href="/fft.html" rel="alternate"></link><updated>2015-07-02T00:00:00+01:00</updated><author><name>Sridhar</name></author><id>tag:,2015-07-02:fft.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;Background&lt;/strong&gt;
+I used the FFT algorithm all through my undergraduate and graduate physics courses without ever looking at the details. So I decided to go back and have another look to see if I can get any further than in my youth. It's a divide and conquer algorithm that speeds up matrix multiplication of an input array of size n and an nxn &lt;span class="math"&gt;\(M_n(\omega)\)&lt;/span&gt; matrix which has (j,k)th entry &lt;span class="math"&gt;\(\omega^{jk}\)&lt;/span&gt; where 1, &lt;span class="math"&gt;\(\omega\)&lt;/span&gt;, &lt;span class="math"&gt;\(\omega^{2}\)&lt;/span&gt;, ..., &lt;span class="math"&gt;\(\omega^{n-1}\)&lt;/span&gt; are the complex nth roots of unity.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Continued&lt;/strong&gt;
+The code below works (the results are correct) though there's a memory leak. &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="sb"&gt;``&lt;/span&gt;`C
+float &lt;span class="kt"&gt;complex&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;fft&lt;span class="p"&gt;(&lt;/span&gt;float &lt;span class="kt"&gt;complex&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="kp"&gt;in&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; int n&lt;span class="p"&gt;,&lt;/span&gt; float &lt;span class="kt"&gt;complex&lt;/span&gt; w&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  int i&lt;span class="p"&gt;,&lt;/span&gt;j&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="kr"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;fabs&lt;span class="p"&gt;(&lt;/span&gt;crealf&lt;span class="p"&gt;(&lt;/span&gt;w&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="m"&gt;-1.00&lt;/span&gt;f&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="m"&gt;.0001&lt;/span&gt;f &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; fabs&lt;span class="p"&gt;(&lt;/span&gt;cimagf&lt;span class="p"&gt;(&lt;/span&gt;w&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="m"&gt;-0.00&lt;/span&gt;f&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="m"&gt;0.0001&lt;/span&gt;f&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="o"&gt;//&lt;/span&gt;printf&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Edge return %d \n&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; n&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="kr"&gt;return&lt;/span&gt; &lt;span class="kp"&gt;in&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="kr"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;crealf&lt;span class="p"&gt;(&lt;/span&gt;w&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="m"&gt;1.0&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; crealf&lt;span class="p"&gt;(&lt;/span&gt;w&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;-&lt;/span&gt;&lt;span class="m"&gt;1.0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="kr"&gt;return&lt;/span&gt; &lt;span class="kp"&gt;in&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="kr"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;stack &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="kr"&gt;return&lt;/span&gt; &lt;span class="kp"&gt;in&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  stack&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  float &lt;span class="kt"&gt;complex&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;ine &lt;span class="o"&gt;=&lt;/span&gt; malloc&lt;span class="p"&gt;(&lt;/span&gt;n&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;sizeof&lt;span class="p"&gt;(&lt;/span&gt;float &lt;span class="kt"&gt;complex&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+  float &lt;span class="kt"&gt;complex&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;ino &lt;span class="o"&gt;=&lt;/span&gt; malloc&lt;span class="p"&gt;(&lt;/span&gt;n&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;sizeof&lt;span class="p"&gt;(&lt;/span&gt;float &lt;span class="kt"&gt;complex&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+  &lt;span class="kr"&gt;for&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;i&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;j&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;i&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;n&lt;span class="p"&gt;;&lt;/span&gt;i&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="kr"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;i&lt;span class="o"&gt;%2==0){ &lt;/span&gt;
+&lt;span class="o"&gt;  ine[j]=in[i];&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;else {&lt;/span&gt;
+&lt;span class="o"&gt;  ino[j++]=in[i];   &lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;  }&lt;/span&gt;
+&lt;span class="o"&gt;  float complex *s = fft(ine,n/2,cpow(w,2));&lt;/span&gt;
+&lt;span class="o"&gt;  float complex *s1 = fft(ino,n/2,cpow(w,2));&lt;/span&gt;
+
+&lt;span class="o"&gt;  float complex *bad = malloc(n*sizeof(float complex));&lt;/span&gt;
+&lt;span class="o"&gt;  for (j=0; j&amp;lt;n/2; j++){&lt;/span&gt;
+&lt;span class="o"&gt;    bad[j] = s[j] + cpow(w,j) * s1[j];&lt;/span&gt;
+&lt;span class="o"&gt;bad[j+n/2] = s[j] - cpow(w,j) * s1[j];&lt;/span&gt;
+&lt;span class="o"&gt;  }&lt;/span&gt;
+&lt;span class="o"&gt;  free(ine); free(ino); //free(s); free(s1);&lt;/span&gt;
+&lt;span class="o"&gt;  //printf(&amp;quot;End return %&lt;/span&gt;d \n&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;, n);&lt;/span&gt;
+  &lt;span class="kr"&gt;return&lt;/span&gt; bad&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="sb"&gt;``&lt;/span&gt;`
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+    
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</summary><category term="roulette"></category><category term="dic"></category></entry><entry><title>Microinverter</title><link href="/microinverter.html" rel="alternate"></link><updated>2013-12-29T00:00:00+00:00</updated><author><name>Sridhar</name></author><id>tag:,2013-12-29:microinverter.html</id><summary type="html">&lt;p&gt;Recently finished a course on Power Electronics offered by Prof.Erikson from the University of Colorado (Boulder) on Coursera. A fantastic hands on introductory course on the methods used in controller design. More than one of the homework assignments involved the design and control of a solar microinverter.  &lt;/p&gt;
+&lt;p&gt;A microinverter is a current inverter (as opposed to a voltage inverter which is commonly used as a battery inverter or un-interrupted power supply (UPS)). Simplified schematic of a microinverter is shown below:  &lt;/p&gt;
+&lt;p&gt;&lt;img alt="Microinverter" src="images/micro_inverter.png" /&gt;  &lt;/p&gt;
+&lt;p&gt;In conventional battery/voltage inverters, the duty cycle is generally a constant function to produce constant AC voltage output. But in a current microinverter or a string inverter, the duty cycle is a function of the AC grid voltage and frequency because the microinverter's output must be in phase with the AC grid voltage or else it will destructive interfere.  &lt;/p&gt;
+&lt;p&gt;Like most controllers, the microinverter also has a compensator feedback loop which adjusts the duty cycle to minimize the difference between a reference AC voltage and the output of the microinverter. An example of a such a compensator loop is shown below along with some example values.   &lt;/p&gt;
+&lt;p&gt;&lt;img alt="Microinverter Compensator Loop" src="images/micro_inverter_2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Texas Instruments has a &lt;a href="http://www.ti.com/tool/tmdshv1phinvkit"&gt;development kit&lt;/a&gt; for engineers interested in developing solar inverters. This particular kit is for a string inverter and is probably of a higher voltage than a typical microinverter.   &lt;/p&gt;</summary><category term="microinverter"></category><category term="inverter"></category><category term="solar"></category><category term="ups"></category></entry></feed>

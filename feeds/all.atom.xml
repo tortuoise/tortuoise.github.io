@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wattwerks</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2015-07-02T00:00:00+01:00</updated><entry><title>FFT</title><link href="/fft.html" rel="alternate"></link><updated>2015-07-02T00:00:00+01:00</updated><author><name>Sridhar</name></author><id>tag:,2015-07-02:fft.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;Background&lt;/strong&gt;
+I used the FFT algorithm all through my undergraduate and graduate physics courses without ever looking at the details. So I decided to go back and have another look to see if I can get any further than in my youth. It's a divide and conquer algorithm that speeds up matrix multiplication of an input array of size n and an nxn &lt;span class="math"&gt;\(M_n(\omega)\)&lt;/span&gt; matrix which has (j,k)th entry &lt;span class="math"&gt;\(\omega^{jk}\)&lt;/span&gt; where 1, &lt;span class="math"&gt;\(\omega\)&lt;/span&gt;, &lt;span class="math"&gt;\(\omega^{2}\)&lt;/span&gt;, ..., &lt;span class="math"&gt;\(\omega^{n-1}\)&lt;/span&gt; are the complex nth roots of unity.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Continued&lt;/strong&gt;
+The code below works (the results are correct) though there's a memory leak. &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="sb"&gt;``&lt;/span&gt;`C
+float &lt;span class="kt"&gt;complex&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;fft&lt;span class="p"&gt;(&lt;/span&gt;float &lt;span class="kt"&gt;complex&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="kp"&gt;in&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; int n&lt;span class="p"&gt;,&lt;/span&gt; float &lt;span class="kt"&gt;complex&lt;/span&gt; w&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  int i&lt;span class="p"&gt;,&lt;/span&gt;j&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="kr"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;fabs&lt;span class="p"&gt;(&lt;/span&gt;crealf&lt;span class="p"&gt;(&lt;/span&gt;w&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="m"&gt;-1.00&lt;/span&gt;f&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="m"&gt;.0001&lt;/span&gt;f &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; fabs&lt;span class="p"&gt;(&lt;/span&gt;cimagf&lt;span class="p"&gt;(&lt;/span&gt;w&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="m"&gt;-0.00&lt;/span&gt;f&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="m"&gt;0.0001&lt;/span&gt;f&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="o"&gt;//&lt;/span&gt;printf&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Edge return %d \n&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; n&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="kr"&gt;return&lt;/span&gt; &lt;span class="kp"&gt;in&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="kr"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;crealf&lt;span class="p"&gt;(&lt;/span&gt;w&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="m"&gt;1.0&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; crealf&lt;span class="p"&gt;(&lt;/span&gt;w&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;-&lt;/span&gt;&lt;span class="m"&gt;1.0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="kr"&gt;return&lt;/span&gt; &lt;span class="kp"&gt;in&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="kr"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;stack &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="kr"&gt;return&lt;/span&gt; &lt;span class="kp"&gt;in&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  stack&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  float &lt;span class="kt"&gt;complex&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;ine &lt;span class="o"&gt;=&lt;/span&gt; malloc&lt;span class="p"&gt;(&lt;/span&gt;n&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;sizeof&lt;span class="p"&gt;(&lt;/span&gt;float &lt;span class="kt"&gt;complex&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+  float &lt;span class="kt"&gt;complex&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;ino &lt;span class="o"&gt;=&lt;/span&gt; malloc&lt;span class="p"&gt;(&lt;/span&gt;n&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;sizeof&lt;span class="p"&gt;(&lt;/span&gt;float &lt;span class="kt"&gt;complex&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+  &lt;span class="kr"&gt;for&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;i&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;j&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;i&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;n&lt;span class="p"&gt;;&lt;/span&gt;i&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="kr"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;i&lt;span class="o"&gt;%2==0){ &lt;/span&gt;
+&lt;span class="o"&gt;  ine[j]=in[i];&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;else {&lt;/span&gt;
+&lt;span class="o"&gt;  ino[j++]=in[i];   &lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;  }&lt;/span&gt;
+&lt;span class="o"&gt;  float complex *s = fft(ine,n/2,cpow(w,2));&lt;/span&gt;
+&lt;span class="o"&gt;  float complex *s1 = fft(ino,n/2,cpow(w,2));&lt;/span&gt;
+
+&lt;span class="o"&gt;  float complex *bad = malloc(n*sizeof(float complex));&lt;/span&gt;
+&lt;span class="o"&gt;  for (j=0; j&amp;lt;n/2; j++){&lt;/span&gt;
+&lt;span class="o"&gt;    bad[j] = s[j] + cpow(w,j) * s1[j];&lt;/span&gt;
+&lt;span class="o"&gt;bad[j+n/2] = s[j] - cpow(w,j) * s1[j];&lt;/span&gt;
+&lt;span class="o"&gt;  }&lt;/span&gt;
+&lt;span class="o"&gt;  free(ine); free(ino); //free(s); free(s1);&lt;/span&gt;
+&lt;span class="o"&gt;  //printf(&amp;quot;End return %&lt;/span&gt;d \n&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;, n);&lt;/span&gt;
+  &lt;span class="kr"&gt;return&lt;/span&gt; bad&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="sb"&gt;``&lt;/span&gt;`
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+    
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</summary><category term="roulette"></category><category term="dic"></category></entry><entry><title>Games</title><link href="/games.html" rel="alternate"></link><updated>2015-06-22T00:00:00+01:00</updated><author><name>Sridhar</name></author><id>tag:,2015-06-22:games.html</id><summary type="html">&lt;h3&gt;Russian Roulette&lt;/h3&gt;
+&lt;p&gt;Q. What's the probability of winning (surviving) a game of Russian Roulette by volunteering to go first (pull the trigger with gun at your head) where each player spins the barrel before pulling the trigger ?&lt;/p&gt;
+&lt;p&gt;A. Let x be the probability of surviving by going first. The probability of surviving going first is 5/6 multiplied by the probability that the other player loses (which is 1-x because the other player faces the same game).   &lt;/p&gt;
+&lt;div class="math"&gt;$$
+\begin{eqnarray}
+x = \frac{5}{6} (1-x) \\\
+x = \frac{5}{11}
+\end{eqnarray}
+$$&lt;/div&gt;
+&lt;p&gt;So a little less than half!&lt;/p&gt;
+&lt;h3&gt;Dice throws&lt;/h3&gt;
+&lt;p&gt;Q. What's the fair value of a game where you get x$ for a throw of a dice where x is the number (1-6) that results from the throw of the dice ?&lt;/p&gt;
+&lt;p&gt;A. 3.5 which is the expected value (mean) of the numbers 1-6.&lt;/p&gt;
+&lt;p&gt;Q. What's the fair value of a game where you have the option of throwing again if you don't like your first throw, but have to accept the outcome of the second throw ?&lt;/p&gt;
+&lt;p&gt;A. You're only going to go for a second throw if your first throws up &amp;lt; 3.5. You'll keep the result of your first throw if it's 4,5 or 6 (probability of which is 0.5). You're only going to go for a second throw if your first throws up &amp;lt; 3.5 which also has probability 0.5. The expected value of the second throw still remains 3.5.&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\begin{eqnarray}
+x = \frac{1}{2} (4+5+6)/3 + \frac{1}{2} (3.5) \\\
+x = \frac{1}{2} (5) + \frac{1}{2} (3.5) \\\
+x =  4.25
+\end{eqnarray}
+$$&lt;/div&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+    
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</summary><category term="roulette"></category><category term="dice"></category></entry><entry><title>Zeromq setup</title><link href="/zeromq-setup.html" rel="alternate"></link><updated>2015-06-22T00:00:00+01:00</updated><author><name>Sridhar</name></author><id>tag:,2015-06-22:zeromq-setup.html</id><summary type="html">&lt;p&gt;A quick summary of ZeroMQ setup, problems encountered and solutions. &lt;/p&gt;
+&lt;h3&gt;libzmq&lt;/h3&gt;
+&lt;p&gt;git clone https://github.com/tortuoise/libzmq&lt;br /&gt;
+apt-get install libtool&lt;br /&gt;
+apt-get install build-essential&lt;br /&gt;
+apt-get install uuid-dev&lt;br /&gt;
+cd libzmq&lt;br /&gt;
+sh autogen.sh&lt;br /&gt;
+./configure --without-libsodium&lt;br /&gt;
+su root&lt;br /&gt;
+make install&lt;br /&gt;
+ldconfig  &lt;/p&gt;
+&lt;h3&gt;czmq ###&lt;/h3&gt;
+&lt;p&gt;git clone git://github.com/zeromq/czmq.git&lt;br /&gt;
+cd czmq&lt;br /&gt;
+sh autogen.sh&lt;br /&gt;
+./configure &lt;br /&gt;
+make all&lt;br /&gt;
+su root&lt;br /&gt;
+make install&lt;br /&gt;
+ldconfig  &lt;/p&gt;
+&lt;h3&gt;Problems encountered&lt;/h3&gt;
+&lt;p&gt;Setup errors:&lt;br /&gt;
+zguide/examples/C: Could not find libtool : change libtool to libtoolize in autogen.sh  &lt;/p&gt;
+&lt;p&gt;./build all: Cannot find -luuid:  apt-get install uuid-dev&lt;br /&gt;
+apt-cache search libuuid  &lt;/p&gt;
+&lt;h3&gt;Why ?&lt;/h3&gt;
+&lt;p&gt;The current device that we use for monitoring PV systems sends data to a receiver which is connected to a serial port of a laptop or desktop. The application running on the computer uses Java. The plan is to replace the laptop/desktop with a small device that runs a basic version of linux and something like zeromq, read the serial data arriving from a wireless device (Zigbee/ANT) and transmit it to a server via a direct connection to the router/modem.&lt;/p&gt;</summary><category term="zeromq"></category><category term="messaging"></category><category term="c"></category></entry><entry><title>Bescom net metering scheme</title><link href="/bescom-net-metering-scheme.html" rel="alternate"></link><updated>2015-03-26T00:00:00+00:00</updated><author><name>Sridhar</name></author><id>tag:,2015-03-26:bescom-net-metering-scheme.html</id><summary type="html">&lt;p&gt;Finally completed all the paperwork and got the net meter installed by Bescom for a 3KWp PV system. &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The initial application is easy to fill out online a&lt;/li&gt;
+&lt;li&gt;Visit the local sub-division to pay the registration fee to kick off the application process&lt;/li&gt;
+&lt;li&gt;Fill out Format 5 with details of the equipment to be used
++_It's wise to purchase the net meter early (well before planned installation) because  &lt;/li&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The process for testing the net meter has been changed to put the responsibility of testing on the meter vendor. &lt;/p&gt;</summary><category term="solar"></category><category term="inverter"></category><category term="pv"></category></entry><entry><title>Kannada Tenses</title><link href="/kannada-tenses.html" rel="alternate"></link><updated>2014-12-30T00:00:00+00:00</updated><author><name>Sridhar</name></author><id>tag:,2014-12-30:kannada-tenses.html</id><summary type="html">&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align="center"&gt;maaDi questions&lt;/th&gt;
+&lt;th align="center"&gt;ninu&lt;/th&gt;
+&lt;th align="center"&gt;nivu&lt;/th&gt;
+&lt;th align="center"&gt;avaru&lt;/th&gt;
+&lt;th align="center"&gt;adu&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align="center"&gt;past&lt;/td&gt;
+&lt;td align="center"&gt;maaDi-diyaa?&lt;/td&gt;
+&lt;td align="center"&gt;maaDi-draa?&lt;/td&gt;
+&lt;td align="center"&gt;maaDi-daraa?&lt;/td&gt;
+&lt;td align="center"&gt;maaDi-ttaa?&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align="center"&gt;present continuous&lt;/td&gt;
+&lt;td align="center"&gt;maaD-tta-idiyaa?&lt;/td&gt;
+&lt;td align="center"&gt;maaD-tta-ideeraa?&lt;/td&gt;
+&lt;td align="center"&gt;maaD-tta-idaraa?&lt;/td&gt;
+&lt;td align="center"&gt;maaD-tta-ideyaa?&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align="center"&gt;future&lt;/td&gt;
+&lt;td align="center"&gt;maaD-tiyaa?&lt;/td&gt;
+&lt;td align="center"&gt;maaD-teeraa?&lt;/td&gt;
+&lt;td align="center"&gt;maaD-taaraa?&lt;/td&gt;
+&lt;td align="center"&gt;maaDi-uttaa?&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align="center"&gt;maaDi answers&lt;/th&gt;
+&lt;th align="center"&gt;naanu&lt;/th&gt;
+&lt;th align="center"&gt;naavu&lt;/th&gt;
+&lt;th align="center"&gt;avaru&lt;/th&gt;
+&lt;th align="center"&gt;adu&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align="center"&gt;past&lt;/td&gt;
+&lt;td align="center"&gt;maaDi-de&lt;/td&gt;
+&lt;td align="center"&gt;maaDi-devu&lt;/td&gt;
+&lt;td align="center"&gt;maaDi-daru&lt;/td&gt;
+&lt;td align="center"&gt;maaDi-ttu&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align="center"&gt;present continuous&lt;/td&gt;
+&lt;td align="center"&gt;maaD-tta-idini&lt;/td&gt;
+&lt;td align="center"&gt;maaD-tta-idivi&lt;/td&gt;
+&lt;td align="center"&gt;maaD-tta-idaare&lt;/td&gt;
+&lt;td align="center"&gt;maaD-tta-ide&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align="center"&gt;future&lt;/td&gt;
+&lt;td align="center"&gt;maaD-tini&lt;/td&gt;
+&lt;td align="center"&gt;maaD-tivi&lt;/td&gt;
+&lt;td align="center"&gt;maaD-taare&lt;/td&gt;
+&lt;td align="center"&gt;maaD-utte&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;</summary><category term="language"></category></entry><entry><title>Bellycoo PV LED Study Lamp Kit</title><link href="/bellycoo-pv-led-study-lamp-kit.html" rel="alternate"></link><updated>2014-06-15T00:00:00+01:00</updated><author><name>Sridhar</name></author><id>tag:,2014-06-15:bellycoo-pv-led-study-lamp-kit.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;Bellycoo PV LED Study Lamp Kit&lt;/strong&gt;  &lt;/p&gt;
+&lt;p&gt;On Saturday, 30/05/14 conducted a workshop for students and teachers of rural schools around Kanakapura town to assemble their own photovoltaic led study lamps. The idea was to use available materials to create a kit that students and teachers could assemble and learn about the principles of electricity and the photovoltaic effect.  &lt;/p&gt;
+&lt;p&gt;The kit consists of a machined white electrical box with holes for the LEDs, 2 PCBs and a 3.7V 1150mAh Lithium ion battery. Moredetails and the manual of the kit are available &lt;a href="bellycoo.pdf"&gt;here&lt;/a&gt;.  &lt;/p&gt;
+&lt;p&gt;The workshop went surprisingly smoothly and many of the participants took to the task with more ease than we had anticipated. A couple of the teams were able to assemble their own PV modules without any breakage! Teams which found the module making too tedious were given pre-made modules to continue the process of soldering the components onto the PCBs and final assembly of the study lamp.  &lt;/p&gt;
+&lt;p&gt;Photos of the event are available &lt;a href="https://www.flickr.com/gp/76843644@N02/2mR8GZ/"&gt;here&lt;/a&gt;. BeLLiku means 'light' in Kannada but Bellycoo is way easier in English so the name has stuck.   &lt;/p&gt;
+&lt;p&gt;As the popular saying goes, give a child a study lamp and she can study so long as the lamp works, teach a child to make a study lamp and she's a student for life.   &lt;/p&gt;</summary><category term="solar"></category><category term="pv"></category><category term="study lamp"></category></entry><entry><title>Microinverter</title><link href="/microinverter.html" rel="alternate"></link><updated>2013-12-29T00:00:00+00:00</updated><author><name>Sridhar</name></author><id>tag:,2013-12-29:microinverter.html</id><summary type="html">&lt;p&gt;Recently finished a course on Power Electronics offered by Prof.Erikson from the University of Colorado (Boulder) on Coursera. A fantastic hands on introductory course on the methods used in controller design. More than one of the homework assignments involved the design and control of a solar microinverter.  &lt;/p&gt;
+&lt;p&gt;A microinverter is a current inverter (as opposed to a voltage inverter which is commonly used as a battery inverter or un-interrupted power supply (UPS)). Simplified schematic of a microinverter is shown below:  &lt;/p&gt;
+&lt;p&gt;&lt;img alt="Microinverter" src="images/micro_inverter.png" /&gt;  &lt;/p&gt;
+&lt;p&gt;In conventional battery/voltage inverters, the duty cycle is generally a constant function to produce constant AC voltage output. But in a current microinverter or a string inverter, the duty cycle is a function of the AC grid voltage and frequency because the microinverter's output must be in phase with the AC grid voltage or else it will destructive interfere.  &lt;/p&gt;
+&lt;p&gt;Like most controllers, the microinverter also has a compensator feedback loop which adjusts the duty cycle to minimize the difference between a reference AC voltage and the output of the microinverter. An example of a such a compensator loop is shown below along with some example values.   &lt;/p&gt;
+&lt;p&gt;&lt;img alt="Microinverter Compensator Loop" src="images/micro_inverter_2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Texas Instruments has a &lt;a href="http://www.ti.com/tool/tmdshv1phinvkit"&gt;development kit&lt;/a&gt; for engineers interested in developing solar inverters. This particular kit is for a string inverter and is probably of a higher voltage than a typical microinverter.   &lt;/p&gt;</summary><category term="microinverter"></category><category term="inverter"></category><category term="solar"></category><category term="ups"></category></entry><entry><title>Chronicle configuration</title><link href="/chronicle-configuration.html" rel="alternate"></link><updated>2013-12-22T00:00:00+00:00</updated><author><name>Sridhar</name></author><id>tag:,2013-12-22:chronicle-configuration.html</id><summary type="html">&lt;p&gt;Static site generator written in Perl. Converts text file to html.  &lt;/p&gt;
+&lt;p&gt;Configuration file is /etc/chroniclerc  &lt;/p&gt;
+&lt;p&gt;chronicle --input input_dir/ --output output_dir/ --sitemap-prefix http://www.yourdomain.com/  &lt;/p&gt;</summary><category term="software"></category></entry><entry><title>Nginx configuration</title><link href="/nginx-configuration.html" rel="alternate"></link><updated>2013-12-22T00:00:00+00:00</updated><author><name>Sridhar</name></author><id>tag:,2013-12-22:nginx-configuration.html</id><summary type="html">&lt;p&gt;Installation is straight forward : apt-get install nginx  &lt;/p&gt;
+&lt;p&gt;Main configuration file is /etc/nginx/nginx.conf which is has includes to other config files such as /etc/nginx/sites-enabled/default. Added the proxy_pass entry in the location block to the first server and added the second server block to have nginx listen on 8080. So the first server listening at 80 is a proxy for the second listening at 8080 (or vice versa ?)  &lt;/p&gt;
+&lt;p&gt;http {&lt;br /&gt;
+  server {&lt;br /&gt;
+    #server_name localhost;&lt;br /&gt;
+    location / {&lt;br /&gt;
+      proxy_pass http://localhost:8080;&lt;br /&gt;
+    }&lt;br /&gt;
+  }&lt;br /&gt;
+  server {&lt;br /&gt;
+    server_name www.hostname.com;&lt;br /&gt;
+    listen 8080;&lt;br /&gt;
+    root /path/to/root/dir;&lt;br /&gt;
+    location /{&lt;br /&gt;
+    }  &lt;br /&gt;
+  }&lt;br /&gt;
+...  &lt;br /&gt;
+}  &lt;/p&gt;</summary><category term="nginx"></category><category term="internet"></category><category term="software"></category></entry><entry><title>TI MSP430</title><link href="/ti-msp430.html" rel="alternate"></link><updated>2013-12-22T00:00:00+00:00</updated><author><name>Sridhar</name></author><id>tag:,2013-12-22:ti-msp430.html</id><summary type="html">&lt;p&gt;Installation is straight forward : apt-get install nginx  &lt;/p&gt;
+&lt;p&gt;Main configuration file is /etc/nginx/nginx.conf which is has includes to other config files such as /etc/nginx/sites-enabled/default. Added the proxy_pass entry in the location block to the first server and added the second server block to have nginx listen on 8080. So the first server listening at 80 is a proxy for the second listening at 8080 (or vice versa ?)  &lt;/p&gt;
+&lt;p&gt;http {&lt;br /&gt;
+  server {&lt;br /&gt;
+    #server_name localhost;&lt;br /&gt;
+    location / {&lt;br /&gt;
+      proxy_pass http://localhost:8080;&lt;br /&gt;
+    }&lt;br /&gt;
+  }&lt;br /&gt;
+  server {&lt;br /&gt;
+    server_name www.hostname.com;&lt;br /&gt;
+    listen 8080;&lt;br /&gt;
+    root /path/to/root/dir;&lt;br /&gt;
+    location /{&lt;br /&gt;
+    }  &lt;br /&gt;
+  }&lt;br /&gt;
+...  &lt;br /&gt;
+}  &lt;/p&gt;</summary><category term="nginx"></category><category term="internet"></category><category term="software"></category></entry><entry><title>Powerone SGTI</title><link href="/powerone-sgti.html" rel="alternate"></link><updated>2013-12-20T00:00:00+00:00</updated><author><name>Sridhar</name></author><id>tag:,2013-12-20:powerone-sgti.html</id><summary type="html">&lt;p&gt;This inverter sold by Powerone in Bengaluru is imported from China where it's manufactured by &lt;a href="http://kstarpower.manufacturer.globalsources.com/si/6008803910630/pdtl/Solar-grid/1064496182/Grid-Connected-Solar-Inverter.htm"&gt;Kstar Power&lt;/a&gt;  &lt;/p&gt;
+&lt;p&gt;The DC isolator switch and WLAN are optional so as expected the inverter arrived without either of them.  &lt;/p&gt;
+&lt;p&gt;Cost Rs 40k for a 3KW inverter plus 12.5% excise (excise is meant to be a manufacturing tax - it's not manufactured in India) and 5.5% KVAT on that.   &lt;/p&gt;
+&lt;p&gt;Installation is straight forward.&lt;br /&gt;
+1. Make sure mains are off.&lt;br /&gt;
+2. Test series open circuit voltage of solar array - shouldn't exceed 500VDC (rated 360VDC) but must exceed 150VDC for the MPPT to work. Connect array of solar modules to DC input ensuring correct polarity. Absolute minimum is 120VDC below which inverter turns off. Maximum short circuit current is 19A (rated 17A).&lt;br /&gt;
+3. Connect AC output to mains and turn mains on.&lt;br /&gt;
+4. Disconnect AC side before DC side during disconnection.  &lt;/p&gt;
+&lt;p&gt;Note:&lt;br /&gt;
+1. The inverter comes with it's own custom connectors for the solar module array. Though these look like MC4 connectors they are not. They can be easily crimped onto some 4mm^2 or 6mm^2 wire using the clip mechanism on the connector's inside metallic part.&lt;br /&gt;
+2. The inverter has a maximum continunous output current of 15A so can easily be plugged into a 15A socket.&lt;br /&gt;
+3. The inverter's lcd lists the current power being output and the runnning total of the energy (in Kwh) generated.  &lt;/p&gt;
+&lt;p&gt;Due to limited roof space and also some shading issues, connected only 6 x 250Wp Emmvee Polycrystalline modules (Voc = 37V) to get above the minimum MPPT voltage for this inverter (150V). The inverter is generating about 3A AC (~700W) at mid-day in December at 15 degrees north latitude. Not enough load available to consume all the power being generated so some of it is being lost to the grid. Need to consume more of it - time to mine some bitcoin.   &lt;/p&gt;</summary><category term="inverter"></category><category term="solar"></category></entry><entry><title>Installing core Debian</title><link href="/installing-core-debian.html" rel="alternate"></link><updated>2013-12-15T00:00:00+00:00</updated><author><name>Sridhar</name></author><id>tag:,2013-12-15:installing-core-debian.html</id><summary type="html">&lt;p&gt;Easiest method is to write the iso image onto a cd and boot the machine from the cd. Once finished with basic configuration tasks, the installer will ask you to pick a mirror. The following command will help in deciding on the server with least latency.  &lt;/p&gt;
+&lt;p&gt;netselect hostname1 hostname2 hostname3   &lt;/p&gt;
+&lt;p&gt;Surprisingly, the server with least latency is in the US!  &lt;/p&gt;
+&lt;p&gt;During pre-installation the installer will prompt for disk partitioning. Software RAID on Linux needs to be configured before Debian is installed. Follow the procedure &lt;a href="http://www.iprobot.net/linux-tutorial/how-to-setup-software-raid-in-debian-ubuntu/"&gt;here&lt;/a&gt;. The steps in brief for 2 hard disk RAID1 array are:    &lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Choose manual partitioning and create 3 partitions on each disk:  &lt;/li&gt;
+&lt;li&gt;Boot(1GB): Primary, beginning, Physical volume for RAID, bootable flag ON.  &lt;/li&gt;
+&lt;li&gt;Swap (2xRAM): Primary, beginning, Physical volume for RAID, bootable flag OFF.  &lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Root(remainder): Primary, Beginning, Physical volume for RAID, bootable flag OFF.  &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Configure Software RAID -&amp;gt; Create 3 new MD (multi-disk) devices with 2 active and 0 spare devices per MD device using the partitions created in step 1. So select the 2 boot partitions on the two disks as the active devices in one of the RAID1 MD devices. Then select the two Swap partitions as the active devices in the next RAID1 MD device and so on.  &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Configure the MD RAID1 devices to be used appropriately:  &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;MD device 1 with 2 boot partitions: Use as EXT4 Journaling File System with Mount point /boot  &lt;/li&gt;
+&lt;li&gt;MD device 2 with 2 swap partitions: Use as Swap Area  &lt;/li&gt;
+&lt;li&gt;MD device 3 with 2 root partitions: Use as EXT4 Journaling File System with Mount point /root   &lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Once the partitioning and software RAID 1 is configured continue with the Debian installation.  &lt;/p&gt;
+&lt;p&gt;After installing the core system, the installer will give you the choice of installing a desktop environment, a web server, database, file server etc. You can choose not to install anything further. The bootloader will then be installed and the machine restarted to complete installation.  &lt;/p&gt;</summary><category term="software"></category><category term="debian"></category></entry><entry><title>Madowatt Wireless E-Meter User Manual</title><link href="/madowatt-wireless-e-meter-user-manual.html" rel="alternate"></link><updated>2013-08-25T00:00:00+01:00</updated><author><name>Sridhar</name></author><id>tag:,2013-08-25:madowatt-wireless-e-meter-user-manual.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;Madowatt Meter: a current transformer based internet connected meter.&lt;/strong&gt;  &lt;/p&gt;
+&lt;p&gt;Connecting meter to inverter 
+1. Clip current transformer onto output of inverter.&lt;br /&gt;
+2. Connect current transformer to meter via 2.3mm audio jack.&lt;br /&gt;
+3. Connect 12V DC power supply adapter to meter and mains. Red LED should light up.   &lt;/p&gt;
+&lt;p&gt;Connect XBee adapter to USB port of computer&lt;br /&gt;
+1. If running Linux can use screen to check readings on serial port.  &lt;/p&gt;
+&lt;p&gt;Download java and madowatt jar 
+0. Download librxtxSerial.so and save in /usr/lib/jvm/java-7-openjdk-amd64/jre/lib/amd64 (Linux) or in C:\Program Files\Java\jre7\bin (Windoze) 
+1. Download &lt;a href="Madowatt.jar"&gt;jar&lt;/a&gt; and &lt;a href="RXTXcomm.jar"&gt;rxtx&lt;/a&gt; and save in classpath.&lt;br /&gt;
+2. Run jar from command prompt: java -jar Madowatt.jar &lt;client_id&gt;   &lt;br /&gt;
+3. Application will connect to server and transmit data from serial port.  &lt;/p&gt;
+&lt;p&gt;Monitor Production&lt;br /&gt;
+1. Connect to &lt;a href="http://meter.madowatt.com"&gt;Portal&lt;/a&gt;&lt;br /&gt;
+2. Register as new user and select password.&lt;br /&gt;
+3. Enter meter number as part of registration process.&lt;br /&gt;
+4. View Production.  &lt;/p&gt;</summary><category term="arduino"></category><category term="xbee"></category><category term="atmel"></category><category term="electronics"></category></entry><entry><title>Madowatt Wireless E-Meter Maker Manual</title><link href="/madowatt-wireless-e-meter-maker-manual.html" rel="alternate"></link><updated>2013-08-18T00:00:00+01:00</updated><author><name>Sridhar</name></author><id>tag:,2013-08-18:madowatt-wireless-e-meter-maker-manual.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;Madowatt Meter: a current transformer based internet connected meter&lt;/strong&gt;  &lt;/p&gt;
+&lt;p&gt;Bill Of Materials:&lt;br /&gt;
+1. Atmel ATmega328PU with Arduino Optiboot&lt;br /&gt;
+2. Crystal: 1 x 16MHz&lt;br /&gt;
+3. Voltage regulators: 1 x LD7805, 1 x &lt;a href="https://www.sparkfun.com/products/526"&gt;LD33V&lt;/a&gt;&lt;br /&gt;
+4. Stripboard  &lt;br /&gt;
+5. XBee S2 
+6. XBee USB Adapter 
+7. &lt;a href="https://www.sparkfun.com/products/8276"&gt;XBee Module Breakout&lt;/a&gt;.&lt;br /&gt;
+7. Capacitors: 3 x 10uF, 2 x 22pF&lt;br /&gt;
+8. Resistors: 2 x 1.7k, 2 x 2.2k, 2 x 3.3k, 2 x 10k&lt;br /&gt;
+9. 12VDC 500mA Power Adapter&lt;br /&gt;
+10. LEDs: 2&lt;br /&gt;
+11. SCT 030 current transformer&lt;br /&gt;
+12. &lt;a href="https://www.sparkfun.com/products/11570"&gt;TRRS 3.5mm Jack Breakout&lt;/a&gt;  &lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Circuit Diagram&lt;/em&gt;&lt;br /&gt;
+The circuit diagram is shown below. Solder all the components onto stripboard. Use a socket for the ATMEGA328-PU and a breadboard adapter for the XBee S2, i.e. don't solder these directly onto the stripboard as they're sensitive devices and may be destroyed while soldering. The rest of the devices can be soldered directly onto the board.  &lt;/p&gt;
+&lt;p&gt;&lt;img alt="Circuit Diagram" src="mado_meter_circuit.png" /&gt;  &lt;/p&gt;
+&lt;p&gt;Current transformer circuit: the current transformer circuit is the simplest part of the meter. Simply connect the +ive end of the SCT-030 to A1 on the Uno and the -ive to GND. Then connect a 10kohm resistor and a 10uF capacitor in series from 5V on the Uno to GND on the Uno. Then connect another 10kohm resistor in parallel with the capacitor and in series with the first resistor. See diagram above and prototype below:   &lt;/p&gt;
+&lt;p&gt;Atmel / Arduino circuit: an Arduino Uno board can be replicated on stripboard as described &lt;a href="http://www.arduino.cc/en/Main/Standalone"&gt;here&lt;/a&gt;.   &lt;/p&gt;
+&lt;p&gt;XBee circuit: a 5V power supply is used with the Atmel ATMEGA328 while the XBee has a reference voltage of 3.3V. So the connections from the Atmel RX/TX to the XBee Dout/Din have to made using a voltage divider to correspond with the XBee's Vref=3.3V.  &lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Atmel ATMEGA328PU&lt;/em&gt; &lt;br /&gt;
+1. Burn bootloader: if the ATMEGA doesn't already have a Arduino bootloader on it it will have to be loaded.&lt;br /&gt;
+2. Upload the following sketch (current only) onto the micro-controller using an Arduino Uno. Power is calculated assuming voltage of 230V and written to serial port.  &lt;/p&gt;
+&lt;p&gt;#include "EmonLib.h"    // Include Emon Library&lt;br /&gt;
+EnergyMonitor emon1;    // Create an instance&lt;br /&gt;
+void setup(){&lt;br /&gt;
+  Serial.begin(9600);&lt;br /&gt;
+  emon1.current(1, 30); // Current: input pin, calibration.&lt;br /&gt;
+}&lt;br /&gt;
+void loop(){&lt;br /&gt;
+  double Irms = emon1.calcIrms(1480);  // Calculate Irms only&lt;br /&gt;
+  Serial.println(Irms*230.0);          // Apparent power&lt;br /&gt;
+  delay(10000);&lt;br /&gt;
+}  &lt;/p&gt;
+&lt;p&gt;&lt;em&gt;XBee RF wireless network&lt;/em&gt;   &lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Prepare the radios for configuration: use X-CTU on Windows or Wine on Linux. See p33 in &lt;a href="http://www.amazon.com/Building-Wireless-Sensor-Networks-Processing/dp/0596807732/ref=sr_1_1?s=books&amp;amp;ie=UTF8&amp;amp;qid=1389273217&amp;amp;sr=1-1&amp;amp;keywords=wireless+sensor+networks"&gt;WirelessSensorNetworks&lt;/a&gt; for instructions on how to install Wine and run X-CTU in Wine on Linux:  &lt;/li&gt;
+&lt;li&gt;If Linux, create a symbolic link in ~/.wine/dosdevices to /dev/ttyUSB0 and call it something like com10: ln -s /dev/ttyUSB0 ~/.wine/dosdevices/com10  &lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Then create a 'User COM Port' in X-CTU by choosing the appropriate com port number (10 in this case). &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Use an XBee USB adapter to connect a radio to the USB port selected as com10. Test/Query the radio to ensure it's working. A dialog box with the type and firmware version should appear.  &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Pressing 'Read' will give current parameter values. For a Digi International XBee S2 choose XB24-ZB as 'Modem'. Configure one co-ordinator radio by choosing the 'Modem Configuration' tab and choosing 'ZIGBEE COORDINATOR AT' function set. Values can be changed by either entering values into the box next to the parameter name and pressing 'Write' OR by clicking on the 'Terminal' tab and manually setting the parameter values using AT commands as follows: &lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;+++ (3 pluses without pressing enter) will result in OK from the radio and set it in AT mode. eg. +++OK  &lt;/li&gt;
+&lt;li&gt;ATID will read and output the PAN ID of the network. This can be left 0 if there are no other co-ordinator radios around. The co-ordinator will randomly choose a PAN ID which can be read using ATOI.  &lt;/li&gt;
+&lt;li&gt;ATMY will read and output the 16-bit network address of the module. A value of 0xFFFE means the module hasn't joined a ZigBee network. The co-ordinator will have an ATMY of 0. &lt;/li&gt;
+&lt;li&gt;ATBD will read and output the baud rate. Set it to 9600 using ATBD3. &lt;/li&gt;
+&lt;li&gt;ATOI reads and outputs the 16-bit PAN ID. The OI value reflects the actial 16-bit PAN ID the module is running on.  &lt;/li&gt;
+&lt;li&gt;ATCN exits command mode. &lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Configure one or more router radios by inserting another XBee S2 into the USB adapater and choose XB24-ZB as 'Modem'. Configure a router radio by choosing 'Zigbee Router AT' under 'Modem Configuration':  &lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;If ATID is not set (left at 0), a router/end device will join any extended PAN ID. &lt;/li&gt;
+&lt;li&gt;If ATID has been set on the co-ordinator radio then the same value should be set as ATID on the router radio so the router can join the network created by the co-ordinator.  &lt;/li&gt;
+&lt;li&gt;Changes to ID, eg. ATID2612 should be written to non-volatile memory using ATWR command to preserve the ID setting if a power cycle occurs.  &lt;/li&gt;
+&lt;li&gt;More details can be found in the &lt;a href="http://www.digi.com/products/wireless-wired-embedded-solutions/zigbee-rf-modules/zigbee-mesh-module/xbee-zb-module#docs"&gt;product manual&lt;/a&gt; on Digi's website.  &lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;In case X-CTU is not at hand the radios can also be configured using an Arduino Uno and an XBee wireless shield.  &lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Upload a 'blank' sketch onto the ATMega328. A black sketch (bare minimum) is one with nothing in the loop() function.  &lt;/li&gt;
+&lt;li&gt;Connect the XBee radio to the XBee shield and connect the shield to the Arduino Uno (Uno). &lt;/li&gt;
+&lt;li&gt;To configure the radio, the XBee shield should be in USB mode. In this mode, commands from your serial port on the computer are sent to the XBee radio.  &lt;/li&gt;
+&lt;li&gt;The XBee radio can be configured using either the Arduino XBee shield or a XBee adapter. &lt;/li&gt;
+&lt;li&gt;Connect the XBee adapter to the USB port of a computer using a USB to USB mini B cable.  &lt;/li&gt;
+&lt;li&gt;Use a serial emulator like screen. After finding the port that the XBee adapter has been connected, type screen /dev/ttyUSB0 9600  &lt;/li&gt;
+&lt;li&gt;The XBee radio can be put into configuration mode by typing +++ and waiting for a second. The expected response from the XBee radio is OK.  &lt;/li&gt;
+&lt;li&gt;Use the commands described in the previous section to change parameters of the radios. Note the radios must already be configured using X-CTU at some point in the past.  &lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Notes &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;If the XBee shield is being used in a production meter then it should be in MICRO mode.  &lt;/li&gt;
+&lt;li&gt;Uploading the current sketch: if you want to upload the current sketch without removing the XBee shield, disconnect the Uno+XBee shield from the power supply and switch the XBee shield to MICRO mode. In this mode, you can upload sketches to the ATMega328. Note that in this mode whatever is sent to the ATMega328 is also transmitted by the XBee radio if it's already configured. So you're likely to see a stream of rubbish if there's another XBee radio with the same (or no) PAN ID.   &lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img alt="Prototype" src="mado_meter_proto.png" /&gt;  &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Madowatt Portal&lt;/strong&gt;&lt;br /&gt;
+1. Client: the MadowattClient connects to the MadowattServer, reads the serial port of the computer and transmits the readings to the MadowattServer. The MadowattClient is run by downloading the jar and running: java -jar Madowatt.jar &lt;meter_id&gt;&lt;br /&gt;
+2. Server:  The MadowattServer is a multi-threaded Java application which listens for connections from clients on a single port and stores the data the clients send in a postgresql database. Complile and run the server using: &lt;br /&gt;
+javac -d . -cp .:postgresql-9.3-1100.jdbc41.jar:c3p0-0.9.1.jar MadowattServer.java MadowattServerThread.java MadowattProtocol.java MadowattData.java&lt;br /&gt;
+java -cp .:postgresql-9.3-1100.jdbc41.jar:c3p0-0.9.1.jar madowatt.MadowattServer &lt;br /&gt;
+3. Servlet: the ChartServlet is a Java HttpServlet which displays the data sent by the Client to the Server. See &lt;a href="http://meter.madowatt.in"&gt;this&lt;/a&gt; for instance.  &lt;/p&gt;</summary><category term="arduino"></category><category term="xbee"></category><category term="atmel"></category><category term="electronics"></category></entry><entry><title>Lead acid batteries</title><link href="/lead-acid-batteries.html" rel="alternate"></link><updated>2013-06-23T00:00:00+01:00</updated><author><name>Sridhar</name></author><id>tag:,2013-06-23:lead-acid-batteries.html</id><summary type="html">&lt;p&gt;BATTERY ABUSE&lt;br /&gt;
+A battery is not an investment or an asset. It's a consumable - each discharge leads it closer to it's ultimate death. Battery maintenance is not simply about topping it up with distilled water every now and then but also about understanding your consumption and your sources of energy to minimize cycling your batteries.  &lt;/p&gt;
+&lt;p&gt;Damaging batteries by over-charging is also a common occurrence. MPPT solar charge controllers are focussed on maximizing the power output from the solar array. This is generally an optimal strategy for grid tied current inverters where the current has somewhere to go - either to the load or the grid. But in off-grid systems if there's not enough load, the batteries get charged at a raised voltage. This is desired if the batteries aren't fully charged but once they are, there is risk of overcharging as at higher voltages water gets electrolyzed into hydrogen and oxygen which escape. The electrolysis and escape of gases causes spillage of the electrolyte if the battery isn't a sealed type. Cell reactions for a lead acid battery are &lt;a href="http://en.wikipedia.org/wiki/Lead-acid_battery"&gt;well known&lt;/a&gt;.  &lt;/p&gt;
+&lt;p&gt;Remember - an ignored battery will end up in a land-fill polluting groundwater sooner than a well maintained one. If you've ever wondered why your kids aren't as clever as you then look no further at the lead and other toxins in our water supply retarding their brain development.  &lt;/p&gt;</summary><category term="battery"></category></entry><entry><title>Too hot for PV</title><link href="/too-hot-for-pv.html" rel="alternate"></link><updated>2013-05-19T00:00:00+01:00</updated><author><name>Sridhar</name></author><id>tag:,2013-05-19:too-hot-for-pv.html</id><summary type="html">&lt;p&gt;There has been a huge rush over the last few years to build PV plants in Gujarat &amp;amp; Rajasthan based on the solar irradiation received. Little attention is paid to how modules perform at 40 deg C in dusty conditions. Contrary to expectations, plant operators may find better performance in the winter.  &lt;/p&gt;
+&lt;p&gt;I met an experienced installer who said that he measured a 150Wp poly-crystalline panel (manufacturer will remain un-named) putting out 3A @ 19V at mid-day in 40 deg heat.  Most module manufacturers will list the loss in power per degree above 25 deg C in their data sheets but what most won't tell you is that the loss isn't linear - the hotter it gets the greater the losses are. So the data sheet will state 0.5% power loss per deg C - so a 7.5% loss if you're at 40 deg. But this 0.5% is per deg above 25 deg C near 25 deg.  What's the loss per degree at 35 deg C ? I don't have data but if I were to guess it's closer to 2%.  &lt;/p&gt;</summary><category term="solar"></category><category term="pv"></category></entry><entry><title>Inverter Topology</title><link href="/inverter-topology.html" rel="alternate"></link><updated>2013-03-31T00:00:00+00:00</updated><author><name>Sridhar</name></author><id>tag:,2013-03-31:inverter-topology.html</id><summary type="html">&lt;p&gt;Transformers in inverters are a must for off-grid systems because the DC side (generation and batteries) must be isolated from the AC side. Low frequency transformers are heavier but they're thought to be more efficient than high frequency ones but the situation is somewhat more complicated that that.
+It's widely assumed that low frequency transformers tend to be more efficient than high frequency ones. But the situation is more subtle than that. While low frequency transformers do have higher efficiency at lower power levels which makes them suitable for low DC voltage systems, they are actually less efficient than their higher frequncy counterparts at high power levels and high voltages. The second link gives a good description of the efficiency of high and low frequency inverters.&lt;/p&gt;
+
+&lt;p&gt;
+http://www.allaboutcircuits.com/vol_2/chpt_9/8.html
+http://www.homepower.com/articles/how-inverters-work
+&lt;/p&gt;</summary><category term="inverter"></category><category term="electronics"></category></entry><entry><title>Vikram Eldora Solar module</title><link href="/vikram-eldora-solar-module.html" rel="alternate"></link><updated>2013-03-31T00:00:00+00:00</updated><author><name>Sridhar</name></author><id>tag:,2013-03-31:vikram-eldora-solar-module.html</id><summary type="html">&lt;p&gt;36 pcs poly-crystalline solar cells, PmPP: 150Wp, VmPP:18.10V, Impp: 8.3A, Voc: 22.45V, Isc: 8.45A  &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Product Warranty**: 5 Years  &lt;/li&gt;
+&lt;li&gt;Performance Guarantee** Guaranteed Power Output of 90% for 10 Years and 80% for 25 Years  &lt;/li&gt;
+&lt;li&gt;Approvals and Certificates: TUV: IEC 61215 Ed.2, IEC 61730, IEC 61701, UL1703, MCS,CEC Listed  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Module put out a maximum of 7.5A @ 19V in Bangalore in February. Perhaps the almost 1A Impp loss can be explained by the elevation of Bangalore and 30 deg heat.  &lt;/p&gt;
+&lt;p&gt;The one slight inconvenience about this product is that the IP-65 rated junction box has TE Connectivity connectors which aren't compatible with MC4 connectors. So if you're looking to extend your array of Vikram modules you can only do it with modules with a TE connector.  &lt;/p&gt;</summary><category term="solar"></category><category term="modules"></category></entry><entry><title>Anu Solar 600W Power Generator</title><link href="/anu-solar-600w-power-generator.html" rel="alternate"></link><updated>2013-03-24T00:00:00+00:00</updated><author><name>Sridhar</name></author><id>tag:,2013-03-24:anu-solar-600w-power-generator.html</id><summary type="html">&lt;p&gt;600 VA Battery inverter. Anusolar sells these as solar "power generators" but what they deliver is a battery inverter and a separate PWM constant current charge controller. The inverter is loud!   &lt;/p&gt;
+&lt;p&gt;Connected the inverter to one fully charged 100AH battery and it provided only about 0.4 units -a fan and a tv for a couple of hours before the battery was discharged - didn't record battery DoD. I can't imagine it's very efficient with all that energy being lost to noise - idle consumption is a massive 7W !!   &lt;/p&gt;
+&lt;p&gt;Tightened the battery connections (DC connections need to be very tight to function properly) and the performance improved but not significantly. The inverter is able to invert only 0.5 - 0.6 Kwh from a fully charged 12V 100Ah battery. Either the battery is not functioning to spec or the inverter is very inefficient. The battery should be able to store 1.2Kwh (12V x 100Ah) so assuming that it discharges to 75% there should be 0.9Kwh available per cycle. But as there's only 0.6Kwh consumed by the load (a computer, modem and router) over 12 hours, the inverter is only ~70% efficient!  &lt;/p&gt;</summary><category term="solar"></category><category term="inverter"></category></entry><entry><title>Linux Cheatsheet</title><link href="/linux-cheatsheet.html" rel="alternate"></link><updated>2012-12-30T00:00:00+00:00</updated><author><name>Sridhar</name></author><id>tag:,2012-12-30:linux-cheatsheet.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;STARTUP&lt;/strong&gt;
+GRUB: hold shift key down as soon as bios loads&lt;br /&gt;
+/etc/default/grub //for grub settings - tried adding vga=0x0369 to this file to fix boot issues and it hasn't worked.&lt;br /&gt;
+sudo update-grub // after making any changes to /etc/default/grub - writes to /boot/grub/grub.cfg  &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;STARTUP ON BOOT&lt;/strong&gt;
+For non-upstart services:&lt;br /&gt;
+sudo update-rc.d tomcat6 enable 2 //changes symlink in /etc/rc2.d/ from K08tomcat6 to S92tomcat6&lt;br /&gt;
+sudo update-rc.d tomcat6 disable 2 //changes symlink in /etc/rc2.d/ from S92tomcat6 to K08tomcat6&lt;br /&gt;
+For upstart services:&lt;br /&gt;
+ls /etc/init/*.conf // lists all upstart services&lt;br /&gt;
+/etc/gdm/Init/Default //this is where you 'can' put some xrandr to apply on startup&lt;br /&gt;
+/etc/init.d //this folder has start-up scripts&lt;br /&gt;
+/etc/default //this folder has default values  &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;UPSTART SERVICES&lt;/strong&gt; 
+initctl list //lists all services with status &lt;br /&gt;
+service --status-all //same as 'ls /etc/init.d' &lt;br /&gt;
+start/stop/restart/status &lt;service&gt; // same as initctl start/stop/restart/status &lt;service&gt;&lt;br /&gt;
+halt/poweroff/shutdown/reboot&lt;br /&gt;
+halt -p // when halting the system switch off the power&lt;br /&gt;
+/etc/init/mysql.override //edit to contain word 'manual' to override startup instructions in mysql.conf - same for all other startup services&lt;br /&gt;
+added cups.override, mysql.override, ssh.override, smbd.override to override startup instructions in respective /etc/init/*.conf files  &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;USER/PASSWORD/ADMIN&lt;/strong&gt;
+/etc/passwd /etc/groups&lt;br /&gt;
+echo $PATH&lt;br /&gt;
+export PATH = $PATH:/new_path/to_add/&lt;br /&gt;
+adduser chetan&lt;br /&gt;
+usermod -g users chetan&lt;br /&gt;
+stat chetan&lt;br /&gt;
+chmod 0700 chetan/  // rwx------  &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;INSTALLTION/REPOSITORIES&lt;/strong&gt;
+/etc/apt/sources.list or /etc/apt/sources.list.d/* //repository list&lt;br /&gt;
+sudo add-apt-repository ppa:&lt;repo path&gt;&lt;br /&gt;
+/home/sridhar/.local/share/Trash // Rubbish&lt;br /&gt;
+update-alternatives --config java //then choose number from list&lt;br /&gt;
+apt-get --simulate purge popularity-contest //remove popularity-contest and related packages altogether   &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;NETWORK&lt;/strong&gt;
+arp -a // find mac address of router&lt;br /&gt;
+ifconfig&lt;br /&gt;
+/etc/network/interfaces&lt;br /&gt;
+ifdown&lt;br /&gt;
+ifup&lt;br /&gt;
+iptables&lt;br /&gt;
+kill -9 pid //find pid of open tcp/udp connection using netstat -atp&lt;br /&gt;
+netstat -at //list all tcp connections -au //udp  -ax //unix  -ar //raw &lt;br /&gt;
+nmap -v -sS localhost //half-open scanning of localhost&lt;br /&gt;
+nmap -v -sS 192.168.0.0/24 //half-open scanning of local network&lt;br /&gt;
+traceroute &lt;host&gt;&lt;br /&gt;
+ufw default deny &lt;br /&gt;
+ufw enable  &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;MEMORY&lt;/strong&gt;
+cat /proc/sys/kernel/threads-max //=62274&lt;br /&gt;
+cat /proc/sys/fs/file_max //=401408&lt;br /&gt;
+cat /proc/mdstats&lt;br /&gt;
+ulimit -v //for virtual = unlimited&lt;br /&gt;
+ulimit -s //for stack = 8192  &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;SHORTCUTS&lt;/strong&gt;
+Alt-F2 //type xkill and click on hung app&lt;br /&gt;
+Ctrl-Alt-F1 // go to virtual terminal - can do sudo reboot from there&lt;br /&gt;
+.bash_aliases&lt;br /&gt;
+alias ssh1='ssh 192.168.0.133' &lt;br /&gt;
+alias grepxsvn='grep -r --exclude=*.svn-base'&lt;br /&gt;
+alias grephtml='grep -r --include=*.html'  &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;UTILITIES&lt;/strong&gt;
+. ./.profile  //sources profile file without restart &lt;br /&gt;
+acpi -V // battery status &lt;br /&gt;
+arch  // possible output is i686 (32 bit) or x86_64 (64 bit)  &lt;br /&gt;
+chmod o=rx dir/ OR u=rwx dir/ OR g=rx dir/&lt;br /&gt;
+chown -R sridhar dir/ &lt;br /&gt;
+chgrp -R sridhar dir/ &lt;br /&gt;
+cp -r source_dir/ target_dir/&lt;br /&gt;
+curl 'http://www.gnu.org/software/coreutils/manual/coreutils.html' 2&amp;gt;/dev/null |&lt;br /&gt;
+    grep 'h3 class' |&lt;br /&gt;
+    grep 'class="command"' |&lt;br /&gt;
+    sed 's/.&lt;em&gt;class="command"&amp;gt;//' |&lt;br /&gt;
+    sed 's|&lt;/span&gt;&lt;/samp&gt;||' |&lt;br /&gt;
+    sed 's|&lt;/h3&gt;||' |&lt;br /&gt;
+    grep ':' |&lt;br /&gt;
+    sort&lt;br /&gt;
+dmesg  //print kernel ring buffer - can be used for boot up message&lt;br /&gt;
+dpkg-reconfigure popularity-contest  //can toggle whether package usage data is sent to debian&lt;br /&gt;
+exec -l $SHELL   //restarts shell&lt;br /&gt;
+fdisk -l //list all partitions&lt;br /&gt;
+find /path -name file_name -type d/f&lt;br /&gt;
+find ./ -type f -name &lt;/em&gt;.class -exec rm -rf {} \;            // remove all files recursively named &lt;em&gt;.class under ./&lt;br /&gt;
+find ./ -type f -name &lt;/em&gt;.class -exec grep -H "string" {} +  // search for string in files recursively named &lt;em&gt;.class under ./ (multi-threaded)&lt;br /&gt;
+find ./ -type f -name &lt;/em&gt;.class -print0 | xargs -0 -n1 -P8 grep -H "string" //search for string in files recursively named &lt;em&gt;.class under ./ use xargs&lt;br /&gt;
+find . -name '&lt;/em&gt;.c' | sort | xargs head -1&lt;br /&gt;
+grep -r search_term dir/&lt;br /&gt;
+gstreamer-properties //multi-media settings&lt;br /&gt;
+gunzip &amp;lt; coreutils-8.13.tar.gz | tar -vx&lt;br /&gt;
+locate&lt;br /&gt;
+ls -a (include hidden) -F (dirs with trailing / and exes with trailing *) -l (long listing) -t (sort by time modified) -R (all subdirs)&lt;br /&gt;
+ls -1 | wc -l  //counts the number of line entries in ls command &lt;br /&gt;
+lspci -v &lt;br /&gt;
+lsb_release -rd&lt;br /&gt;
+lsof -i -n -P //list all open files &amp;amp; ports &lt;br /&gt;
+lsof -i tcp:8888 /// lists services running on 8888 &lt;br /&gt;
+lsusb //list usb devices&lt;br /&gt;
+ps -ef //list all running processes&lt;br /&gt;
+rm -rf ./dir  ///// for dirs with special chars in name&lt;br /&gt;
+rsync -anv ./dir sridhar@192.168.0.9:/home/sridhar/dev   //simulate&lt;br /&gt;
+rsync -az ./dir sridhar@192.168.0.9:/home/sridhar/dev     //do it for real using compression&lt;br /&gt;
+rsync -a --exclude=pattern_to_exclude ./dir sridhar@192.168.0.9:/home/sridhar/dev     //do it for real&lt;br /&gt;
+scp sridhar@192.168.1.72:/usr/local/bin/iptables /usrlocal/bin/iptables    // need to 'sudo start ssh' on server before trying to connect &lt;br /&gt;
+ssh -C 192.168.1.72 -l sridhar   // ssh on port 22 (tcp)&lt;br /&gt;
+ssh -C sridhar@192.168.1.72   // ssh on port 22 (tcp)&lt;br /&gt;
+screen ctrl-a then c for new terminal. ctrl-a, 0 or 1 to toggle between terminal // not used much since byobu&lt;br /&gt;
+tail &lt;file&gt; //lists last few entires in file&lt;br /&gt;
+tar -xvzf file.tar.gz&lt;br /&gt;
+tar xfJ scala-docs-2.10.2.txz&lt;br /&gt;
+tar -zvcf file.tar.gz directory/      //compress directory into file.tar.gz&lt;br /&gt;
+time ./program //real: real time, user: how long program was running on cpu, sys: how long the program was waiting for os to perform tasks for it&lt;br /&gt;
+uname -a     // 32 or 64 bit i686 is 32 bit, x86_64 is 64 bit&lt;br /&gt;
+unrar e file.rar&lt;br /&gt;
+wget 'http://ftp.gnu.org/gnu/coreutils/coreutils-8.13.tar.gz'&lt;br /&gt;
+whereis&lt;br /&gt;
+xxd //make hexdump or reverse hexdump&lt;br /&gt;
+xrandr //used to set size, orientation and output for screens  &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;APPLICATIONS&lt;/strong&gt;
+evince file.pdf&lt;br /&gt;
+pdftk in.pdf cat 1-12 14-end output out1.pdf //removes page 13&lt;br /&gt;
+pdftk in.pdf cat 1E output out1.pdf //rotates p1 anti-clockwise&lt;br /&gt;
+pdftk A=in1.pdf B=in2.pdf cat A1-12 B3 A14-end output out1.pdf //add p3(B) after p12(A) &amp;amp; remove page 13(A)&lt;br /&gt;
+pdftohtml file.pdf  //saves html as file.html // lynx file.pdf does the same thing&lt;br /&gt;
+pdftotext file.pdf //saves text as file.txt&lt;br /&gt;
+display boy.jpg // imagemagick command line tool&lt;br /&gt;
+enscript -p foo.ps foo.txt&lt;br /&gt;
+ghostscript: ps2pdf foo.ps, pdf2ps foo.pdf&lt;br /&gt;
+texi2pdf file.tex  &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Ubuntu One&lt;/strong&gt;&lt;br /&gt;
+u1sdtool --help&lt;br /&gt;
+u1sdtool --list-folders&lt;br /&gt;
+u1sdtool --waiting&lt;br /&gt;
+u1sdtool --current-transfers  &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Byobu&lt;/strong&gt;
+F9 for menu&lt;br /&gt;
+F12 escape&lt;br /&gt;
+byobu-ctrl-a to change behaviour of ctrl-a&lt;br /&gt;
+developed in python  &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;wacom&lt;/strong&gt;
+sudo add-apt-repository ppa:lekensteyn/wacom-tablet&lt;br /&gt;
+sudo apt-get update&lt;br /&gt;
+sudo apt-get install dkms wacom-dkms  &lt;/p&gt;</summary><category term="linux"></category><category term="software"></category></entry></feed>

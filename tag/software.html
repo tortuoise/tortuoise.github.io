@@ -9,6 +9,9 @@
     <link rel="alternate" type="application/atom+xml"
                            title="Wattwerks — Flux Atom"
                            href="/" /> 
+    <link rel ="alternate" type="application/rss+xml"
+                           title="Wattwerks — Flux RSS"
+                           href="/feeds/rss.xml" /> 
     <!--[if lte IE 8]><script src="/theme/js/html5shiv.js"></script><![endif]-->
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no" />
   </head>
@@ -103,66 +106,12 @@
           <a class="readmore" href="/ti-msp430.html">Read more...</a>
         </footer>
       </article>
-        
-      <article class="post">
-        <header class="post-header">
-          <time datetime="2013-12-15T00:00:00+00:00" pubdate="pubdate">
-            Sun 15 December 2013
-          </time>
-          <h1>
-            <a rel="bookmark"
-               href="/installing-core-debian.html"
-               title="Lien permanent vers «Installing core Debian»">
-               Installing core Debian
-            </a>
-          </h1>
-          <div class="meta">
-              In «<a href="/category/manual.html">Manual</a>» 
-              by <a href="/author/sridhar.html">Sridhar</a>
-          </div>
-        </header>
-        <div class="post-content"> 
-          <p>Easiest method is to write the iso image onto a cd and boot the machine from the cd. Once finished with basic configuration tasks, the installer will ask you to pick a mirror. The following command will help in deciding on the server with least latency.  </p>
-<p>netselect hostname1 hostname2 hostname3 ...</p>
-        </div>
-        <footer class="post-footer">
-          <a class="readmore" href="/installing-core-debian.html">Read more...</a>
-        </footer>
-      </article>
-        
-      <article class="post">
-        <header class="post-header">
-          <time datetime="2012-12-30T00:00:00+00:00" pubdate="pubdate">
-            Sun 30 December 2012
-          </time>
-          <h1>
-            <a rel="bookmark"
-               href="/linux-cheatsheet.html"
-               title="Lien permanent vers «Linux Cheatsheet»">
-               Linux Cheatsheet
-            </a>
-          </h1>
-          <div class="meta">
-              In «<a href="/category/cheat-sheet.html">Cheat Sheet</a>» 
-              by <a href="/author/sridhar.html">Sridhar</a>
-          </div>
-        </header>
-        <div class="post-content"> 
-          <p><strong>STARTUP</strong>
-GRUB: hold shift key down as soon as bios loads<br />
-/etc/default/grub //for grub settings - tried adding vga=0x0369 to this file to fix boot issues and it hasn't worked.<br />
-sudo update-grub // after making any changes to /etc/default/grub - writes to /boot/grub/grub.cfg  </p>
-<p><strong>STARTUP ...</strong></p>
-        </div>
-        <footer class="post-footer">
-          <a class="readmore" href="/linux-cheatsheet.html">Read more...</a>
-        </footer>
-      </article>
       <nav id="pagination">   <!-- <span id="first_page" class="a inactive">&#60;&#60;</span>
         <span id="first_page" class="a inactive">&#60;</span> -->
         <span class="a active">1</span>
-   <!-- <span id="next_page" class="a inactive">&#62;</span>
-        <span id="next_page" class="a inactive">&#62;&#62;</span> -->
+        <a href="/tag/software2.html">2</a>
+        <a id="next_page" href="/tag/software2.html">&#62;</a>
+        <a id="last_page" href="/tag/software2.html">&#62;&#62;</a>
 </nav>    </section>
       </div>
     <aside class="page-sidebar">
@@ -193,7 +142,8 @@ sudo update-grub // after making any changes to /etc/default/grub - writes to /b
         <ul>
           <li><a href="http://stackoverflow.com/users/1093710/sridhar">SO</a></li>
           <li><a href="https://github.com/tortuoise">Github</a></li>
-          <li><a href="/" rel="alternate">Flux Atom</a></li>
+          <li><a href="/feeds/atom.xml" rel="alternate">Atom</a></li>
+          <li><a href="/feeds/rss.xml" rel="alternate">RSS</a></li>
         </ul>
       </nav>
     </aside> 

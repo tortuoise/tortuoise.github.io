@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wattwerks</title><link href="/" rel="alternate"></link><link href="/feeds/teaser.atom.xml" rel="self"></link><id>/</id><updated>2015-06-22T00:00:00+01:00</updated><entry><title>Games</title><link href="/games.html" rel="alternate"></link><updated>2015-06-22T00:00:00+01:00</updated><author><name>Sridhar</name></author><id>tag:,2015-06-22:games.html</id><summary type="html">&lt;h3&gt;Russian Roulette&lt;/h3&gt;
+&lt;p&gt;Q. What's the probability of winning (surviving) a game of Russian Roulette by volunteering to go first (pull the trigger with gun at your head) where each player spins the barrel before pulling the trigger ?&lt;/p&gt;
+&lt;p&gt;A. Let x be the probability of surviving by going first. The probability of surviving going first is 5/6 multiplied by the probability that the other player loses (which is 1-x because the other player faces the same game).   &lt;/p&gt;
+&lt;div class="math"&gt;$$
+\begin{eqnarray}
+x = \frac{5}{6} (1-x) \\\
+x = \frac{5}{11}
+\end{eqnarray}
+$$&lt;/div&gt;
+&lt;p&gt;So a little less than half!&lt;/p&gt;
+&lt;h3&gt;Dice throws&lt;/h3&gt;
+&lt;p&gt;Q. What's the fair value of a game where you get x$ for a throw of a dice where x is the number (1-6) that results from the throw of the dice ?&lt;/p&gt;
+&lt;p&gt;A. 3.5 which is the expected value (mean) of the numbers 1-6.&lt;/p&gt;
+&lt;p&gt;Q. What's the fair value of a game where you have the option of throwing again if you don't like your first throw, but have to accept the outcome of the second throw ?&lt;/p&gt;
+&lt;p&gt;A. You're only going to go for a second throw if your first throws up &amp;lt; 3.5. You'll keep the result of your first throw if it's 4,5 or 6 (probability of which is 0.5). You're only going to go for a second throw if your first throws up &amp;lt; 3.5 which also has probability 0.5. The expected value of the second throw still remains 3.5.&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\begin{eqnarray}
+x = \frac{1}{2} (4+5+6)/3 + \frac{1}{2} (3.5) \\\
+x = \frac{1}{2} (5) + \frac{1}{2} (3.5) \\\
+x =  4.25
+\end{eqnarray}
+$$&lt;/div&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+    
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</summary><category term="roulette"></category><category term="dice"></category></entry></feed>
