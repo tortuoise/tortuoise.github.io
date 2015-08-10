@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wattwerks</title><link href="/" rel="alternate"></link><link href="/feeds/cheat-sheet.atom.xml" rel="self"></link><id>/</id><updated>2014-12-30T00:00:00+00:00</updated><entry><title>Kannada Tenses</title><link href="/kannada-tenses.html" rel="alternate"></link><updated>2014-12-30T00:00:00+00:00</updated><author><name>Sridhar</name></author><id>tag:,2014-12-30:kannada-tenses.html</id><summary type="html">&lt;table&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wattwerks</title><link href="http://tortuoise.github.io/" rel="alternate"></link><link href="http://tortuoise.github.io/feeds/cheat-sheet.atom.xml" rel="self"></link><id>http://tortuoise.github.io/</id><updated>2014-12-30T00:00:00+00:00</updated><entry><title>Kannada Tenses</title><link href="http://tortuoise.github.io/kannada-tenses.html" rel="alternate"></link><updated>2014-12-30T00:00:00+00:00</updated><author><name>Sridhar</name></author><id>tag:tortuoise.github.io,2014-12-30:kannada-tenses.html</id><summary type="html">&lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
 &lt;th align="center"&gt;maaDi questions&lt;/th&gt;
@@ -66,7 +66,7 @@
 &lt;td align="center"&gt;maaD-utte&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
-&lt;/table&gt;</summary><category term="language"></category></entry><entry><title>Linux Cheatsheet</title><link href="/linux-cheatsheet.html" rel="alternate"></link><updated>2012-12-30T00:00:00+00:00</updated><author><name>Sridhar</name></author><id>tag:,2012-12-30:linux-cheatsheet.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;STARTUP&lt;/strong&gt;
+&lt;/table&gt;</summary><category term="language"></category></entry><entry><title>Linux Cheatsheet</title><link href="http://tortuoise.github.io/linux-cheatsheet.html" rel="alternate"></link><updated>2012-12-30T00:00:00+00:00</updated><author><name>Sridhar</name></author><id>tag:tortuoise.github.io,2012-12-30:linux-cheatsheet.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;STARTUP&lt;/strong&gt;
 GRUB: hold shift key down as soon as bios loads&lt;br /&gt;
 /etc/default/grub //for grub settings - tried adding vga=0x0369 to this file to fix boot issues and it hasn't worked.&lt;br /&gt;
 sudo update-grub // after making any changes to /etc/default/grub - writes to /boot/grub/grub.cfg  &lt;/p&gt;
