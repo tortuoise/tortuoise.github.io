@@ -92,7 +92,82 @@ float &lt;span class="kt"&gt;complex&lt;/span&gt; &lt;span class="o"&gt;*&lt;/sp
         "}";
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</summary><category term="roulette"></category><category term="dic"></category></entry><entry><title>Microinverter</title><link href="http://tortuoise.github.io/microinverter.html" rel="alternate"></link><updated>2013-12-29T00:00:00+00:00</updated><author><name>Sridhar</name></author><id>tag:tortuoise.github.io,2013-12-29:microinverter.html</id><summary type="html">&lt;p&gt;Recently finished a course on Power Electronics offered by Prof.Erikson from the University of Colorado (Boulder) on Coursera. A fantastic hands on introductory course on the methods used in controller design. More than one of the homework assignments involved the design and control of a solar microinverter.  &lt;/p&gt;
+&lt;/script&gt;</summary><category term="roulette"></category><category term="dic"></category></entry><entry><title>Maxwell</title><link href="http://tortuoise.github.io/maxwell.html" rel="alternate"></link><updated>2014-03-15T00:00:00+00:00</updated><author><name>Sridhar</name></author><id>tag:tortuoise.github.io,2014-03-15:maxwell.html</id><summary type="html">&lt;p&gt;James Clerk Maxwell was a Scottish mathematician, whose name is most synonymous with the field of classical electromagnetics. It is interesting to note that he was not an experimentalist. However, he used the observations of the scientists and experimentalists who came before him to formulate an overarching theory of electromagnetism and electromagnetic wave propagation. He was born in 1831, around the time the previous scientists we have talked about had published their discoveries. The equations that are now ascribed to him arrived in their initial form in 1873 in his book, "A Treatise on Electricity and Magnetism". In their original form, there were 20 equations with 20 unknowns. Later, Oliver Heaviside simplified these equations into the vector form that we know today.  &lt;/p&gt;
+&lt;p&gt;Besides being a brilliant mathematician, Maxwell was also an excellent writer. He also had no first-hand knowledge via experimentation of any of the laws that he formulated. He was very cognizant of this and realized that mathematical thinking often obscures conceptual understanding of a phenomenon. He was therefore greatly influenced by Faraday's writings and his aim was to convey Faradays' ideas about "lines of force" to the mathematical minds of the day. Until then, the concept of the electromagnetic "wave" was not accepted by the scientific community. One of the many significant contributions he made to the understanding of electromagnetic waves was to prove that light and magnetism are "affections of the same substance, and that light is an electromagnetic disturbance propagated through the field according to electromagnetic laws".     &lt;/p&gt;
+&lt;p&gt;How did he do this? It was known through experimentation at this time that the speed of light in air was around 3&lt;em&gt;10^8 m/sec (3.14858&lt;/em&gt;10^8 to 2.98 &lt;em&gt;10^8 depending on the experimenter). Maxwell was able to prove mathematically (using only the experimental knowledge of the electric and magnetic permeability of air) that the velocity of al electromagnetic wave is also around 3&lt;/em&gt;10^8 m/sec, very close to what had been proved to be the velocity of light. While this was not definitive physical evidence that light was a form of electromagnetic wave, it was the mathematical proof to a fact that would be proven by others later on.   &lt;/p&gt;
+&lt;p&gt;The differential form of Maxwell's equations are the simplest to understand for the new student. All that is needed to link the previously stated concepts to their concise mathematical representation is an understanding of two mathematical concepts (details in appendix):  &lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The &lt;span class="math"&gt;\(\vec{\nabla}\)&lt;/span&gt;  operator and divergence  &lt;/li&gt;
+&lt;li&gt;The &lt;span class="math"&gt;\(\vec{\nabla}x\)&lt;/span&gt; operator and curl  &lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The &lt;span class="math"&gt;\(\vec{\nabla}\)&lt;/span&gt; (del) operator signifies differentiation, or change of a variable with respect to another. If it is applied to a vector field in a dot product (&lt;span class="math"&gt;\(\vec{\nabla}\bullet\)&lt;/span&gt; )  it signifies the divergence of that field or how much that field radiates. We already know that static E fields have a non-zero divergence and H fields have a zero divergence.   &lt;/p&gt;
+&lt;p&gt;The &lt;span class="math"&gt;\(\vec{\nabla}x\)&lt;/span&gt; operator (cross product of del with vector field) denotes the curl of field. Physically, it is a representation of how much a field circulates. We know that H fields circulate and static E fields do not.   &lt;/p&gt;
+&lt;p&gt;So we can now state Heavisides simplification of Maxwell's equations, which neatly summarizes all of the above phenomena in neat statements. The full form and derivation of these equations is rigorous and can obscure the basic concepts. So for the purpose of revealing the key concepts, we will only look at the simplest vector notation of the equations. The goal here is to get an intuitive understanding of what is going on with electric and magnetic fields and come away with certain key facts and also to be able to recognize and "read" Maxwell's equations and associate them with the key facts. The equations are nothing more than a simple representation of the key concepts.    &lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation}  
+    \vec{\nabla} \bullet \vec{D} = \rho_\nu \\
+    \vec{D} = \epsilon \vec{E} \\
+    \vec{\nabla} \bullet \epsilon E = \rho_\nu \\
+    \epsilon (\vec{\nabla} \bullet \vec{E}) = \rho_\nu
+\end{equation}&lt;/div&gt;
+&lt;p&gt;The equations above are nothing more than the mathematical representation of Key Concept #9, or Gauss' law for static electric fields. D is the electric flux density and is related to the electric field E through the electric permittivity of the medium as shown above. &lt;span class="math"&gt;\(\rho_\nu\)&lt;/span&gt; is the volume charge density. &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;If we assume that $\epsilon$ is not a vector, it can be taken out of the del operator. The final equation above conveys that the amount an E field diverges is equal to the volume of charge in the sphere under consideration and inversely proportional to the permittivity of free space. In a more advanced treatment of this equation, we can write it in its integral form and relate it to other laws (Coulomb&amp;#39;s law). However, that often obscures the main conceptual idea behind this equation, which is that the divergence of an electric field in a medium is directly proportional to volume charge density and inversely proportional to the permittivity of the medium. This sounds counter-intuitive at first. However, absolute permittivity is a measure of the resistance that is encountered when forming an electric field in a medium.
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+    
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</summary><category term="electricity"></category><category term="magnetism"></category></entry><entry><title>Microinverter</title><link href="http://tortuoise.github.io/microinverter.html" rel="alternate"></link><updated>2013-12-29T00:00:00+00:00</updated><author><name>Sridhar</name></author><id>tag:tortuoise.github.io,2013-12-29:microinverter.html</id><summary type="html">&lt;p&gt;Recently finished a course on Power Electronics offered by Prof.Erikson from the University of Colorado (Boulder) on Coursera. A fantastic hands on introductory course on the methods used in controller design. More than one of the homework assignments involved the design and control of a solar microinverter.  &lt;/p&gt;
 &lt;p&gt;A microinverter is a current inverter (as opposed to a voltage inverter which is commonly used as a battery inverter or un-interrupted power supply (UPS)). Simplified schematic of a microinverter is shown below:  &lt;/p&gt;
 &lt;p&gt;&lt;img alt="Microinverter" src="images/micro_inverter.png" /&gt;  &lt;/p&gt;
 &lt;p&gt;In conventional battery/voltage inverters, the duty cycle is generally a constant function to produce constant AC voltage output. But in a current microinverter or a string inverter, the duty cycle is a function of the AC grid voltage and frequency because the microinverter's output must be in phase with the AC grid voltage or else it will destructive interfere.  &lt;/p&gt;

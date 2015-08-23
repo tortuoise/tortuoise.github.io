@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="utf-8" />
+    <title>Maxwell — Wattwerks</title>
+    <link rel="stylesheet" type="text/css" href="http://tortuoise.github.io/theme/css/skeleton.css" />
+    <link rel="stylesheet" type="text/css" href="http://tortuoise.github.io/theme/css/main.css" />
+    <link rel="shortcut icon" type="text/css" href="http://tortuoise.github.io/favicon.ico" />
+    <link rel="alternate" type="application/atom+xml"
+                           title="Wattwerks — Flux Atom"
+                           href="http://tortuoise.github.io/" /> 
+    <link rel ="alternate" type="application/rss+xml"
+                           title="Wattwerks — Flux RSS"
+                           href="http://tortuoise.github.io/feeds/rss.xml" /> 
+    <!--[if lte IE 8]><script src="http://tortuoise.github.io/theme/js/html5shiv.js"></script><![endif]-->
+    <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no" />
+
+    <meta name="author"   content="Sridhar" />
+    <meta name="keywords" content="electricity, magnetism" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="page-head">
+        <h1>
+          <a href="http://tortuoise.github.io/index.html">Wattwerks</a>
+        </h1>
+      </header>
+
+      <div class="page-content">
+     <article class="post content">
+      <header class="post-header">
+        <time datetime="2014-03-15T00:00:00+00:00" pubdate="pubdate">
+          Sat 15 March 2014
+        </time>
+        <h1>
+          <a rel="bookmark"
+             href="http://tortuoise.github.io/maxwell.html"
+             title="Lien permanent vers «Maxwell»">
+             Maxwell
+          </a>
+        </h1>
+        <div class="meta">
+            In «<a href="http://tortuoise.github.io/category/detailed.html">Detailed</a>» 
+            by <a href="http://tortuoise.github.io/author/sridhar.html">Sridhar</a>
+        </div>
+      </header>
+      <div class="post-content"> 
+        <p>James Clerk Maxwell was a Scottish mathematician, whose name is most synonymous with the field of classical electromagnetics. It is interesting to note that he was not an experimentalist. However, he used the observations of the scientists and experimentalists who came before him to formulate an overarching theory of electromagnetism and electromagnetic wave propagation. He was born in 1831, around the time the previous scientists we have talked about had published their discoveries. The equations that are now ascribed to him arrived in their initial form in 1873 in his book, "A Treatise on Electricity and Magnetism". In their original form, there were 20 equations with 20 unknowns. Later, Oliver Heaviside simplified these equations into the vector form that we know today.  </p>
+<p>Besides being a brilliant mathematician, Maxwell was also an excellent writer. He also had no first-hand knowledge via experimentation of any of the laws that he formulated. He was very cognizant of this and realized that mathematical thinking often obscures conceptual understanding of a phenomenon. He was therefore greatly influenced by Faraday's writings and his aim was to convey Faradays' ideas about "lines of force" to the mathematical minds of the day. Until then, the concept of the electromagnetic "wave" was not accepted by the scientific community. One of the many significant contributions he made to the understanding of electromagnetic waves was to prove that light and magnetism are "affections of the same substance, and that light is an electromagnetic disturbance propagated through the field according to electromagnetic laws".     </p>
+<p>How did he do this? It was known through experimentation at this time that the speed of light in air was around 3<em>10^8 m/sec (3.14858</em>10^8 to 2.98 <em>10^8 depending on the experimenter). Maxwell was able to prove mathematically (using only the experimental knowledge of the electric and magnetic permeability of air) that the velocity of al electromagnetic wave is also around 3</em>10^8 m/sec, very close to what had been proved to be the velocity of light. While this was not definitive physical evidence that light was a form of electromagnetic wave, it was the mathematical proof to a fact that would be proven by others later on.   </p>
+<p>The differential form of Maxwell's equations are the simplest to understand for the new student. All that is needed to link the previously stated concepts to their concise mathematical representation is an understanding of two mathematical concepts (details in appendix):  </p>
+<ol>
+<li>The <span class="math">\(\vec{\nabla}\)</span>  operator and divergence  </li>
+<li>The <span class="math">\(\vec{\nabla}x\)</span> operator and curl  </li>
+</ol>
+<p>The <span class="math">\(\vec{\nabla}\)</span> (del) operator signifies differentiation, or change of a variable with respect to another. If it is applied to a vector field in a dot product (<span class="math">\(\vec{\nabla}\bullet\)</span> )  it signifies the divergence of that field or how much that field radiates. We already know that static E fields have a non-zero divergence and H fields have a zero divergence.   </p>
+<p>The <span class="math">\(\vec{\nabla}x\)</span> operator (cross product of del with vector field) denotes the curl of field. Physically, it is a representation of how much a field circulates. We know that H fields circulate and static E fields do not.   </p>
+<p>So we can now state Heavisides simplification of Maxwell's equations, which neatly summarizes all of the above phenomena in neat statements. The full form and derivation of these equations is rigorous and can obscure the basic concepts. So for the purpose of revealing the key concepts, we will only look at the simplest vector notation of the equations. The goal here is to get an intuitive understanding of what is going on with electric and magnetic fields and come away with certain key facts and also to be able to recognize and "read" Maxwell's equations and associate them with the key facts. The equations are nothing more than a simple representation of the key concepts.    </p>
+<div class="math">\begin{equation}  
+    \vec{\nabla} \bullet \vec{D} = \rho_\nu \\
+    \vec{D} = \epsilon \vec{E} \\
+    \vec{\nabla} \bullet \epsilon E = \rho_\nu \\
+    \epsilon (\vec{\nabla} \bullet \vec{E}) = \rho_\nu
+\end{equation}</div>
+<p>The equations above are nothing more than the mathematical representation of Key Concept #9, or Gauss' law for static electric fields. D is the electric flux density and is related to the electric field E through the electric permittivity of the medium as shown above. <span class="math">\(\rho_\nu\)</span> is the volume charge density. </p>
+<div class="highlight"><pre>If we assume that $\epsilon$ is not a vector, it can be taken out of the del operator. The final equation above conveys that the amount an E field diverges is equal to the volume of charge in the sphere under consideration and inversely proportional to the permittivity of free space. In a more advanced treatment of this equation, we can write it in its integral form and relate it to other laws (Coulomb&#39;s law). However, that often obscures the main conceptual idea behind this equation, which is that the divergence of an electric field in a medium is directly proportional to volume charge density and inversely proportional to the permittivity of the medium. This sounds counter-intuitive at first. However, absolute permittivity is a measure of the resistance that is encountered when forming an electric field in a medium.
+</pre></div>
+
+
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+    
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+      </div>
+      <footer class="post-footer">
+        <div class="meta">
+            Posted in «<a href="http://tortuoise.github.io/category/detailed.html">Detailed</a>» 
+            by <a href="http://tortuoise.github.io/author/sridhar.html">Sridhar</a><br />
+            Tags:  #<a href="http://tortuoise.github.io/tag/electricity.html">electricity</a> #<a href="http://tortuoise.github.io/tag/magnetism.html">magnetism</a>        </div>
+      </footer>
+    </article>
+      </div>
+    <aside class="page-sidebar">
+      <nav class="widget">
+      <h3>Site</h3>
+        <ul>
+          <li><a href="http://tortuoise.github.io">Home</a></li>
+          <li><a href="http://tortuoise.github.io/archives.html">Archives</a></li>
+          <li><a href="http://tortuoise.github.io/tags.html">Tags</a></li>
+        </ul>
+      </nav>
+
+      <nav class="widget">
+        <h3>Categories</h3>
+        <ul>
+          <li><a href="http://tortuoise.github.io/category/chatter.html">Chatter</a></li>
+          <li><a href="http://tortuoise.github.io/category/cheat-sheet.html">Cheat Sheet</a></li>
+          <li><a href="http://tortuoise.github.io/category/detailed.html">Detailed</a></li>
+          <li><a href="http://tortuoise.github.io/category/events.html">Events</a></li>
+          <li><a href="http://tortuoise.github.io/category/manual.html">Manual</a></li>
+          <li><a href="http://tortuoise.github.io/category/review.html">Review</a></li>
+          <li><a href="http://tortuoise.github.io/category/teaser.html">Teaser</a></li>
+        </ul>
+      </nav>
+
+      <nav class="widget">
+        <h3>Social</h3>
+        <ul>
+          <li><a href="http://stackoverflow.com/users/1093710/sridhar">SO</a></li>
+          <li><a href="https://github.com/tortuoise">Github</a></li>
+          <li><a href="http://tortuoise.github.io/feeds/atom.xml" rel="alternate">Atom</a></li>
+          <li><a href="http://tortuoise.github.io/feeds/rss.xml" rel="alternate">RSS</a></li>
+        </ul>
+      </nav>
+    </aside> 
+
+      <footer class="page-footer">
+        <p> Powered by <a href="http://pelican.readthedocs.org">Pelican</a></p>
+      </footer>
+    </div>
+  </body>
+</html>

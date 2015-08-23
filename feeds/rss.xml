@@ -196,10 +196,10 @@ apt-cache search libuuid  &lt;/p&gt;
 &lt;h3&gt;Why ?&lt;/h3&gt;
 &lt;p&gt;The current device that we use for monitoring PV systems sends data to a receiver which is connected to a serial port of a laptop or desktop. The application running on the computer uses Java. The plan is to replace the laptop/desktop with a small device that runs a basic version of linux and something like zeromq, read the serial data arriving from a wireless device (Zigbee/ANT) and transmit it to a server via a direct connection to the router/modem.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sridhar</dc:creator><pubDate>Mon, 22 Jun 2015 00:00:00 +0100</pubDate><guid>tag:tortuoise.github.io,2015-06-22:zeromq-setup.html</guid><category>zeromq</category><category>messaging</category><category>c</category></item><item><title>Bescom net metering scheme</title><link>http://tortuoise.github.io/bescom-net-metering-scheme.html</link><description>&lt;p&gt;Finally completed all the paperwork and got the net meter installed by Bescom for a 3KWp PV system. &lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;The initial application is easy to fill out online a&lt;/li&gt;
-&lt;li&gt;Visit the local sub-division to pay the registration fee to kick off the application process&lt;/li&gt;
-&lt;li&gt;Fill out Format 5 with details of the equipment to be used
-+_It's wise to purchase the net meter early (well before planned installation) because  &lt;/li&gt;
+&lt;li&gt;The initial application is easy to fill out online at this site. Though Bescom keeps changing the IP address of this. For instance here are a c&lt;/li&gt;
+&lt;li&gt;Visit the local sub-division to pay the registration fee to kick off the application process. This is not a painful process if you're used to standing in queues to do simple tasks. At the Green Summit in 2015 Bescom MD Shri Pandey said this payment could be shortly made online. This still hasn't happened. Management always under-estimates the amount of work required even for seeminly simple changes. A reliable payment service is not easy to implement. &lt;/li&gt;
+&lt;li&gt;Fill out Format 5 with details of the equipment to be used&lt;/li&gt;
+&lt;li&gt;It's wise to purchase the net meter early (well before planned installation) because  &lt;/li&gt;
 &lt;li&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;The process for testing the net meter has been changed to put the responsibility of testing on the meter vendor. &lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sridhar</dc:creator><pubDate>Thu, 26 Mar 2015 00:00:00 +0000</pubDate><guid>tag:tortuoise.github.io,2015-03-26:bescom-net-metering-scheme.html</guid><category>solar</category><category>inverter</category><category>pv</category></item><item><title>Kannada Tenses</title><link>http://tortuoise.github.io/kannada-tenses.html</link><description>&lt;table&gt;
@@ -274,7 +274,82 @@ apt-cache search libuuid  &lt;/p&gt;
 &lt;p&gt;The kit consists of a machined white electrical box with holes for the LEDs, 2 PCBs and a 3.7V 1150mAh Lithium ion battery. Moredetails and the manual of the kit are available &lt;a href="bellycoo.pdf"&gt;here&lt;/a&gt;.  &lt;/p&gt;
 &lt;p&gt;The workshop went surprisingly smoothly and many of the participants took to the task with more ease than we had anticipated. A couple of the teams were able to assemble their own PV modules without any breakage! Teams which found the module making too tedious were given pre-made modules to continue the process of soldering the components onto the PCBs and final assembly of the study lamp.  &lt;/p&gt;
 &lt;p&gt;Photos of the event are available &lt;a href="https://www.flickr.com/gp/76843644@N02/2mR8GZ/"&gt;here&lt;/a&gt;. BeLLiku means 'light' in Kannada but Bellycoo is way easier in English so the name has stuck.   &lt;/p&gt;
-&lt;p&gt;As the popular saying goes, give a child a study lamp and she can study so long as the lamp works, teach a child to make a study lamp and she's a student for life.   &lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sridhar</dc:creator><pubDate>Sun, 15 Jun 2014 00:00:00 +0100</pubDate><guid>tag:tortuoise.github.io,2014-06-15:bellycoo-pv-led-study-lamp-kit.html</guid><category>solar</category><category>pv</category><category>study lamp</category></item><item><title>Microinverter</title><link>http://tortuoise.github.io/microinverter.html</link><description>&lt;p&gt;Recently finished a course on Power Electronics offered by Prof.Erikson from the University of Colorado (Boulder) on Coursera. A fantastic hands on introductory course on the methods used in controller design. More than one of the homework assignments involved the design and control of a solar microinverter.  &lt;/p&gt;
+&lt;p&gt;As the popular saying goes, give a child a study lamp and she can study so long as the lamp works, teach a child to make a study lamp and she's a student for life.   &lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sridhar</dc:creator><pubDate>Sun, 15 Jun 2014 00:00:00 +0100</pubDate><guid>tag:tortuoise.github.io,2014-06-15:bellycoo-pv-led-study-lamp-kit.html</guid><category>solar</category><category>pv</category><category>study lamp</category></item><item><title>Maxwell</title><link>http://tortuoise.github.io/maxwell.html</link><description>&lt;p&gt;James Clerk Maxwell was a Scottish mathematician, whose name is most synonymous with the field of classical electromagnetics. It is interesting to note that he was not an experimentalist. However, he used the observations of the scientists and experimentalists who came before him to formulate an overarching theory of electromagnetism and electromagnetic wave propagation. He was born in 1831, around the time the previous scientists we have talked about had published their discoveries. The equations that are now ascribed to him arrived in their initial form in 1873 in his book, "A Treatise on Electricity and Magnetism". In their original form, there were 20 equations with 20 unknowns. Later, Oliver Heaviside simplified these equations into the vector form that we know today.  &lt;/p&gt;
+&lt;p&gt;Besides being a brilliant mathematician, Maxwell was also an excellent writer. He also had no first-hand knowledge via experimentation of any of the laws that he formulated. He was very cognizant of this and realized that mathematical thinking often obscures conceptual understanding of a phenomenon. He was therefore greatly influenced by Faraday's writings and his aim was to convey Faradays' ideas about "lines of force" to the mathematical minds of the day. Until then, the concept of the electromagnetic "wave" was not accepted by the scientific community. One of the many significant contributions he made to the understanding of electromagnetic waves was to prove that light and magnetism are "affections of the same substance, and that light is an electromagnetic disturbance propagated through the field according to electromagnetic laws".     &lt;/p&gt;
+&lt;p&gt;How did he do this? It was known through experimentation at this time that the speed of light in air was around 3&lt;em&gt;10^8 m/sec (3.14858&lt;/em&gt;10^8 to 2.98 &lt;em&gt;10^8 depending on the experimenter). Maxwell was able to prove mathematically (using only the experimental knowledge of the electric and magnetic permeability of air) that the velocity of al electromagnetic wave is also around 3&lt;/em&gt;10^8 m/sec, very close to what had been proved to be the velocity of light. While this was not definitive physical evidence that light was a form of electromagnetic wave, it was the mathematical proof to a fact that would be proven by others later on.   &lt;/p&gt;
+&lt;p&gt;The differential form of Maxwell's equations are the simplest to understand for the new student. All that is needed to link the previously stated concepts to their concise mathematical representation is an understanding of two mathematical concepts (details in appendix):  &lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The &lt;span class="math"&gt;\(\vec{\nabla}\)&lt;/span&gt;  operator and divergence  &lt;/li&gt;
+&lt;li&gt;The &lt;span class="math"&gt;\(\vec{\nabla}x\)&lt;/span&gt; operator and curl  &lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The &lt;span class="math"&gt;\(\vec{\nabla}\)&lt;/span&gt; (del) operator signifies differentiation, or change of a variable with respect to another. If it is applied to a vector field in a dot product (&lt;span class="math"&gt;\(\vec{\nabla}\bullet\)&lt;/span&gt; )  it signifies the divergence of that field or how much that field radiates. We already know that static E fields have a non-zero divergence and H fields have a zero divergence.   &lt;/p&gt;
+&lt;p&gt;The &lt;span class="math"&gt;\(\vec{\nabla}x\)&lt;/span&gt; operator (cross product of del with vector field) denotes the curl of field. Physically, it is a representation of how much a field circulates. We know that H fields circulate and static E fields do not.   &lt;/p&gt;
+&lt;p&gt;So we can now state Heavisides simplification of Maxwell's equations, which neatly summarizes all of the above phenomena in neat statements. The full form and derivation of these equations is rigorous and can obscure the basic concepts. So for the purpose of revealing the key concepts, we will only look at the simplest vector notation of the equations. The goal here is to get an intuitive understanding of what is going on with electric and magnetic fields and come away with certain key facts and also to be able to recognize and "read" Maxwell's equations and associate them with the key facts. The equations are nothing more than a simple representation of the key concepts.    &lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation}  
+    \vec{\nabla} \bullet \vec{D} = \rho_\nu \\
+    \vec{D} = \epsilon \vec{E} \\
+    \vec{\nabla} \bullet \epsilon E = \rho_\nu \\
+    \epsilon (\vec{\nabla} \bullet \vec{E}) = \rho_\nu
+\end{equation}&lt;/div&gt;
+&lt;p&gt;The equations above are nothing more than the mathematical representation of Key Concept #9, or Gauss' law for static electric fields. D is the electric flux density and is related to the electric field E through the electric permittivity of the medium as shown above. &lt;span class="math"&gt;\(\rho_\nu\)&lt;/span&gt; is the volume charge density. &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;If we assume that $\epsilon$ is not a vector, it can be taken out of the del operator. The final equation above conveys that the amount an E field diverges is equal to the volume of charge in the sphere under consideration and inversely proportional to the permittivity of free space. In a more advanced treatment of this equation, we can write it in its integral form and relate it to other laws (Coulomb&amp;#39;s law). However, that often obscures the main conceptual idea behind this equation, which is that the divergence of an electric field in a medium is directly proportional to volume charge density and inversely proportional to the permittivity of the medium. This sounds counter-intuitive at first. However, absolute permittivity is a measure of the resistance that is encountered when forming an electric field in a medium.
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+    
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sridhar</dc:creator><pubDate>Sat, 15 Mar 2014 00:00:00 +0000</pubDate><guid>tag:tortuoise.github.io,2014-03-15:maxwell.html</guid><category>electricity</category><category>magnetism</category></item><item><title>Microinverter</title><link>http://tortuoise.github.io/microinverter.html</link><description>&lt;p&gt;Recently finished a course on Power Electronics offered by Prof.Erikson from the University of Colorado (Boulder) on Coursera. A fantastic hands on introductory course on the methods used in controller design. More than one of the homework assignments involved the design and control of a solar microinverter.  &lt;/p&gt;
 &lt;p&gt;A microinverter is a current inverter (as opposed to a voltage inverter which is commonly used as a battery inverter or un-interrupted power supply (UPS)). Simplified schematic of a microinverter is shown below:  &lt;/p&gt;
 &lt;p&gt;&lt;img alt="Microinverter" src="images/micro_inverter.png" /&gt;  &lt;/p&gt;
 &lt;p&gt;In conventional battery/voltage inverters, the duty cycle is generally a constant function to produce constant AC voltage output. But in a current microinverter or a string inverter, the duty cycle is a function of the AC grid voltage and frequency because the microinverter's output must be in phase with the AC grid voltage or else it will destructive interfere.  &lt;/p&gt;
@@ -475,146 +550,4 @@ http://www.homepower.com/articles/how-inverters-work
 &lt;p&gt;Module put out a maximum of 7.5A @ 19V in Bangalore in February. Perhaps the almost 1A Impp loss can be explained by the elevation of Bangalore and 30 deg heat.  &lt;/p&gt;
 &lt;p&gt;The one slight inconvenience about this product is that the IP-65 rated junction box has TE Connectivity connectors which aren't compatible with MC4 connectors. So if you're looking to extend your array of Vikram modules you can only do it with modules with a TE connector.  &lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sridhar</dc:creator><pubDate>Sun, 31 Mar 2013 00:00:00 +0000</pubDate><guid>tag:tortuoise.github.io,2013-03-31:vikram-eldora-solar-module.html</guid><category>solar</category><category>modules</category></item><item><title>Anu Solar 600W Power Generator</title><link>http://tortuoise.github.io/anu-solar-600w-power-generator.html</link><description>&lt;p&gt;600 VA Battery inverter. Anusolar sells these as solar "power generators" but what they deliver is a battery inverter and a separate PWM constant current charge controller. The inverter is loud!   &lt;/p&gt;
 &lt;p&gt;Connected the inverter to one fully charged 100AH battery and it provided only about 0.4 units -a fan and a tv for a couple of hours before the battery was discharged - didn't record battery DoD. I can't imagine it's very efficient with all that energy being lost to noise - idle consumption is a massive 7W !!   &lt;/p&gt;
-&lt;p&gt;Tightened the battery connections (DC connections need to be very tight to function properly) and the performance improved but not significantly. The inverter is able to invert only 0.5 - 0.6 Kwh from a fully charged 12V 100Ah battery. Either the battery is not functioning to spec or the inverter is very inefficient. The battery should be able to store 1.2Kwh (12V x 100Ah) so assuming that it discharges to 75% there should be 0.9Kwh available per cycle. But as there's only 0.6Kwh consumed by the load (a computer, modem and router) over 12 hours, the inverter is only ~70% efficient!  &lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sridhar</dc:creator><pubDate>Sun, 24 Mar 2013 00:00:00 +0000</pubDate><guid>tag:tortuoise.github.io,2013-03-24:anu-solar-600w-power-generator.html</guid><category>solar</category><category>inverter</category></item><item><title>Linux Cheatsheet</title><link>http://tortuoise.github.io/linux-cheatsheet.html</link><description>&lt;p&gt;&lt;strong&gt;STARTUP&lt;/strong&gt;
-GRUB: hold shift key down as soon as bios loads&lt;br /&gt;
-/etc/default/grub //for grub settings - tried adding vga=0x0369 to this file to fix boot issues and it hasn't worked.&lt;br /&gt;
-sudo update-grub // after making any changes to /etc/default/grub - writes to /boot/grub/grub.cfg  &lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;STARTUP ON BOOT&lt;/strong&gt;
-For non-upstart services:&lt;br /&gt;
-sudo update-rc.d tomcat6 enable 2 //changes symlink in /etc/rc2.d/ from K08tomcat6 to S92tomcat6&lt;br /&gt;
-sudo update-rc.d tomcat6 disable 2 //changes symlink in /etc/rc2.d/ from S92tomcat6 to K08tomcat6&lt;br /&gt;
-For upstart services:&lt;br /&gt;
-ls /etc/init/*.conf // lists all upstart services&lt;br /&gt;
-/etc/gdm/Init/Default //this is where you 'can' put some xrandr to apply on startup&lt;br /&gt;
-/etc/init.d //this folder has start-up scripts&lt;br /&gt;
-/etc/default //this folder has default values  &lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;UPSTART SERVICES&lt;/strong&gt; 
-initctl list //lists all services with status &lt;br /&gt;
-service --status-all //same as 'ls /etc/init.d' &lt;br /&gt;
-start/stop/restart/status &lt;service&gt; // same as initctl start/stop/restart/status &lt;service&gt;&lt;br /&gt;
-halt/poweroff/shutdown/reboot&lt;br /&gt;
-halt -p // when halting the system switch off the power&lt;br /&gt;
-/etc/init/mysql.override //edit to contain word 'manual' to override startup instructions in mysql.conf - same for all other startup services&lt;br /&gt;
-added cups.override, mysql.override, ssh.override, smbd.override to override startup instructions in respective /etc/init/*.conf files  &lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;USER/PASSWORD/ADMIN&lt;/strong&gt;
-/etc/passwd /etc/groups&lt;br /&gt;
-echo $PATH&lt;br /&gt;
-export PATH = $PATH:/new_path/to_add/&lt;br /&gt;
-adduser chetan&lt;br /&gt;
-usermod -g users chetan&lt;br /&gt;
-stat chetan&lt;br /&gt;
-chmod 0700 chetan/  // rwx------  &lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;INSTALLTION/REPOSITORIES&lt;/strong&gt;
-/etc/apt/sources.list or /etc/apt/sources.list.d/* //repository list&lt;br /&gt;
-sudo add-apt-repository ppa:&lt;repo path&gt;&lt;br /&gt;
-/home/sridhar/.local/share/Trash // Rubbish&lt;br /&gt;
-update-alternatives --config java //then choose number from list&lt;br /&gt;
-apt-get --simulate purge popularity-contest //remove popularity-contest and related packages altogether   &lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;NETWORK&lt;/strong&gt;
-arp -a // find mac address of router&lt;br /&gt;
-ifconfig&lt;br /&gt;
-/etc/network/interfaces&lt;br /&gt;
-ifdown&lt;br /&gt;
-ifup&lt;br /&gt;
-iptables&lt;br /&gt;
-kill -9 pid //find pid of open tcp/udp connection using netstat -atp&lt;br /&gt;
-netstat -at //list all tcp connections -au //udp  -ax //unix  -ar //raw &lt;br /&gt;
-nmap -v -sS localhost //half-open scanning of localhost&lt;br /&gt;
-nmap -v -sS 192.168.0.0/24 //half-open scanning of local network&lt;br /&gt;
-traceroute &lt;host&gt;&lt;br /&gt;
-ufw default deny &lt;br /&gt;
-ufw enable  &lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;MEMORY&lt;/strong&gt;
-cat /proc/sys/kernel/threads-max //=62274&lt;br /&gt;
-cat /proc/sys/fs/file_max //=401408&lt;br /&gt;
-cat /proc/mdstats&lt;br /&gt;
-ulimit -v //for virtual = unlimited&lt;br /&gt;
-ulimit -s //for stack = 8192  &lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;SHORTCUTS&lt;/strong&gt;
-Alt-F2 //type xkill and click on hung app&lt;br /&gt;
-Ctrl-Alt-F1 // go to virtual terminal - can do sudo reboot from there&lt;br /&gt;
-.bash_aliases&lt;br /&gt;
-alias ssh1='ssh 192.168.0.133' &lt;br /&gt;
-alias grepxsvn='grep -r --exclude=*.svn-base'&lt;br /&gt;
-alias grephtml='grep -r --include=*.html'  &lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;UTILITIES&lt;/strong&gt;
-. ./.profile  //sources profile file without restart &lt;br /&gt;
-acpi -V // battery status &lt;br /&gt;
-arch  // possible output is i686 (32 bit) or x86_64 (64 bit)  &lt;br /&gt;
-chmod o=rx dir/ OR u=rwx dir/ OR g=rx dir/&lt;br /&gt;
-chown -R sridhar dir/ &lt;br /&gt;
-chgrp -R sridhar dir/ &lt;br /&gt;
-cp -r source_dir/ target_dir/&lt;br /&gt;
-curl 'http://www.gnu.org/software/coreutils/manual/coreutils.html' 2&amp;gt;/dev/null |&lt;br /&gt;
-    grep 'h3 class' |&lt;br /&gt;
-    grep 'class="command"' |&lt;br /&gt;
-    sed 's/.&lt;em&gt;class="command"&amp;gt;//' |&lt;br /&gt;
-    sed 's|&lt;/span&gt;&lt;/samp&gt;||' |&lt;br /&gt;
-    sed 's|&lt;/h3&gt;||' |&lt;br /&gt;
-    grep ':' |&lt;br /&gt;
-    sort&lt;br /&gt;
-dmesg  //print kernel ring buffer - can be used for boot up message&lt;br /&gt;
-dpkg-reconfigure popularity-contest  //can toggle whether package usage data is sent to debian&lt;br /&gt;
-exec -l $SHELL   //restarts shell&lt;br /&gt;
-fdisk -l //list all partitions&lt;br /&gt;
-find /path -name file_name -type d/f&lt;br /&gt;
-find ./ -type f -name &lt;/em&gt;.class -exec rm -rf {} \;            // remove all files recursively named &lt;em&gt;.class under ./&lt;br /&gt;
-find ./ -type f -name &lt;/em&gt;.class -exec grep -H "string" {} +  // search for string in files recursively named &lt;em&gt;.class under ./ (multi-threaded)&lt;br /&gt;
-find ./ -type f -name &lt;/em&gt;.class -print0 | xargs -0 -n1 -P8 grep -H "string" //search for string in files recursively named &lt;em&gt;.class under ./ use xargs&lt;br /&gt;
-find . -name '&lt;/em&gt;.c' | sort | xargs head -1&lt;br /&gt;
-grep -r search_term dir/&lt;br /&gt;
-gstreamer-properties //multi-media settings&lt;br /&gt;
-gunzip &amp;lt; coreutils-8.13.tar.gz | tar -vx&lt;br /&gt;
-locate&lt;br /&gt;
-ls -a (include hidden) -F (dirs with trailing / and exes with trailing *) -l (long listing) -t (sort by time modified) -R (all subdirs)&lt;br /&gt;
-ls -1 | wc -l  //counts the number of line entries in ls command &lt;br /&gt;
-lspci -v &lt;br /&gt;
-lsb_release -rd&lt;br /&gt;
-lsof -i -n -P //list all open files &amp;amp; ports &lt;br /&gt;
-lsof -i tcp:8888 /// lists services running on 8888 &lt;br /&gt;
-lsusb //list usb devices&lt;br /&gt;
-ps -ef //list all running processes&lt;br /&gt;
-rm -rf ./dir  ///// for dirs with special chars in name&lt;br /&gt;
-rsync -anv ./dir sridhar@192.168.0.9:/home/sridhar/dev   //simulate&lt;br /&gt;
-rsync -az ./dir sridhar@192.168.0.9:/home/sridhar/dev     //do it for real using compression&lt;br /&gt;
-rsync -a --exclude=pattern_to_exclude ./dir sridhar@192.168.0.9:/home/sridhar/dev     //do it for real&lt;br /&gt;
-scp sridhar@192.168.1.72:/usr/local/bin/iptables /usrlocal/bin/iptables    // need to 'sudo start ssh' on server before trying to connect &lt;br /&gt;
-ssh -C 192.168.1.72 -l sridhar   // ssh on port 22 (tcp)&lt;br /&gt;
-ssh -C sridhar@192.168.1.72   // ssh on port 22 (tcp)&lt;br /&gt;
-screen ctrl-a then c for new terminal. ctrl-a, 0 or 1 to toggle between terminal // not used much since byobu&lt;br /&gt;
-tail &lt;file&gt; //lists last few entires in file&lt;br /&gt;
-tar -xvzf file.tar.gz&lt;br /&gt;
-tar xfJ scala-docs-2.10.2.txz&lt;br /&gt;
-tar -zvcf file.tar.gz directory/      //compress directory into file.tar.gz&lt;br /&gt;
-time ./program //real: real time, user: how long program was running on cpu, sys: how long the program was waiting for os to perform tasks for it&lt;br /&gt;
-uname -a     // 32 or 64 bit i686 is 32 bit, x86_64 is 64 bit&lt;br /&gt;
-unrar e file.rar&lt;br /&gt;
-wget 'http://ftp.gnu.org/gnu/coreutils/coreutils-8.13.tar.gz'&lt;br /&gt;
-whereis&lt;br /&gt;
-xxd //make hexdump or reverse hexdump&lt;br /&gt;
-xrandr //used to set size, orientation and output for screens  &lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;APPLICATIONS&lt;/strong&gt;
-evince file.pdf&lt;br /&gt;
-pdftk in.pdf cat 1-12 14-end output out1.pdf //removes page 13&lt;br /&gt;
-pdftk in.pdf cat 1E output out1.pdf //rotates p1 anti-clockwise&lt;br /&gt;
-pdftk A=in1.pdf B=in2.pdf cat A1-12 B3 A14-end output out1.pdf //add p3(B) after p12(A) &amp;amp; remove page 13(A)&lt;br /&gt;
-pdftohtml file.pdf  //saves html as file.html // lynx file.pdf does the same thing&lt;br /&gt;
-pdftotext file.pdf //saves text as file.txt&lt;br /&gt;
-display boy.jpg // imagemagick command line tool&lt;br /&gt;
-enscript -p foo.ps foo.txt&lt;br /&gt;
-ghostscript: ps2pdf foo.ps, pdf2ps foo.pdf&lt;br /&gt;
-texi2pdf file.tex  &lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Ubuntu One&lt;/strong&gt;&lt;br /&gt;
-u1sdtool --help&lt;br /&gt;
-u1sdtool --list-folders&lt;br /&gt;
-u1sdtool --waiting&lt;br /&gt;
-u1sdtool --current-transfers  &lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Byobu&lt;/strong&gt;
-F9 for menu&lt;br /&gt;
-F12 escape&lt;br /&gt;
-byobu-ctrl-a to change behaviour of ctrl-a&lt;br /&gt;
-developed in python  &lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;wacom&lt;/strong&gt;
-sudo add-apt-repository ppa:lekensteyn/wacom-tablet&lt;br /&gt;
-sudo apt-get update&lt;br /&gt;
-sudo apt-get install dkms wacom-dkms  &lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sridhar</dc:creator><pubDate>Sun, 30 Dec 2012 00:00:00 +0000</pubDate><guid>tag:tortuoise.github.io,2012-12-30:linux-cheatsheet.html</guid><category>linux</category><category>software</category></item></channel></rss>
+&lt;p&gt;Tightened the battery connections (DC connections need to be very tight to function properly) and the performance improved but not significantly. The inverter is able to invert only 0.5 - 0.6 Kwh from a fully charged 12V 100Ah battery. Either the battery is not functioning to spec or the inverter is very inefficient. The battery should be able to store 1.2Kwh (12V x 100Ah) so assuming that it discharges to 75% there should be 0.9Kwh available per cycle. But as there's only 0.6Kwh consumed by the load (a computer, modem and router) over 12 hours, the inverter is only ~70% efficient!  &lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sridhar</dc:creator><pubDate>Sun, 24 Mar 2013 00:00:00 +0000</pubDate><guid>tag:tortuoise.github.io,2013-03-24:anu-solar-600w-power-generator.html</guid><category>solar</category><category>inverter</category></item></channel></rss>
