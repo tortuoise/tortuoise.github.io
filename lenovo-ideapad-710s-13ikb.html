@@ -44,15 +44,15 @@
       <div class="post-content"> 
         <h2>Contents</h2>
 <ul>
-<li><a href="#device">Device</a>
-        * <a href="#components">Components</a>
-        * <a href="#purchase">Purchase</a></li>
-<li><a href="#install">Install</a>
-        * <a href="#ubuntu">Ubuntu 16.04.1 LTS</a> 
-        * <a href="#lvm">LVM</a>
-        * <a href="#ath10k">Qualcomm Atheros</a> </li>
-<li><a href="#gotchas">Gotchas</a></li>
-<li><a href="#references">References</a></li>
+<li><a href="#device">Device</a><br />
+        * <a href="#components">Components</a><br />
+        * <a href="#purchase">Purchase</a>  </li>
+<li><a href="#install">Install</a><br />
+        * <a href="#ubuntu">Ubuntu 16.04.1 LTS</a> <br />
+        * <a href="#lvm">LVM</a><br />
+        * <a href="#ath10k">Qualcomm Atheros</a>  </li>
+<li><a href="#gotchas">Gotchas</a>  </li>
+<li><a href="#references">References</a>  </li>
 </ul>
 <h2>Device</h2>
 <p>The Lenovo ideaPad 710S 13IKB is a sleek 13.3" screen laptop with Intel's core(TM) i7-7500 CPU which comes installed with Windows 10 Home. </p>
@@ -83,7 +83,9 @@
 <p>16.04.1 LTS lists 4.4.0-59-generic as Linux kernel version. </p>
 <h3>LVM</h3>
 <p>Choose to use LVM for future ease of re-sizing partitions. 3 partitions are created with the ubuntu-vg volume group on nvme0n1p3.</p>
-<p>+pvdisplay</p>
+<ul>
+<li>pvdisplay</li>
+</ul>
 <p>--- Physical volume ---
   PV Name               /dev/MZVLV256HCHP-000XXXXXXXXXXXXXXX-part3
   VG Name               ubuntu-vg
@@ -93,7 +95,9 @@
   Total PE              60799
   Free PE               3
   Allocated PE          60796</p>
-<p>+vgdisplay</p>
+<ul>
+<li>vgdisplay</li>
+</ul>
 <p>--- Volume group ---
   VG Name               ubuntu-vg
   System ID           <br />
@@ -113,7 +117,9 @@
   Total PE              60799
   Alloc PE / Size       60796 / 237.48 GiB
   Free  PE / Size       3 / 12.00 MiB</p>
-<p>+df -h</p>
+<ul>
+<li>df -h</li>
+</ul>
 <p>Filesystem                   Size  Used Avail Use% Mounted on
 udev                         3.9G     0  3.9G   0% /dev
 tmpfs                        788M   82M  707M  11% /run
