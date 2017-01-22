@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="utf-8" />
+    <title>Lenovo Ideapad 710s 13IKB — Wattwerks</title>
+    <link rel="stylesheet" type="text/css" href="/theme/css/skeleton.css" />
+    <link rel="stylesheet" type="text/css" href="/theme/css/main.css" />
+    <link rel="shortcut icon" type="text/css" href="/favicon.ico" />
+    <link rel="alternate" type="application/atom+xml"
+                           title="Wattwerks — Flux Atom"
+                           href="/" /> 
+    <!--[if lte IE 8]><script src="/theme/js/html5shiv.js"></script><![endif]-->
+    <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no" />
+
+    <meta name="author"   content="Sridhar" />
+    <meta name="keywords" content="hardware, laptop" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="page-head">
+        <h1>
+          <a href="/index.html">Wattwerks</a>
+        </h1>
+      </header>
+
+      <div class="page-content">
+     <article class="post content">
+      <header class="post-header">
+        <time datetime="2017-01-31T00:00:00+00:00" pubdate="pubdate">
+          Tue 31 January 2017
+        </time>
+        <h1>
+          <a rel="bookmark"
+             href="/lenovo-ideapad-710s-13ikb.html"
+             title="Lien permanent vers «Lenovo Ideapad 710s 13IKB»">
+             Lenovo Ideapad 710s 13IKB
+          </a>
+        </h1>
+        <div class="meta">
+            Dans «<a href="/category/review.html">Review</a>» 
+            par <a href="/author/sridhar.html">Sridhar</a>
+        </div>
+      </header>
+      <div class="post-content"> 
+        <h2>Contents</h2>
+<ul>
+<li><a href="#device">Device</a>
+        * <a href="#components">Components</a>
+        * <a href="#purchase">Purchase</a></li>
+<li><a href="#install">Install</a>
+        * <a href="#ubuntu">Ubuntu 16.04.1 LTS</a> 
+        * <a href="#lvm">LVM</a>
+        * <a href="#ath10k">Qualcomm Atheros</a> </li>
+<li><a href="#gotchas">Gotchas</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+<h2>Device</h2>
+<p>The Lenovo ideaPad 710S 13IKB is a sleek 13.3" screen laptop with Intel's core(TM) i7-7500 CPU which comes installed with Windows 10 Home. </p>
+<p>The placement of keys is a little unusual, but not show-stopping. </p>
+<h3>Components</h3>
+<p>OOTB Device Manager list</p>
+<ul>
+<li>Edition Windows 10 Home</li>
+<li>Version 1511</li>
+<li>OS Build 10586.420 </li>
+<li>Processor Intel(R) Core(TM) i7-7500 CPU @ 2.7GHz</li>
+<li>Installed RAM 8.00GB (7.96 usable)</li>
+<li>Intel chipset SATA RAID Controller</li>
+<li>NVMe Samsung MZVLV256</li>
+</ul>
+<h3>Purchase</h3>
+<p>Lenovo's EU contact address listed on the back of the device is in Bratislava. The Lenovo sales person I spoke with was based in Barcelona who informed me the laptop would be shipped from a warehouse in Netherlands. The payment processor is a company called Digital River in Ireland with a C/O address in Lancashire. I don't pretend to understand the reasons for such complicated logistics but I hope Lenovo have some post-Brexit plans in place.  </p>
+<h2>Install</h2>
+<p>After <a href="https://forums.lenovo.com/t5/forums/v3_1/forumtopicpage/board-id/Special_Interest_linux/thread-id/7950/page/1">complaints</a> from customers on the Lenovo forum, <a href="https://forums.lenovo.com/t5/Lenovo-Yoga-Series-Notebooks/Yoga-900-and-Ideapad-710S-Linux-Only-BIOS/ta-p/3466850">Linux BIOS'</a> were released for some new models. </p>
+<p>I was a bit reluctant to replace Windows 10 Home with Ubuntu 16.04.1 LTS as I was unsure whether there were Linux drivers available for all the peripherals. But I was convinced I had to try when Windows 10 Home without warning proceeded to download a boat load of updates and then restart 3-4 times during installation of those updates.  </p>
+<p>Downloaded the <a href="http://support.lenovo.com/gb/en/downloads/DS119359">appropriate BIOS update for 710S 13IKB</a>, verified checksum and ran exe. The exe flashes the BIOS onto ROM and reboots machine. The BIOS now allows AHCI SATA Controller mode to be selected under 'Configuration' tab in BIOS (Fn F2 during boot). Windows 10 still runs with the RAID mode selected.   </p>
+<h3>Ubuntu</h3>
+<ul>
+<li>Ubuntu 16.04.1 LTS</li>
+</ul>
+<p>Write downloaded, verified ISO image to <a href="http://www.amazon.in/SanDisk-Cruzer-Blade-Flash-Drive/dp/B005FYNT3G?_encoding=UTF8&amp;psc=1&amp;redirect=true&amp;ref_=od_aui_detailpages00">SanDisk Cruzer Blade 32GB flash drive</a>.</p>
+<p>Boot the laptop from the USB drive and choose to install Ubuntu. Due to write speed of NVMe controller to SSD, install happens very fast.</p>
+<p>16.04.1 LTS lists 4.4.0-59-generic as Linux kernel version. </p>
+<h3>LVM</h3>
+<p>Choose to use LVM for future ease of re-sizing partitions. 3 partitions are created with the ubuntu-vg volume group on nvme0n1p3.</p>
+<p>+pvdisplay</p>
+<p>--- Physical volume ---
+  PV Name               /dev/MZVLV256HCHP-000XXXXXXXXXXXXXXX-part3
+  VG Name               ubuntu-vg
+  PV Size               237.50 GiB / not usable 0 <br />
+  Allocatable           yes 
+  PE Size               4.00 MiB
+  Total PE              60799
+  Free PE               3
+  Allocated PE          60796</p>
+<p>+vgdisplay</p>
+<p>--- Volume group ---
+  VG Name               ubuntu-vg
+  System ID           <br />
+  Format                lvm2
+  Metadata Areas        1
+  Metadata Sequence No  3
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                2
+  Open LV               2
+  Max PV                0
+  Cur PV                1
+  Act PV                1
+  VG Size               237.50 GiB
+  PE Size               4.00 MiB
+  Total PE              60799
+  Alloc PE / Size       60796 / 237.48 GiB
+  Free  PE / Size       3 / 12.00 MiB</p>
+<p>+df -h</p>
+<p>Filesystem                   Size  Used Avail Use% Mounted on
+udev                         3.9G     0  3.9G   0% /dev
+tmpfs                        788M   82M  707M  11% /run
+/dev/mapper/ubuntu--vg-root  226G  5.6G  209G   3% /
+tmpfs                        3.9G  812K  3.9G   1% /dev/shm
+tmpfs                        5.0M  4.0K  5.0M   1% /run/lock
+tmpfs                        3.9G     0  3.9G   0% /sys/fs/cgroup
+/dev/nvme0n1p2               473M  122M  327M  28% /boot
+/dev/nvme0n1p1               511M  3.6M  508M   1% /boot/efi
+tmpfs                        788M  132K  788M   1% /run/user/1000</p>
+<h3>ath10k</h3>
+<p>The Qualcomm Atheros QCA6174 802.11ac Wireless Network Adapter doesn't work OOTB. An apt-update/upgrade fixes that though. Thankfully the wired network adapter works OOTB. If not, follow instructions found <a href="https://askubuntu.com/questions/607707/ath10k-installation">here</a>.</p>
+<p>Many thanks to <a href="https://github.com/kvalo/ath10k-firmware">kvalo</a> for the firmware update.</p>
+<h2>Gotchas</h2>
+<ul>
+<li>During the install, Ubuntu may complain about not being able to install boot loader to nvme0n5 or something to that effect. Choosing another partition / logical volume doesn't work. Restarting the install seems to iron out the bug. </li>
+</ul>
+<h2>References ##</h2>
+<ul>
+<li><a href="https://forums.lenovo.com/t5/Lenovo-Yoga-Series-Notebooks/Yoga-900-and-Ideapad-710S-Linux-Only-BIOS/ta-p/3466850">Lenovo 710s Linux only BIOS</a></li>
+<li><a href="https://forums.lenovo.com/t5/forums/v3_1/forumtopicpage/board-id/Special_Interest_linux/thread-id/7950/page/1">Lenovo 710s discussion</a></li>
+<li><a href="https://ark.intel.com/products/95451/Intel-Core-i7-7500U-Processor-4M-Cache-up-to-3_50-GHz-">Intel(R) Core(TM) i7-7500U</a></li>
+<li><a href="http://www.samsung.com/semiconductor/products/flash-storage/client-ssd/MZVLV256HCHP?ia=831">Samsung MZVLV256HCHP SDD</a></li>
+<li><a href="https://www.ubuntu.com/download/desktop/create-a-usb-stick-on-windows">Ubuntu 16.04.1 LTS USB</a> </li>
+<li><a href="https://askubuntu.com/questions/607707/ath10k-installation">Qualcomm Atheros QCA6174</a></li>
+<li><a href="https://github.com/kvalo/ath10k-firmware">ath10k firmware</a></li>
+</ul>
+      </div>
+      <footer class="post-footer">
+        <div class="meta">
+            Posté dans «<a href="/category/review.html">Review</a>» 
+            par <a href="/author/sridhar.html">Sridhar</a><br />
+            Mots-clés:  #<a href="/tag/hardware.html">hardware</a> #<a href="/tag/laptop.html">laptop</a>        </div>
+      </footer>
+    </article>
+      </div>
+    <aside class="page-sidebar">
+      <nav class="widget">
+      <h3>Site</h3>
+        <ul>
+          <li><a href="">Accueil</a></li>
+          <li><a href="/archives.html">Archives</a></li>
+          <li><a href="/tags.html">Mots-clés</a></li>
+        </ul>
+      </nav>
+
+      <nav class="widget">
+        <h3>Catégories</h3>
+        <ul>
+          <li><a href="/category/chatter.html">Chatter</a></li>
+          <li><a href="/category/cheat-sheet.html">Cheat Sheet</a></li>
+          <li><a href="/category/detailed.html">Detailed</a></li>
+          <li><a href="/category/events.html">Events</a></li>
+          <li><a href="/category/manual.html">Manual</a></li>
+          <li><a href="/category/review.html">Review</a></li>
+          <li><a href="/category/teaser.html">Teaser</a></li>
+        </ul>
+      </nav>
+
+      <nav class="widget">
+        <h3>Social</h3>
+        <ul>
+          <li><a href="https://stackoverflow.com/users/1093710/sridhar">SO</a></li>
+          <li><a href="https://github.com/tortuoise">Github</a></li>
+          <li><a href="/" rel="alternate">Flux Atom</a></li>
+        </ul>
+      </nav>
+    </aside> 
+
+      <footer class="page-footer">
+        <p> Powered by <a href="http://pelican.readthedocs.org">Pelican</a></p>
+      </footer>
+    </div>
+  </body>
+</html>

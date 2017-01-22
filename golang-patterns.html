@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
         <meta charset="utf-8" />
-    <title>Lead acid batteries — Wattwerks</title>
+    <title>Golang patterns — Wattwerks</title>
     <link rel="stylesheet" type="text/css" href="/theme/css/skeleton.css" />
     <link rel="stylesheet" type="text/css" href="/theme/css/main.css" />
     <link rel="shortcut icon" type="text/css" href="/favicon.ico" />
@@ -13,7 +13,7 @@
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no" />
 
     <meta name="author"   content="Sridhar" />
-    <meta name="keywords" content="battery" />
+    <meta name="keywords" content="go, software" />
   </head>
   <body>
     <div class="page">
@@ -26,32 +26,45 @@
       <div class="page-content">
      <article class="post content">
       <header class="post-header">
-        <time datetime="2013-06-23T00:00:00+01:00" pubdate="pubdate">
-          Sun 23 June 2013
+        <time datetime="2017-01-15T00:00:00+00:00" pubdate="pubdate">
+          Sun 15 January 2017
         </time>
         <h1>
           <a rel="bookmark"
-             href="/lead-acid-batteries.html"
-             title="Lien permanent vers «Lead acid batteries»">
-             Lead acid batteries
+             href="/golang-patterns.html"
+             title="Lien permanent vers «Golang patterns»">
+             Golang patterns
           </a>
         </h1>
         <div class="meta">
-            Dans «<a href="/category/chatter.html">Chatter</a>» 
+            Dans «<a href="/category/cheat-sheet.html">Cheat Sheet</a>» 
             par <a href="/author/sridhar.html">Sridhar</a>
         </div>
       </header>
       <div class="post-content"> 
-        <p>BATTERY ABUSE<br />
-A battery is not an investment or an asset. It's a consumable - each discharge leads it closer to it's ultimate death. Battery maintenance is not simply about topping it up with distilled water every now and then but also about understanding your consumption and your sources of energy to minimize cycling your batteries.  </p>
-<p>Damaging batteries by over-charging is also a common occurrence. MPPT solar charge controllers are focussed on maximizing the power output from the solar array. This is generally an optimal strategy for grid tied current inverters where the current has somewhere to go - either to the load or the grid. But in off-grid systems if there's not enough load, the batteries get charged at a raised voltage. This is desired if the batteries aren't fully charged but once they are, there is risk of overcharging as at higher voltages water gets electrolyzed into hydrogen and oxygen which escape. The electrolysis and escape of gases causes spillage of the electrolyte if the battery isn't a sealed type. Cell reactions for a lead acid battery are <a href="http://en.wikipedia.org/wiki/Lead-acid_battery">well known</a>.  </p>
-<p>Remember - an ignored battery will end up in a land-fill polluting groundwater sooner than a well maintained one. If you've ever wondered why your kids aren't as clever as you then look no further at the lead and other toxins in our water supply retarding their brain development.  </p>
+        <ul>
+<li>
+<p>Single function interfaces and function types</p>
+</li>
+<li>
+<p>Let the entity to it's own validation by having it implement a Validator interface
+    type Validator interface {
+        func Validate() bool
+    }</p>
+<p>type User struct {
+    Email string
+}</p>
+<p>func (u *User) Validate() bool {</p>
+<p>}</p>
+</li>
+<li></li>
+</ul>
       </div>
       <footer class="post-footer">
         <div class="meta">
-            Posté dans «<a href="/category/chatter.html">Chatter</a>» 
+            Posté dans «<a href="/category/cheat-sheet.html">Cheat Sheet</a>» 
             par <a href="/author/sridhar.html">Sridhar</a><br />
-            Mots-clés:  #<a href="/tag/battery.html">battery</a>        </div>
+            Mots-clés:  #<a href="/tag/go.html">go</a> #<a href="/tag/software.html">software</a>        </div>
       </footer>
     </article>
       </div>
