@@ -127,26 +127,30 @@ func main<span class="p">()</span> <span class="p">{</span>
 </ul>
 <h3><a href="#dispatch" id="dispatch">Dynamic dispatch</a></h3>
 <ul>
-<li>A combination of a single function interface and dynamic dispatch can be used for validation during entity creation / updation. For instance:  </li>
-</ul>
+<li>
+<p>A combination of a single function interface and dynamic dispatch can be used for validation during entity creation / updation. For instance:  </p>
+</li>
+<li>
 <p>Let the entity do it's own validation by having it implement a Validator interface    </p>
-<div class="highlight"><pre>    type Validator interface {
-            func Validate(v ...interface{}) error
-    }
+<div class="highlight"><pre>type Validator interface {
+        func Validate(v ...interface{}) error
+}
 
-    type User struct {
-            Email string
-    }
+type User struct {
+        Email string
+}
 
-    // checks for errors in u optionally against v
-    func (u *User) Validate(v ...interface{}) error {
+// checks for errors in u optionally against v
+func (u *User) Validate(v ...interface{}) error {
 
-    }
+}
 </pre></div>
 
 
-<ul>
-<li>A function Validate can then select a Validator depending on the type of the interface.<div class="highlight"><pre>func Validate(u interface{}, v ...interface{}) error {
+</li>
+<li>
+<p>A function Validate can then select a Validator depending on the type of the interface.</p>
+<div class="highlight"><pre>func Validate(u interface{}, v ...interface{}) error {
         uu := reflect.ValueOf(u)
         err := selectValidatorType(uu.Type())(uu, v...)
         return err
