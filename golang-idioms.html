@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="utf-8" />
+    <title>Golang idioms — Wattwerks</title>
+    <link rel="stylesheet" type="text/css" href="/theme/css/skeleton.css" />
+    <link rel="stylesheet" type="text/css" href="/theme/css/main.css" />
+    <link rel="shortcut icon" type="text/css" href="/favicon.ico" />
+    <link rel="alternate" type="application/atom+xml"
+                           title="Wattwerks — Flux Atom"
+                           href="/" /> 
+    <!--[if lte IE 8]><script src="/theme/js/html5shiv.js"></script><![endif]-->
+    <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no" />
+
+    <meta name="author"   content="Sridhar" />
+    <meta name="keywords" content="go, software" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="page-head">
+        <h1>
+          <a href="/index.html">Wattwerks</a>
+        </h1>
+      </header>
+
+      <div class="page-content">
+     <article class="post content">
+      <header class="post-header">
+        <time datetime="2017-01-15T00:00:00+00:00" pubdate="pubdate">
+          Sun 15 January 2017
+        </time>
+        <h1>
+          <a rel="bookmark"
+             href="/golang-idioms.html"
+             title="Lien permanent vers «Golang idioms»">
+             Golang idioms
+          </a>
+        </h1>
+        <div class="meta">
+            In «<a href="/category/cheat-sheet.html">Cheat Sheet</a>» 
+            by <a href="/author/sridhar.html">Sridhar</a>
+        </div>
+      </header>
+      <div class="post-content"> 
+        <h2><a href="#contents" id="contents">Contents</a></h2>
+<ul>
+<li><a href="#funcy" id="funcy">Funcy interface</a>  </li>
+<li><a href="#wrap" id="wrap">WrapperAdapter</a>  </li>
+<li><a href="#limit" id="limit">Limit goroutines</a>  </li>
+<li><a href="#dispatch" id="dispatch">Dynamic dispatch</a>  </li>
+</ul>
+<h3><a href="#funcy" id="funcy">Funcy interface</a></h3>
+<ul>
+<li>
+<p>Single function interfaces can be supplanted by function types, the  most popluar example being http.Handler &amp; http.HandlerFunc  </p>
+<p>type Handler interface {
+    ServeHTTP(w http.ResponseWriter, r *http.Request)
+}</p>
+<p>type HandlerFunc(w http.ResponseWriter, r *http.Request) func  </p>
+<p>func (f HandlerFunc) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+    f(w, r)
+}</p>
+</li>
+</ul>
+<h3><a href="#wrap" id="wrap">Wrapper Adapter</a></h3>
+<ul>
+<li>
+<p>Wrapping preserves interfaces while adding functionality  </p>
+<p>func Wrap (h http.Handler) http.Handler {</p>
+<div class="highlight"><pre>return &amp;wrapper{ handler: h}
+</pre></div>
+
+
+<p>}</p>
+<p>type wrapper struct {</p>
+<div class="highlight"><pre>handler http.Handler
+</pre></div>
+
+
+<p>}</p>
+<p>func (w<em> wrapper) ServeHTTP(w http.ResponseWriter, r </em>http.Request) {</p>
+<div class="highlight"><pre>// Do something before
+
+w.handler.ServeHTTP(w, r)
+
+// Do something after
+</pre></div>
+
+
+<p>}</p>
+<p>func main() {</p>
+<div class="highlight"><pre>myHandler := NewHandler();
+http.Handle(&quot;/&quot;, Wrap(myHandler))
+</pre></div>
+
+
+<p>}</p>
+</li>
+</ul>
+<h3><a href="#limit" id="limit">Limit goroutines</a></h3>
+<ul>
+<li>
+<p>Use a channel to create goroutines only when </p>
+<p>var (
+    concurrent = 5
+    limit = make(chan struct{}, concurrent)
+)</p>
+<p>func doWork(i int) {</p>
+<div class="highlight"><pre>limit <span class="o">&lt;-</span> struct<span class="p">{}{}</span>  <span class="o">//</span> block until slot is released by existing goroutine
+go func <span class="p">{</span>
+    defer func<span class="p">()</span> <span class="p">{</span>
+        <span class="o">&lt;-</span>limit  <span class="o">//</span> release a slot
+    <span class="p">}</span>
+log.Println<span class="p">(</span>i<span class="p">)</span>
+    time.Sleep<span class="p">(</span><span class="m">1</span><span class="o">*</span>time.Second<span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>}</p>
+<p>func main() {
+    for i:=0; i &lt; 10000; i++ {
+        doWork(i)
+    }
+}</p>
+</li>
+</ul>
+<h3><a href="#dispatch" id="dispatch">Dynamic dispatch</a></h3>
+<ul>
+<li>
+<p>A combination of a single function interface and dynamic dispatch can be used for validation during entity creation / updation. For instance:  </p>
+<p>Let the entity do it's own validation by having it implement a Validator interface</p>
+<p>type Validator interface {
+    func Validate(v ...interface{}) error 
+}</p>
+<p>type User struct {
+    Email string
+}</p>
+<p>// checks for errors in u optionally against v
+func (u *User) Validate(v ...interface{}) error {</p>
+<p>}</p>
+</li>
+<li>
+<p>A function Validate can then select a Validator depending on the type of the interface.</p>
+<p>func Validate(u interface{}, v ...interface{}) error {
+     uu := reflect.ValueOf(u)
+     err := selectValidatorType(uu.Type())(uu, v...)
+     return err
+}</p>
+<p>var (
+    validatorType = reflect.TypeOf(new(Validator)).Elem()
+)</p>
+<p>type validatorFunc func(u reflect.Value, vv ...interface{}) error </p>
+<p>func selectValidatorType(t reflect.Type) validatorFunc {
+    if t.Implements(validatorType) {
+        return selectValidator
+    } else {
+        return errorValidator
+    }
+}</p>
+<p>func selectValidator(u reflect.Value, v ...interface{}) error {
+    if u.Kind() == reflect.Ptr &amp;&amp; u.IsNil() {
+        return DSErr{When: time.Now(), What: "Nil Value"}
+    }</p>
+<div class="highlight"><pre>m := u.Interface().(Validator)
+err := m.Validate(v...)
+if err != nil {
+    return DSErr{When: time.Now(), What: err.Error()}
+}
+return nil
+</pre></div>
+
+
+<p>}</p>
+<p>func errorValidator(u reflect.Value, v ...interface{}) error {
+    return DSErr{When: time.Now(), What: "Not a Validator"}
+}</p>
+</li>
+</ul>
+      </div>
+      <footer class="post-footer">
+        <div class="meta">
+            In «<a href="/category/cheat-sheet.html">Cheat Sheet</a>» 
+            by <a href="/author/sridhar.html">Sridhar</a><br />
+            Tags:  #<a href="/tag/go.html">go</a> #<a href="/tag/software.html">software</a>        </div>
+      </footer>
+    </article>
+      </div>
+    <aside class="page-sidebar">
+      <nav class="widget">
+      <h3>Site</h3>
+        <ul>
+          <li><a href="">Home</a></li>
+          <li><a href="/archives.html">Archives</a></li>
+          <li><a href="/tags.html">Tags</a></li>
+        </ul>
+      </nav>
+
+      <nav class="widget">
+        <h3>Categories</h3>
+        <ul>
+          <li><a href="/category/chatter.html">Chatter</a></li>
+          <li><a href="/category/cheat-sheet.html">Cheat Sheet</a></li>
+          <li><a href="/category/detailed.html">Detailed</a></li>
+          <li><a href="/category/events.html">Events</a></li>
+          <li><a href="/category/manual.html">Manual</a></li>
+          <li><a href="/category/review.html">Review</a></li>
+          <li><a href="/category/teaser.html">Teaser</a></li>
+        </ul>
+      </nav>
+
+      <nav class="widget">
+        <h3>Social</h3>
+        <ul>
+          <li><a href="https://stackoverflow.com/users/1093710/sridhar">SO</a></li>
+          <li><a href="https://github.com/tortuoise">Github</a></li>
+          <li><a href="/" rel="alternate">Flux Atom</a></li>
+        </ul>
+      </nav>
+    </aside> 
+
+      <footer class="page-footer">
+        <p> Powered by <a href="http://pelican.readthedocs.org">Pelican</a></p>
+      </footer>
+    </div>
+  </body>
+</html>
