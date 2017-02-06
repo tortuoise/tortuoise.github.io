@@ -51,50 +51,49 @@
 </ul>
 <h3><a href="#funcy" id="funcy">Funcy interface</a></h3>
 <ul>
-<li>
-<p>Single function interfaces can be supplanted by function types, the  most popluar example being http.Handler &amp; http.HandlerFunc  </p>
-<p>type Handler interface {
-    ServeHTTP(w http.ResponseWriter, r *http.Request)
-}</p>
-<p>type HandlerFunc(w http.ResponseWriter, r *http.Request) func  </p>
-<p>func (f HandlerFunc) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-    f(w, r)
-}</p>
+<li>Single function interfaces can be supplanted by function types, the  most popluar example being http.Handler &amp; http.HandlerFunc  <div class="highlight"><pre>type Handler interface {
+        ServeHTTP(w http.ResponseWriter, r *http.Request)
+}
+
+type HandlerFunc(w http.ResponseWriter, r *http.Request) func
+
+func (f HandlerFunc) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+        f(w, r)
+}
+</pre></div>
+
+
 </li>
 </ul>
 <h3><a href="#wrap" id="wrap">Wrapper Adapter</a></h3>
 <ul>
-<li>
-<p>Wrapping preserves interfaces while adding functionality  </p>
-<p>func Wrap (h http.Handler) http.Handler {</p>
-<div class="highlight"><pre>return &amp;wrapper{ handler: h}
+<li>Wrapping preserves interfaces while adding functionality  <div class="highlight"><pre>func Wrap (h http.Handler) http.Handler {
+        return &amp;wrapper{ handler: h}
+}
+
+type wrapper struct {
+        handler http.Handler
+}
+
+func (w* wrapper) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+
+        // Do something before
+
+        w.handler.ServeHTTP(w, r)
+
+        // Do something after
+
+}
+
+func main() {
+
+        myHandler := NewHandler();
+        http.Handle(&quot;/&quot;, Wrap(myHandler))
+
+}
 </pre></div>
 
 
-<p>}</p>
-<p>type wrapper struct {</p>
-<div class="highlight"><pre>handler http.Handler
-</pre></div>
-
-
-<p>}</p>
-<p>func (w<em> wrapper) ServeHTTP(w http.ResponseWriter, r </em>http.Request) {</p>
-<div class="highlight"><pre>// Do something before
-
-w.handler.ServeHTTP(w, r)
-
-// Do something after
-</pre></div>
-
-
-<p>}</p>
-<p>func main() {</p>
-<div class="highlight"><pre>myHandler := NewHandler();
-http.Handle(&quot;/&quot;, Wrap(myHandler))
-</pre></div>
-
-
-<p>}</p>
 </li>
 </ul>
 <h3><a href="#limit" id="limit">Limit goroutines</a></h3>
@@ -127,54 +126,64 @@ log.Println<span class="p">(</span>i<span class="p">)</span>
 </ul>
 <h3><a href="#dispatch" id="dispatch">Dynamic dispatch</a></h3>
 <ul>
-<li>
-<p>A combination of a single function interface and dynamic dispatch can be used for validation during entity creation / updation. For instance:  </p>
-<p>Let the entity do it's own validation by having it implement a Validator interface</p>
-<p>type Validator interface {
-    func Validate(v ...interface{}) error 
-}</p>
-<p>type User struct {
-    Email string
-}</p>
-<p>// checks for errors in u optionally against v
-func (u *User) Validate(v ...interface{}) error {</p>
-<p>}</p>
-</li>
-<li>
-<p>A function Validate can then select a Validator depending on the type of the interface.</p>
-<p>func Validate(u interface{}, v ...interface{}) error {
-     uu := reflect.ValueOf(u)
-     err := selectValidatorType(uu.Type())(uu, v...)
-     return err
-}</p>
-<p>var (
-    validatorType = reflect.TypeOf(new(Validator)).Elem()
-)</p>
-<p>type validatorFunc func(u reflect.Value, vv ...interface{}) error </p>
-<p>func selectValidatorType(t reflect.Type) validatorFunc {
-    if t.Implements(validatorType) {
-        return selectValidator
-    } else {
-        return errorValidator
+<li>A combination of a single function interface and dynamic dispatch can be used for validation during entity creation / updation. For instance:  </li>
+</ul>
+<p>Let the entity do it's own validation by having it implement a Validator interface    </p>
+<div class="highlight"><pre>    type Validator interface {
+            func Validate(v ...interface{}) error
     }
-}</p>
-<p>func selectValidator(u reflect.Value, v ...interface{}) error {
-    if u.Kind() == reflect.Ptr &amp;&amp; u.IsNil() {
-        return DSErr{When: time.Now(), What: "Nil Value"}
-    }</p>
-<div class="highlight"><pre>m := u.Interface().(Validator)
-err := m.Validate(v...)
-if err != nil {
-    return DSErr{When: time.Now(), What: err.Error()}
-}
-return nil
+
+    type User struct {
+            Email string
+    }
+
+    // checks for errors in u optionally against v
+    func (u *User) Validate(v ...interface{}) error {
+
+    }
 </pre></div>
 
 
-<p>}</p>
-<p>func errorValidator(u reflect.Value, v ...interface{}) error {
-    return DSErr{When: time.Now(), What: "Not a Validator"}
-}</p>
+<ul>
+<li>A function Validate can then select a Validator depending on the type of the interface.<div class="highlight"><pre>func Validate(u interface{}, v ...interface{}) error {
+        uu := reflect.ValueOf(u)
+        err := selectValidatorType(uu.Type())(uu, v...)
+        return err
+}
+
+var (
+        validatorType = reflect.TypeOf(new(Validator)).Elem()
+)
+
+type validatorFunc func(u reflect.Value, vv ...interface{}) error
+
+func selectValidatorType(t reflect.Type) validatorFunc {
+        if t.Implements(validatorType) {
+                return selectValidator
+        } else {
+                return errorValidator
+        }
+}
+
+func selectValidator(u reflect.Value, v ...interface{}) error {
+        if u.Kind() == reflect.Ptr &amp;&amp; u.IsNil() {
+            return DSErr{When: time.Now(), What: &quot;Nil Value&quot;}
+        }
+
+        m := u.Interface().(Validator)
+        err := m.Validate(v...)
+        if err != nil {
+            return DSErr{When: time.Now(), What: err.Error()}
+        }
+                return nil
+}
+
+func errorValidator(u reflect.Value, v ...interface{}) error {
+        return DSErr{When: time.Now(), What: &quot;Not a Validator&quot;}
+}
+</pre></div>
+
+
 </li>
 </ul>
       </div>
