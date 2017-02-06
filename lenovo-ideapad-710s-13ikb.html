@@ -42,7 +42,7 @@
         </div>
       </header>
       <div class="post-content"> 
-        <h2>Contents</h2>
+        <h2><a href="#contents">Contents</a></h2>
 <ul>
 <li><a href="#device">Device</a><br />
         * <a href="#components">Components</a><br />
@@ -54,10 +54,10 @@
 <li><a href="#gotchas">Gotchas</a>  </li>
 <li><a href="#references">References</a>  </li>
 </ul>
-<h2>Device</h2>
+<h2><a href="#device" id="device">Device</a></h2>
 <p>The Lenovo ideaPad 710S 13IKB is a sleek 13.3" screen laptop with Intel's core(TM) i7-7500 CPU which comes installed with Windows 10 Home. </p>
 <p>The placement of keys is a little unusual, but not show-stopping. </p>
-<h3>Components</h3>
+<h3><a href="#components" id="components">Components</a></h3>
 <p>OOTB Device Manager list</p>
 <ul>
 <li>Edition Windows 10 Home</li>
@@ -68,76 +68,76 @@
 <li>Intel chipset SATA RAID Controller</li>
 <li>NVMe Samsung MZVLV256</li>
 </ul>
-<h3>Purchase</h3>
+<h3><a href="#purchase" id="purchase">Purchase</a></h3>
 <p>Lenovo's EU contact address listed on the back of the device is in Bratislava. The Lenovo sales person I spoke with was based in Barcelona who informed me the laptop would be shipped from a warehouse in Netherlands. The payment processor is a company called Digital River in Ireland with a C/O address in Lancashire. I don't pretend to understand the reasons for such complicated logistics but I hope Lenovo have some post-Brexit plans in place.  </p>
-<h2>Install</h2>
+<h2><a href="#install" id="install">Install</a></h2>
 <p>After <a href="https://forums.lenovo.com/t5/forums/v3_1/forumtopicpage/board-id/Special_Interest_linux/thread-id/7950/page/1">complaints</a> from customers on the Lenovo forum, <a href="https://forums.lenovo.com/t5/Lenovo-Yoga-Series-Notebooks/Yoga-900-and-Ideapad-710S-Linux-Only-BIOS/ta-p/3466850">Linux BIOS'</a> were released for some new models. </p>
 <p>I was a bit reluctant to replace Windows 10 Home with Ubuntu 16.04.1 LTS as I was unsure whether there were Linux drivers available for all the peripherals. But I was convinced I had to try when Windows 10 Home without warning proceeded to download a boat load of updates and then restart 3-4 times during installation of those updates.  </p>
 <p>Downloaded the <a href="http://support.lenovo.com/gb/en/downloads/DS119359">appropriate BIOS update for 710S 13IKB</a>, verified checksum and ran exe. The exe flashes the BIOS onto ROM and reboots machine. The BIOS now allows AHCI SATA Controller mode to be selected under 'Configuration' tab in BIOS (Fn F2 during boot). Windows 10 still runs with the RAID mode selected.   </p>
-<h3>Ubuntu</h3>
+<h3><a href="#ubuntu0" id="ubuntu">Ubuntu</a></h3>
 <ul>
 <li>Ubuntu 16.04.1 LTS</li>
 </ul>
 <p>Write downloaded, verified ISO image to <a href="http://www.amazon.in/SanDisk-Cruzer-Blade-Flash-Drive/dp/B005FYNT3G?_encoding=UTF8&amp;psc=1&amp;redirect=true&amp;ref_=od_aui_detailpages00">SanDisk Cruzer Blade 32GB flash drive</a>.</p>
 <p>Boot the laptop from the USB drive and choose to install Ubuntu. Due to write speed of NVMe controller to SSD, install happens very fast.</p>
 <p>16.04.1 LTS lists 4.4.0-59-generic as Linux kernel version. </p>
-<h3>LVM</h3>
+<h3><a href="#lvm" id="lvm">LVM</a></h3>
 <p>Choose to use LVM for future ease of re-sizing partitions. 3 partitions are created with the ubuntu-vg volume group on nvme0n1p3.</p>
 <ul>
 <li>pvdisplay</li>
 </ul>
-<p>--- Physical volume ---
-  PV Name               /dev/MZVLV256HCHP-000XXXXXXXXXXXXXXX-part3
-  VG Name               ubuntu-vg
+<p>--- Physical volume ---<br />
+  PV Name               /dev/MZVLV256HCHP-000XXXXXXXXXXXXXXX-part3<br />
+  VG Name               ubuntu-vg<br />
   PV Size               237.50 GiB / not usable 0 <br />
-  Allocatable           yes 
-  PE Size               4.00 MiB
-  Total PE              60799
-  Free PE               3
-  Allocated PE          60796</p>
+  Allocatable           yes <br />
+  PE Size               4.00 MiB<br />
+  Total PE              60799<br />
+  Free PE               3<br />
+  Allocated PE          60796  </p>
 <ul>
 <li>vgdisplay</li>
 </ul>
-<p>--- Volume group ---
-  VG Name               ubuntu-vg
-  System ID           <br />
-  Format                lvm2
-  Metadata Areas        1
-  Metadata Sequence No  3
-  VG Access             read/write
-  VG Status             resizable
-  MAX LV                0
-  Cur LV                2
-  Open LV               2
-  Max PV                0
-  Cur PV                1
-  Act PV                1
-  VG Size               237.50 GiB
-  PE Size               4.00 MiB
-  Total PE              60799
-  Alloc PE / Size       60796 / 237.48 GiB
-  Free  PE / Size       3 / 12.00 MiB</p>
+<p>--- Volume group ---<br />
+  VG Name               ubuntu-vg<br />
+  System ID             <br />
+  Format                lvm2<br />
+  Metadata Areas        1<br />
+  Metadata Sequence No  3<br />
+  VG Access             read/write<br />
+  VG Status             resizable<br />
+  MAX LV                0<br />
+  Cur LV                2<br />
+  Open LV               2<br />
+  Max PV                0<br />
+  Cur PV                1<br />
+  Act PV                1<br />
+  VG Size               237.50 GiB<br />
+  PE Size               4.00 MiB<br />
+  Total PE              60799<br />
+  Alloc PE / Size       60796 / 237.48 GiB<br />
+  Free  PE / Size       3 / 12.00 MiB  </p>
 <ul>
 <li>df -h</li>
 </ul>
-<p>Filesystem                   Size  Used Avail Use% Mounted on
-udev                         3.9G     0  3.9G   0% /dev
-tmpfs                        788M   82M  707M  11% /run
-/dev/mapper/ubuntu--vg-root  226G  5.6G  209G   3% /
-tmpfs                        3.9G  812K  3.9G   1% /dev/shm
-tmpfs                        5.0M  4.0K  5.0M   1% /run/lock
-tmpfs                        3.9G     0  3.9G   0% /sys/fs/cgroup
-/dev/nvme0n1p2               473M  122M  327M  28% /boot
-/dev/nvme0n1p1               511M  3.6M  508M   1% /boot/efi
-tmpfs                        788M  132K  788M   1% /run/user/1000</p>
-<h3>ath10k</h3>
+<p>Filesystem                   Size  Used Avail Use% Mounted on<br />
+udev                         3.9G     0  3.9G   0% /dev<br />
+tmpfs                        788M   82M  707M  11% /run<br />
+/dev/mapper/ubuntu--vg-root  226G  5.6G  209G   3% /<br />
+tmpfs                        3.9G  812K  3.9G   1% /dev/shm<br />
+tmpfs                        5.0M  4.0K  5.0M   1% /run/lock<br />
+tmpfs                        3.9G     0  3.9G   0% /sys/fs/cgroup<br />
+/dev/nvme0n1p2               473M  122M  327M  28% /boot<br />
+/dev/nvme0n1p1               511M  3.6M  508M   1% /boot/efi<br />
+tmpfs                        788M  132K  788M   1% /run/user/1000  </p>
+<h3><a href="#ath10k" id="ath10k">ath10k</a></h3>
 <p>The Qualcomm Atheros QCA6174 802.11ac Wireless Network Adapter doesn't work OOTB. An apt-update/upgrade fixes that though. Thankfully the wired network adapter works OOTB. If not, follow instructions found <a href="https://askubuntu.com/questions/607707/ath10k-installation">here</a>.</p>
 <p>Many thanks to <a href="https://github.com/kvalo/ath10k-firmware">kvalo</a> for the firmware update.</p>
-<h2>Gotchas</h2>
+<h2><a href="#gotchas" id="gotchas">Gotchas</a></h2>
 <ul>
 <li>During the install, Ubuntu may complain about not being able to install boot loader to nvme0n5 or something to that effect. Choosing another partition / logical volume doesn't work. Restarting the install seems to iron out the bug. </li>
 </ul>
-<h2>References ##</h2>
+<h2><a href="#references" id="references">References</a></h2>
 <ul>
 <li><a href="https://forums.lenovo.com/t5/Lenovo-Yoga-Series-Notebooks/Yoga-900-and-Ideapad-710S-Linux-Only-BIOS/ta-p/3466850">Lenovo 710s Linux only BIOS</a></li>
 <li><a href="https://forums.lenovo.com/t5/forums/v3_1/forumtopicpage/board-id/Special_Interest_linux/thread-id/7950/page/1">Lenovo 710s discussion</a></li>
@@ -150,9 +150,9 @@ tmpfs                        788M  132K  788M   1% /run/user/1000</p>
       </div>
       <footer class="post-footer">
         <div class="meta">
-            Posté dans «<a href="/category/review.html">Review</a>» 
-            par <a href="/author/sridhar.html">Sridhar</a><br />
-            Mots-clés:  #<a href="/tag/hardware.html">hardware</a> #<a href="/tag/laptop.html">laptop</a>        </div>
+            In «<a href="/category/review.html">Review</a>» 
+            by <a href="/author/sridhar.html">Sridhar</a><br />
+            Tags:  #<a href="/tag/hardware.html">hardware</a> #<a href="/tag/laptop.html">laptop</a>        </div>
       </footer>
     </article>
       </div>

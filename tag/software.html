@@ -32,9 +32,9 @@
           </time>
           <h1>
             <a rel="bookmark"
-               href="/golang-patterns.html"
-               title="Lien permanent vers «Golang patterns»">
-               Golang patterns
+               href="/golang-idioms.html"
+               title="Lien permanent vers «Golang idioms»">
+               Golang idioms
             </a>
           </h1>
           <div class="meta">
@@ -43,26 +43,10 @@
           </div>
         </header>
         <div class="post-content"> 
-          <ul>
-<li>
-<p>Single function interfaces and function types</p>
-</li>
-<li>
-<p>Let the entity to it's own validation by having it implement a Validator interface
-    type Validator interface {
-        func Validate() bool
-    }</p>
-<p>type User struct {
-    Email string
-}</p>
-<p>func (u *User) Validate() bool {</p>
-<p>}</p>
-</li>
-<li></li>
-</ul>
+        
         </div>
         <footer class="post-footer">
-          <a class="readmore" href="/golang-patterns.html">Read more...</a>
+          <a class="readmore" href="/golang-idioms.html">Read more...</a>
         </footer>
       </article>
         
@@ -84,16 +68,7 @@
           </div>
         </header>
         <div class="post-content"> 
-          <h2>Contents</h2>
-<ul>
-<li><a href="#customdomains">Custom Domains</a></li>
-<li><a href="#install">Install</a></li>
-<li><a href="#run">Run</a></li>
-<li><a href="#datastore">Datastore</a></li>
-<li><a href="#requests">Requests</a></li>
-</ul>
-<h2>Custom Domains</h2>
-<p>Google allows for GAE apps to be available at custom domains. Sign into admin.google.com, add a new domain, verify ownership. Then add a new GAE app and add new URL to app. Also need to add cname record at ...</p>
+        
         </div>
         <footer class="post-footer">
           <a class="readmore" href="/gae-gotchas.html">Read more...</a>
@@ -118,9 +93,7 @@
           </div>
         </header>
         <div class="post-content"> 
-          <p>Static site generator written in Perl. Converts text file to html.  </p>
-<p>Configuration file is /etc/chroniclerc  </p>
-<p>chronicle --input input_dir/ --output output_dir/ --sitemap-prefix http://www.yourdomain.com/  </p>
+        
         </div>
         <footer class="post-footer">
           <a class="readmore" href="/chronicle-configuration.html">Read more...</a>
@@ -145,8 +118,7 @@
           </div>
         </header>
         <div class="post-content"> 
-          <p>Installation is straight forward : apt-get install nginx  </p>
-<p>Main configuration file is /etc/nginx/nginx.conf which is has includes to other config files such as /etc/nginx/sites-enabled/default. Added the proxy_pass entry in the location block to the first server and added the second server block to have nginx ...</p>
+        
         </div>
         <footer class="post-footer">
           <a class="readmore" href="/nginx-configuration.html">Read more...</a>
@@ -171,8 +143,7 @@
           </div>
         </header>
         <div class="post-content"> 
-          <p>Installation is straight forward : apt-get install nginx  </p>
-<p>Main configuration file is /etc/nginx/nginx.conf which is has includes to other config files such as /etc/nginx/sites-enabled/default. Added the proxy_pass entry in the location block to the first server and added the second server block to have nginx ...</p>
+        
         </div>
         <footer class="post-footer">
           <a class="readmore" href="/ti-msp430.html">Read more...</a>
@@ -197,8 +168,7 @@
           </div>
         </header>
         <div class="post-content"> 
-          <p>Easiest method is to write the iso image onto a cd and boot the machine from the cd. Once finished with basic configuration tasks, the installer will ask you to pick a mirror. The following command will help in deciding on the server with least latency.  </p>
-<p>netselect hostname1 hostname2 hostname3 ...</p>
+        
         </div>
         <footer class="post-footer">
           <a class="readmore" href="/installing-core-debian.html">Read more...</a>
@@ -223,11 +193,7 @@
           </div>
         </header>
         <div class="post-content"> 
-          <p><strong>STARTUP</strong>
-GRUB: hold shift key down as soon as bios loads<br />
-/etc/default/grub //for grub settings - tried adding vga=0x0369 to this file to fix boot issues and it hasn't worked.<br />
-sudo update-grub // after making any changes to /etc/default/grub - writes to /boot/grub/grub.cfg  </p>
-<p><strong>STARTUP ...</strong></p>
+        
         </div>
         <footer class="post-footer">
           <a class="readmore" href="/linux-cheatsheet.html">Read more...</a>
