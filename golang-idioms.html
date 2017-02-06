@@ -98,30 +98,31 @@ func main() {
 </ul>
 <h3><a href="#limit" id="limit">Limit goroutines</a></h3>
 <ul>
-<li>
-<p>Use a channel to create goroutines only when </p>
-<p>var (
-    concurrent = 5
-    limit = make(chan struct{}, concurrent)
-)</p>
-<p>func doWork(i int) {</p>
-<div class="highlight"><pre>limit <span class="o">&lt;-</span> struct<span class="p">{}{}</span>  <span class="o">//</span> block until slot is released by existing goroutine
+<li>Use a channel to create goroutines only when <div class="highlight"><pre>var <span class="p">(</span>
+        concurrent <span class="o">=</span> <span class="m">5</span>
+        limit <span class="o">=</span> make<span class="p">(</span>chan struct<span class="p">{},</span> concurrent<span class="p">)</span>
+<span class="p">)</span>
+
+func doWork<span class="p">(</span>i int<span class="p">)</span> <span class="p">{</span>
+
+limit <span class="o">&lt;-</span> struct<span class="p">{}{}</span>  <span class="o">//</span> block until slot is released by existing goroutine
 go func <span class="p">{</span>
     defer func<span class="p">()</span> <span class="p">{</span>
         <span class="o">&lt;-</span>limit  <span class="o">//</span> release a slot
     <span class="p">}</span>
-log.Println<span class="p">(</span>i<span class="p">)</span>
+    log.Println<span class="p">(</span>i<span class="p">)</span>
     time.Sleep<span class="p">(</span><span class="m">1</span><span class="o">*</span>time.Second<span class="p">)</span>
+<span class="p">}</span>
+<span class="p">}</span>
+
+func main<span class="p">()</span> <span class="p">{</span>
+        <span class="kr">for</span> i<span class="o">:=</span><span class="m">0</span><span class="p">;</span> i <span class="o">&lt;</span> <span class="m">10000</span><span class="p">;</span> i<span class="o">++</span> <span class="p">{</span>
+            doWork<span class="p">(</span>i<span class="p">)</span>
+        <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 
 
-<p>}</p>
-<p>func main() {
-    for i:=0; i &lt; 10000; i++ {
-        doWork(i)
-    }
-}</p>
 </li>
 </ul>
 <h3><a href="#dispatch" id="dispatch">Dynamic dispatch</a></h3>
