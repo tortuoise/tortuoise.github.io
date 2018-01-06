@@ -43,7 +43,7 @@
       </header>
       <div class="post-content"> 
         <p><strong>Background</strong>
-I used the FFT algorithm all through my undergraduate and graduate physics courses without ever looking at the details. So I decided to go back and have another look to see if I can get any further than in my youth. It's a divide and conquer algorithm that speeds up matrix multiplication of an input array of size n and an nxn <span class="math">\(M_n(\omega)\)</span> matrix which has (j,k)th entry <span class="math">\(\omega^{jk}\)</span> where 1, <span class="math">\(\omega\)</span>, <span class="math">\(\omega^{2}\)</span>, ..., <span class="math">\(\omega^{n-1}\)</span> are the complex nth roots of unity.</p>
+FFT is a divide and conquer algorithm that speeds up matrix multiplication of an input array of size n and an nxn <span class="math">\(M_n(\omega)\)</span> matrix which has (j,k)th entry <span class="math">\(\omega^{jk}\)</span> where 1, <span class="math">\(\omega\)</span>, <span class="math">\(\omega^{2}\)</span>, ..., <span class="math">\(\omega^{n-1}\)</span> are the complex nth roots of unity.</p>
 <p><strong>Continued</strong>
 The code below works (the results are correct) though there's a memory leak. </p>
 <div class="highlight"><pre><span class="sb">``</span>`C

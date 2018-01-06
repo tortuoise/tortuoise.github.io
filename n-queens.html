@@ -55,20 +55,90 @@
 <h2>Methods</h2>
 <h3>Backtracking on permutations</h3>
 <p>Since we're backtracking on permutations of unique row indices, we only need to check diagonals. Below is example with n=4  </p>
-<p>'Up' diagonals p=i+a[j] where a[j]=[0,1,2,3] is the first trial permutation of row indices for columns [0,1,2,3]  \
-|j(row),i(col)|0|1|2|3|
-|---|---|---|---|---|
-|0  |0|1|2|3|
-|1  |1|2|3|4|
-|2  |2|3|4|5|
-|3  |3|4|5|6|</p>
-<p>'Down' diagonals q=i+(n-1)-a[j]  \
-|j(row),i(col)|0|1|2|3|
-|---|---|---|---|---|
-|0  |3|4|5|6|
-|1  |2|3|4|5|
-|2  |1|2|3|4|
-|3  |0|1|2|3|</p>
+<p>'Up' diagonals p=i+a[j] where a[j]=[0,1,2,3] is the first trial permutation of row indices for columns [0,1,2,3]  \</p>
+<table>
+<thead>
+<tr>
+<th>j\i</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>3</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+</tr>
+</tbody>
+</table>
+<p>'Down' diagonals q=i+(n-1)-a[j]  \</p>
+<table>
+<thead>
+<tr>
+<th>j/i</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+</tr>
+<tr>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
 <p>There are 2xn-1=7 up diagonals. The same elements along the up diagonals of p.
 There are 2xn-1=7 down diagonals. The same elements along the down diagonals of q</p>
 <h2>Implementation</h2>
