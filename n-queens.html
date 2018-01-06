@@ -51,31 +51,32 @@
 <li><a href="#references">References</a></li>
 </ul>
 <h2>Brief</h2>
-<p>Place n queens on a chessboard without any of the queens threatening the other</p>
+<p>Place n queens on a chessboard without any of the queens threatening the other  </p>
 <h2>Methods</h2>
 <h3>Backtracking on permutations</h3>
-<p>Since we're backtracking on permutations of unique row indices, we only need to check diagonals. Below is example with n=4</p>
-<p>'Up' diagonals p=i+a[j] where a[j]=[0,1,2,3] is the first trial permutation of row indices for columns [0,1,2,3]
-j(row),i(col)|0|1|2|3
----|---|---|---|---
-0  |0|1|2|3
-1  |1|2|3|4
-2  |2|3|4|5
-3  |3|4|5|6</p>
-<p>'Down' diagonals q=i+(n-1)-a[j]
-j(row),i(col)|0|1|2|3
----|---|---|---|---
-0  |3|4|5|6
-1  |2|3|4|5
-2  |1|2|3|4
-3  |0|1|2|3</p>
+<p>Since we're backtracking on permutations of unique row indices, we only need to check diagonals. Below is example with n=4  </p>
+<p>'Up' diagonals p=i+a[j] where a[j]=[0,1,2,3] is the first trial permutation of row indices for columns [0,1,2,3]<br />
+|j(row),i(col)|0|1|2|3|
+|---|---|---|---|---|
+|0  |0|1|2|3|
+|1  |1|2|3|4|
+|2  |2|3|4|5|
+|3  |3|4|5|6|</p>
+<p>'Down' diagonals q=i+(n-1)-a[j]<br />
+|j(row),i(col)|0|1|2|3|
+|---|---|---|---|---|
+|0  |3|4|5|6|
+|1  |2|3|4|5|
+|2  |1|2|3|4|
+|3  |0|1|2|3|</p>
 <p>There are 2xn-1=7 up diagonals. The same elements along the up diagonals of p.
 There are 2xn-1=7 down diagonals. The same elements along the down diagonals of q</p>
 <h2>Implementation</h2>
-<p>def qqueens(n):
+<div class="highlight"><pre>```Python
+def qqueens(n):
      a = list(range(n))
-     u = [True]<em>(2</em>n - 1) 
-     v = [True]<em>(2</em>n - 1)
+     u = [True]*(2*n - 1) 
+     v = [True]*(2*n - 1)
      m = 0
      def sub(i):
          nonlocal m
@@ -91,24 +92,26 @@ There are 2xn-1=7 down diagonals. The same elements along the down diagonals of 
                      a[i], a[j] = a[j], a[i]
                      sub(i + 1)
                      u[p] = v[q] = True
-                     a[i], a[j] = a[j], a[i]</p>
-<div class="highlight"><pre> sub(0)
- return m
+                     a[i], a[j] = a[j], a[i]
+
+     sub(0)
+     return m
 </pre></div>
 
 
-<h1>solutions returned as generator using 'yield from' requires Python 3.3</h1>
-<p>def queens_bp(n):
+<h1>solutions returned as generator using 'yield from' requires Python 3.3 \</h1>
+<div class="highlight"><pre>```Python
+def queens_bp(n):
      a = list(range(n)) #permutation being checked
-     up = [True]<em>(2</em>n - 1) #"up" diagonals - going up left to right
-     down = [True]<em>(2</em>n - 1) # "down" diagonals - going down left to right
+     up = [True]*(2*n - 1) #&quot;up&quot; diagonals - going up left to right
+     down = [True]*(2*n - 1) # &quot;down&quot; diagonals - going down left to right
      def sub(i):
          if i == n:
              yield tuple(a)
          else:
              for k in range(i, n):
                  j = a[k] 
-                 p = i + j #up diagonals have equal sum of row and column index<br />
+                 p = i + j #up diagonals have equal sum of row and column index  
                  q = i - j + n - 1 #down diagonals have i-j+(n-1) equal
                  if up[p] and down[q]:
                      up[p] = down[q] = False
@@ -116,7 +119,10 @@ There are 2xn-1=7 down diagonals. The same elements along the down diagonals of 
                      yield from sub(i + 1)
                      up[p] = down[q] = True
                      a[i], a[k] = a[k], a[i]
-     yield from sub(0)</p>
+     yield from sub(0)
+</pre></div>
+
+
 <h2>References ##</h2>
 <ul>
 <li><a href="https://rosettacode.org/wiki/N-queens_problem#Python">Python</a></li>
