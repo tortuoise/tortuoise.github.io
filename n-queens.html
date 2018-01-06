@@ -55,14 +55,14 @@
 <h2>Methods</h2>
 <h3>Backtracking on permutations</h3>
 <p>Since we're backtracking on permutations of unique row indices, we only need to check diagonals. Below is example with n=4  </p>
-<p>'Up' diagonals p=i+a[j] where a[j]=[0,1,2,3] is the first trial permutation of row indices for columns [0,1,2,3]<br />
+<p>'Up' diagonals p=i+a[j] where a[j]=[0,1,2,3] is the first trial permutation of row indices for columns [0,1,2,3]  \
 |j(row),i(col)|0|1|2|3|
 |---|---|---|---|---|
 |0  |0|1|2|3|
 |1  |1|2|3|4|
 |2  |2|3|4|5|
 |3  |3|4|5|6|</p>
-<p>'Down' diagonals q=i+(n-1)-a[j]<br />
+<p>'Down' diagonals q=i+(n-1)-a[j]  \
 |j(row),i(col)|0|1|2|3|
 |---|---|---|---|---|
 |0  |3|4|5|6|
