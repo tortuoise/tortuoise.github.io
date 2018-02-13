@@ -26,8 +26,8 @@
       <div class="page-content">
      <article class="post content">
       <header class="post-header">
-        <time datetime="2017-12-05T00:00:00+00:00" pubdate="pubdate">
-          Tue 05 December 2017
+        <time datetime="2016-12-05T00:00:00+00:00" pubdate="pubdate">
+          Mon 05 December 2016
         </time>
         <h1>
           <a rel="bookmark"
@@ -67,19 +67,25 @@
 <p>Share memory by communicating.</p>
 <h2>Builtin</h2>
 <h3>append</h3>
-<p>s := make([]int, 5)
-  s = append(s, 6) // Out: [0,0,0,0,0,6]</p>
+<div class="highlight"><pre>s := make([]int, 5)
+s = append(s, 6) // Out: [0,0,0,0,0,6]
+</pre></div>
+
+
 <h2>sort</h2>
 <p>A type, typically a collection, that satisfies sort.Interface can be sorted by the routines in the sort package. The methods require that the elements of the collection be enumerated by an integer index. </p>
-<p>type Interface interface {
-          // Len is the number of elements in the collection.
-          Len() int
-          // Less reports whether the element with
-          // index i should sort before the element with index j.
-          Less(i, j int) bool
-          // Swap swaps the elements with indexes i and j.
-          Swap(i, j int)
-  }</p>
+<div class="highlight"><pre>type Interface interface {
+    // Len is the number of elements in the collection.
+    Len() int
+    // Less reports whether the element with
+    // index i should sort before the element with index j.
+    Less(i, j int) bool
+    // Swap swaps the elements with indexes i and j.
+    Swap(i, j int)
+}
+</pre></div>
+
+
 <h2>Gotchas</h2>
 <h2>References ##</h2>
 <ul>
