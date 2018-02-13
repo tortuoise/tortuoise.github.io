@@ -49,20 +49,26 @@
   -<a href="#concurrency">Concurrency</a></li>
 <li><a href="#builtin">Builtin</a>
   -<a href="#append">append</a></li>
-<li><a href="#packages">Packages</a></li>
-<li><a href="#sort">sort</a></li>
-<li><a href="#async">async</a></li>
+<li><a href="#packages">Packages</a>
+  -<a href="#sort">sort</a>
+  -<a href="#async">async</a></li>
 <li><a href="#testing">Testing</a></li>
 <li><a href="#gotchas">Gotchas</a></li>
 <li><a href="#references">References</a></li>
 </ul>
 <h2>Overview</h2>
 <h3>Named types</h3>
-<p>type StringSlice []string</p>
+<div class="highlight"><pre>type StringSlice []string
+</pre></div>
+
+
 <p>Methods can be defined for any named type (except a pointer or an interface); the receiver does not have to be a struct. So:</p>
-<p>func (s *StringSlice) Len() int {
-    return len(s)
-  }</p>
+<div class="highlight"><pre>func (s \*StringSlice) Len() int {
+  return len(s)
+}
+</pre></div>
+
+
 <h3>Concurrency</h3>
 <p>Share memory by communicating.</p>
 <h2>Builtin</h2>
