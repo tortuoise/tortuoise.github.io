@@ -60,6 +60,8 @@ initctl list //lists all services with status <br />
 service --status-all //same as 'ls /etc/init.d' <br />
 start/stop/restart/status <service> // same as initctl start/stop/restart/status <service><br />
 halt/poweroff/shutdown/reboot<br />
+shutdown -r -t 20 now // shutdown in 20s with warning now and reboot
+last reboot //info on previous few reboots
 halt -p // when halting the system switch off the power<br />
 /etc/init/mysql.override //edit to contain word 'manual' to override startup instructions in mysql.conf - same for all other startup services<br />
 added cups.override, mysql.override, ssh.override, smbd.override to override startup instructions in respective /etc/init/*.conf files  </p>
@@ -70,13 +72,22 @@ export PATH = $PATH:/new_path/to_add/<br />
 adduser chetan<br />
 usermod -g users chetan<br />
 stat chetan<br />
-chmod 0700 chetan/  // rwx------  </p>
+chmod 0700 chetan/  // rwx------<br />
+chmod u+x <filename> // add exec right to current user</p>
 <p><strong>INSTALLTION/REPOSITORIES</strong>
 /etc/apt/sources.list or /etc/apt/sources.list.d/* //repository list<br />
 sudo add-apt-repository ppa:<repo path><br />
 /home/sridhar/.local/share/Trash // Rubbish<br />
 update-alternatives --config java //then choose number from list<br />
-apt-get --simulate purge popularity-contest //remove popularity-contest and related packages altogether   </p>
+apt-get --simulate purge popularity-contest //remove popularity-contest and related packages altogether <br />
+apt list --upgradable
+apt-get autoremove --purge // removes old kernels from boot partition to free up disk space
+dpkg -c/i/l/L/r/s  // package manager view contents/install/list/file locations/remove/installed?
+vgdisplay // volume groups
+pvdisplay // physical volumes
+lvresize -r -L -20G /dev/mapper/home
+lvextend -r -L +20G /dev/mapper/root
+lsblk -a /dev/sda // lists blocks on hd</p>
 <p><strong>NETWORK</strong>
 arp -a // find mac address of router<br />
 ifconfig<br />
@@ -95,10 +106,14 @@ ufw enable  </p>
 cat /proc/sys/kernel/threads-max //=62274<br />
 cat /proc/sys/fs/file_max //=401408<br />
 cat /proc/mdstats<br />
+du -h | cut -f1 | sort -h | uniq -c | sort -rn | head  //du recursively lists directory and file sizes
+df -h //lists all partitions
+top // lists cpu util
 ulimit -v //for virtual = unlimited<br />
 ulimit -s //for stack = 8192  </p>
 <p><strong>SHORTCUTS</strong>
 Alt-F2 //type xkill and click on hung app<br />
+Alt-F4 //closes window
 Ctrl-Alt-F1 // go to virtual terminal - can do sudo reboot from there<br />
 .bash_aliases<br />
 alias ssh1='ssh 192.168.0.133' <br />
@@ -107,33 +122,41 @@ alias grephtml='grep -r --include=*.html'  </p>
 <p><strong>UTILITIES</strong>
 . ./.profile  //sources profile file without restart <br />
 acpi -V // battery status <br />
+aplay -L //list of available cards and devices
+apropos -s 1 compare OR apropos "compare" //searches man files for keyword or string
 arch  // possible output is i686 (32 bit) or x86_64 (64 bit)  <br />
 chmod o=rx dir/ OR u=rwx dir/ OR g=rx dir/<br />
 chown -R sridhar dir/ <br />
 chgrp -R sridhar dir/ <br />
+convert -delay 5 -loop 0 <em>.jpg pp.gif //gif creation
 cp -r source_dir/ target_dir/<br />
+cron // user crontabs in /var/spool/cron/crontabs
 curl 'http://www.gnu.org/software/coreutils/manual/coreutils.html' 2&gt;/dev/null |<br />
     grep 'h3 class' |<br />
     grep 'class="command"' |<br />
-    sed 's/.<em>class="command"&gt;//' |<br />
+    sed 's/.</em>class="command"&gt;//' |<br />
     sed 's|</span></samp>||' |<br />
     sed 's|</h3>||' |<br />
     grep ':' |<br />
     sort<br />
 dmesg  //print kernel ring buffer - can be used for boot up message<br />
 dpkg-reconfigure popularity-contest  //can toggle whether package usage data is sent to debian<br />
+dpkg --add-architecture i386 //allows 32 bit applications to be installed/run
 exec -l $SHELL   //restarts shell<br />
 fdisk -l //list all partitions<br />
 find /path -name file_name -type d/f<br />
-find ./ -type f -name </em>.class -exec rm -rf {} \;            // remove all files recursively named <em>.class under ./<br />
-find ./ -type f -name </em>.class -exec grep -H "string" {} +  // search for string in files recursively named <em>.class under ./ (multi-threaded)<br />
-find ./ -type f -name </em>.class -print0 | xargs -0 -n1 -P8 grep -H "string" //search for string in files recursively named <em>.class under ./ use xargs<br />
-find . -name '</em>.c' | sort | xargs head -1<br />
+find ./ -type f -name <em>.class -exec rm -rf {} \;            // remove all files recursively named </em>.class under ./<br />
+find ./ -type f -name <em>.class -exec grep -H "string" {} +  // search for string in files recursively named </em>.class under ./ (multi-threaded)<br />
+find ./ -type f -name <em>.class -print0 | xargs -0 -n1 -P8 grep -H "string" //search for string in files recursively named </em>.class under ./ use xargs<br />
+find . -name '<em>.c' | sort | xargs head -1<br />
+find ./ -type d -newer ~/docs/temp/timestamp -exec rm -rf {} \;  // remove directories newer than timestamp
+find ./ -type d ! -newer ~/docs/temp/timestamp -exec rm -rf {} \;  // remove directories older than timestamp
 grep -r search_term dir/<br />
+grep . /sys/devices/system/cpu/vulnerabilities/</em> 
 gstreamer-properties //multi-media settings<br />
 gunzip &lt; coreutils-8.13.tar.gz | tar -vx<br />
 locate<br />
-ls -a (include hidden) -F (dirs with trailing / and exes with trailing *) -l (long listing) -t (sort by time modified) -R (all subdirs)<br />
+ls -a (include hidden) -F (dirs with trailing / and exes with trailing <em>) -l (long listing) -t (sort by time modified) -R (all subdirs)<br />
 ls -1 | wc -l  //counts the number of line entries in ls command <br />
 lspci -v <br />
 lsb_release -rd<br />
@@ -141,27 +164,39 @@ lsof -i -n -P //list all open files &amp; ports <br />
 lsof -i tcp:8888 /// lists services running on 8888 <br />
 lsusb //list usb devices<br />
 ps -ef //list all running processes<br />
+rename -n 's/old/new/' </em>.jpg //bulk rename
 rm -rf ./dir  ///// for dirs with special chars in name<br />
 rsync -anv ./dir sridhar@192.168.0.9:/home/sridhar/dev   //simulate<br />
 rsync -az ./dir sridhar@192.168.0.9:/home/sridhar/dev     //do it for real using compression<br />
 rsync -a --exclude=pattern_to_exclude ./dir sridhar@192.168.0.9:/home/sridhar/dev     //do it for real<br />
-scp sridhar@192.168.1.72:/usr/local/bin/iptables /usrlocal/bin/iptables    // need to 'sudo start ssh' on server before trying to connect <br />
-ssh -C 192.168.1.72 -l sridhar   // ssh on port 22 (tcp)<br />
-ssh -C sridhar@192.168.1.72   // ssh on port 22 (tcp)<br />
+scp -C sridhar@192.168.1.72:/usr/local/bin/iptables /usrlocal/bin/iptables    // need to 'sudo start ssh' on server before trying to connect, always use -C to enable compression
+ssh -C 192.168.1.72 -l sridhar   // ssh on port 22 (tcp)  always use -C to enable compression
+ssh -C sridhar@192.168.1.72   // ssh on port 22 (tcp)  always use -C to enable compression
 screen ctrl-a then c for new terminal. ctrl-a, 0 or 1 to toggle between terminal // not used much since byobu<br />
+speaker-test -Dsysdefault:Intel -c 6 // tests 6 audio channels only first two of which are generally used
+stty -echo // turn off terminal echo
+stty echo // turn it back on
 tail <file> //lists last few entires in file<br />
 tar -xvzf file.tar.gz<br />
 tar xfJ scala-docs-2.10.2.txz<br />
 tar -zvcf file.tar.gz directory/      //compress directory into file.tar.gz<br />
+tee <output_file> //reads from std input and writes to std output and to the named file
 time ./program //real: real time, user: how long program was running on cpu, sys: how long the program was waiting for os to perform tasks for it<br />
+touch -t 201607010000 ~/docs/temp/timestamp
 uname -a     // 32 or 64 bit i686 is 32 bit, x86_64 is 64 bit<br />
+uname -r // prints kernel version
 unrar e file.rar<br />
 wget 'http://ftp.gnu.org/gnu/coreutils/coreutils-8.13.tar.gz'<br />
 whereis<br />
 xxd //make hexdump or reverse hexdump<br />
 xrandr //used to set size, orientation and output for screens  </p>
+<p><strong>Filesystem</strong>
+filenames with space : escape with \
+filenames with &amp; or ( or ) : enclose in 'filename'</p>
 <p><strong>APPLICATIONS</strong>
 evince file.pdf<br />
+ffmpeg -f gif -i 585.gif 585.mp4 //converts gif to mp4
+ffmpeg -i 585.mp4 -i 585.mp3 -codec copy -shortest output.mp4 //adds music to mp4
 pdftk in.pdf cat 1-12 14-end output out1.pdf //removes page 13<br />
 pdftk in.pdf cat 1E output out1.pdf //rotates p1 anti-clockwise<br />
 pdftk A=in1.pdf B=in2.pdf cat A1-12 B3 A14-end output out1.pdf //add p3(B) after p12(A) &amp; remove page 13(A)<br />
@@ -215,6 +250,7 @@ sudo apt-get install dkms wacom-dkms  </p>
           <li><a href="/category/manual.html">Manual</a></li>
           <li><a href="/category/misc.html">misc</a></li>
           <li><a href="/category/review.html">Review</a></li>
+          <li><a href="/category/setup.html">Setup</a></li>
           <li><a href="/category/teaser.html">Teaser</a></li>
         </ul>
       </nav>
