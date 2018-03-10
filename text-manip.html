@@ -44,7 +44,7 @@
       <div class="post-content"> 
         <h2>Contents</h2>
 <ul>
-<li><a href="utils">Utils</a></li>
+<li><a href="#utils">Utils</a></li>
 <li><a href="#markdown">Markdown</a></li>
 <li><a href="#vim">Vim</a>
         * <a href="#basics">basics</a>
@@ -53,7 +53,7 @@
         * <a href="#ops">operators</a></li>
 <li><a href="#misc">Misc</a></li>
 </ul>
-<h2>Utils</h2>
+<h2><a href="#utils" id="utils">Utils</a></h2>
 <p>sed -i 's/GBP/INR/g' <em>.html   //replace all instances of "GBP" in all </em>.html files to "INR"
 sed -i 's~dir/file~dir/dir/file~g' // can use any delimiter (~ in this case) to find/replace text with "/" in it</p>
 <p>cat order.<em> | sort | grep Patterns  //// concatenates all files starting with order., sorts and looks for the word Pattern
@@ -74,7 +74,7 @@ find ./ -name build.xml -exec sed -i 's/old_string/new_string/g' {} \;    //// r
 <p>find ./ -name build.xml -exec sed -i 's|version1.5"/&gt;|version1.5"/&gt;--&gt;|' {} \;    <br />
 Couldn't escape backslashes in regexp so best option is to use sed because the arguments in sed s/old/new/ are plain strings w/o the need for surrounding single or double quotes or escaping special characters. So for instance even this is allowed:
 cat build.xml | sed 's|version1.5"/&gt;|version1.5"/&gt;--&gt;|'</p>
-<h2>Markdown</h2>
+<h2><a href="#markdown">Markdown</a></h2>
 <p>bold:  <strong> text </strong>
 italics:  * text * 
 links:
