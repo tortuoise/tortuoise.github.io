@@ -44,16 +44,22 @@
       <div class="post-content"> 
         <h2>Contents</h2>
 <ul>
-<li><a href="#overview">Overview</a></li>
+<li><a href="#overview">Overview</a><ul>
 <li><a href="#go+git">Go+git</a></li>
 <li><a href="#namedtypes">Named types</a></li>
 <li><a href="#concurrency">Concurrency</a></li>
-<li><a href="#builtin">Builtin</a></li>
+</ul>
+</li>
+<li><a href="#builtin">Builtin</a><ul>
 <li><a href="#append">append</a></li>
-<li><a href="#packages">Packages</a></li>
+</ul>
+</li>
+<li><a href="#packages">Packages</a><ul>
 <li><a href="#async">async</a></li>
 <li><a href="#sort">sort</a></li>
 <li><a href="#signal">signal</a></li>
+</ul>
+</li>
 <li><a href="#testing">Testing</a></li>
 <li><a href="#gotchas">Gotchas</a></li>
 <li><a href="#references">References</a></li>
@@ -176,7 +182,7 @@ s = append(s, 6) // Out: [0,0,0,0,0,6]
 <p>When Go programs write to a broken pipe, kernel will raise signal:
 + SIGPIPE</p>
 <p>If no channel has been registered to be notified of SIGPIPE, the program will exit if the write is to a file descriptor of type 1 or 2. Write to all other types will cause write to fail with EPIPE error.</p>
-<p>There are precautions while handling signals when calling non-Go programs from Go programs and vice-versa. Check [os.signal][3] for details. </p>
+<p>There are precautions while handling signals when calling non-Go programs from Go programs and vice-versa. Check <a href="3">os.signal</a> for details. </p>
 <h2>Gotchas</h2>
 <h2>References ##</h2>
 <ul>
