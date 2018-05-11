@@ -42,37 +42,46 @@
         </div>
       </header>
       <div class="post-content"> 
-        <h2>Contents</h2>
+        <h2><a href="#contents" id="contents">Contents</a></h2>
 <ul>
-<li><a href="#overview">Overview</a>
-        * <a href="#go+git">Go+git</a>
-        * <a href="#namedtypes">Named types</a>
-        * <a href="#concurrency">Concurrency</a></li>
-<li><a href="#builtin">Builtin</a>
-        * <a href="#append">append</a></li>
-<li><a href="#packages">Packages</a>
-        * <a href="#async">async</a>
-        * <a href="#sort">sort</a>
-        * <a href="#signal">signal</a>
-        * <a href="#testing">testing</a></li>
+<li><a href="#overview">Overview</a><ul>
+<li><a href="#go+git">Go+git</a></li>
+<li><a href="#namedtypes">Named types</a></li>
+<li><a href="#concurrency">Concurrency</a><ul>
+<li><a href="#channels">channels</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#builtin">Builtin</a><ul>
+<li><a href="#append">append</a></li>
+</ul>
+</li>
+<li><a href="#packages">Packages</a><ul>
+<li><a href="#async">async</a></li>
+<li><a href="#sort">sort</a></li>
+<li><a href="#signal">signal</a></li>
+<li><a href="#testing">testing</a></li>
+</ul>
+</li>
 <li><a href="#testing">Testing</a></li>
 <li><a href="#tool">Tool</a></li>
 <li><a href="#gotchas">Gotchas</a></li>
-<li><a href="#references">References</a></li>
+<li><a href="#refs" id="refs">References</a></li>
 </ul>
-<h2>Overview</h2>
+<h3><a href="#overview" id="overview">Overview</a></h3>
 <ul>
 <li>go build [-i] github.com/user/aclient/cmd/multiget //  (-i installs binary - like running go install) </li>
 <li>go clean [-i] github.com/user/aclient/cmd/multiget // removes object files and executables (-i removes binaries installed with go install) </li>
 </ul>
-<h3>Go+git</h3>
+<h4><a href="#go+git" id="go+git">Go+git</a></h4>
 <p>git clone https://github.com/origin/repo.git OR go get https://github.com/origin/repo</p>
 <p>git remote add fork https://github.com/fork/repo.git
 git push fork</p>
 <p>This is preferred to cloning the fork because it enables pushing changes to your fork without changing import paths. So for instance if there are local import paths like github.com/origin/repo/sub then you don't have to change them all to github.com/fork/repo/sub because you're working on the origin. </p>
 <p>Sending pull requests from the fork then becomes easy because the package import paths are same as for the origin. </p>
 <p>tldr; don't clone or work on the fork - simply add it as a remote and push changes to it. Anyway in most cases you won't be able to push changes to the origin because you won't have permission. </p>
-<h3>Named types</h3>
+<h4><a href="#namedtypes" id="namedtypes">Named types</a></h4>
 <div class="highlight"><pre>type StringSlice []string
 </pre></div>
 
@@ -84,9 +93,9 @@ git push fork</p>
 </pre></div>
 
 
-<h3>Concurrency</h3>
+<h4><a href="#concurrency" id="concurrency">Concurrency</a></h4>
 <p>Share memory by communicating.</p>
-<h4>channels</h4>
+<h5><a href="#channels" id="channels">channels</a></h5>
 <ul>
 <li>
 <p>Read channel:
@@ -133,14 +142,14 @@ git push fork</p>
 <p>Sending on nil results in fatal error. </p>
 </li>
 </ul>
-<h2>Builtin</h2>
-<h3>append</h3>
+<h3><a href="#builtin" id="builtin">Builtin</a></h3>
+<h4><a href="#append" id="append">append</a></h4>
 <div class="highlight"><pre>s := make([]int, 5)
 s = append(s, 6) // Out: [0,0,0,0,0,6]
 </pre></div>
 
 
-<h3>sort</h3>
+<h4><a href="#sort" id="sort">sort</a></h4>
 <p>A type, typically a collection, that satisfies sort.Interface can be sorted by the routines in the sort package. The methods require that the elements of the collection be enumerated by an integer index. </p>
 <div class="highlight"><pre>type Interface interface {
     // Len is the number of elements in the collection.
@@ -154,7 +163,7 @@ s = append(s, 6) // Out: [0,0,0,0,0,6]
 </pre></div>
 
 
-<h3>signal</h3>
+<h4><a href="#signal" id="signal">signal</a></h4>
 <p>The signal package implements access to incoming signals.</p>
 <p>Signals are a form of inter-process communication (IPC) mediated by the kernel and handled by processes/threads. They are asynchronous messages sent to processes or specific threads. Signals are similar to interrupts but differ from interrupts which are mediated by the processor and handled by the kernel. </p>
 <p>The following signals cannot be caught by Go programs:
@@ -183,9 +192,9 @@ s = append(s, 6) // Out: [0,0,0,0,0,6]
 + SIGPIPE</p>
 <p>If no channel has been registered to be notified of SIGPIPE, the program will exit if the write is to a file descriptor of type 1 or 2. Write to all other types will cause write to fail with EPIPE error.</p>
 <p>There are precautions while handling signals when calling non-Go programs from Go programs and vice-versa. Check <a href="3">os.signal</a> for details. </p>
-<h3>Testing (#testing){#testing}</h3>
+<h3><a href="#testing" id="testing">Testing</a></h3>
 <p>go test -run Foo github.com/user/project/</p>
-<h3>Tool (#tool){#tool}</h3>
+<h3><a href="#tool" id="tool">Tool</a></h3>
 <ul>
 <li>
 <p>go tool # lists all available tools</p>
@@ -214,8 +223,8 @@ s = append(s, 6) // Out: [0,0,0,0,0,6]
 <li>trace</li>
 <li>vet</li>
 </ul>
-<h2>Gotchas</h2>
-<h2>References ##</h2>
+<h3><a href="#gotchas" id="gotchas">Gotchas</a></h3>
+<h3><a href="#refs" id="refs">References</a></h3>
 <ul>
 <li>[3]: https://golang.org/pkg/os/signal</li>
 <li><a href="https://golang.org/doc/effective_go.html">Effective Go</a></li>
