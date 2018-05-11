@@ -42,7 +42,7 @@
         </div>
       </header>
       <div class="post-content"> 
-        <h2>Contents</h2>
+        <h2><a href="#contents" id="contents">Contents</a></h2>
 <ul>
 <li><a href="#utils">Utils</a></li>
 <li><a href="#markdown">Markdown</a></li>
@@ -74,7 +74,7 @@ find ./ -name build.xml -exec sed -i 's/old_string/new_string/g' {} \;    //// r
 <p>find ./ -name build.xml -exec sed -i 's|version1.5"/&gt;|version1.5"/&gt;--&gt;|' {} \;    <br />
 Couldn't escape backslashes in regexp so best option is to use sed because the arguments in sed s/old/new/ are plain strings w/o the need for surrounding single or double quotes or escaping special characters. So for instance even this is allowed:
 cat build.xml | sed 's|version1.5"/&gt;|version1.5"/&gt;--&gt;|'</p>
-<h2><a href="#markdown">Markdown</a></h2>
+<h2><a href="#markdown" id="markdown">Markdown</a></h2>
 <p>bold:  <strong> text </strong>
 italics:  * text * 
 links:
@@ -84,8 +84,8 @@ links:
 lists:  -/+/*</p>
 <p>new line: two spaces at end to force new line
 strikethrough:  <s> text </s></p>
-<h2>Vim</h2>
-<h3>basics</h3>
+<h2><a href="#vim" id="vim">Vim</a></h2>
+<h3><a href="#basics" id="basics">basics</a></h3>
 <p>vim
 vim file_name
 i to insert
@@ -121,13 +121,13 @@ au BufNewFile </em>.go 0r ~/.vim/go.skel | let IndentStyle = "go"
 <p>//Different tab setting for different files types. 8 for .go, 4 for .java
 au FileType java setl sw=4 sts=4 et
 au FileType go setl sw=8 sts=8 et</p>
-<h3>macros</h3>
+<h3><a href="#macros" id="macros">macros</a></h3>
 <p>qa  // starts recording
 q   // stops recording
 @a  // repeats macro actions recorded
 ^   // goes to end of line - useful while recording macro
 $   // goes to start of line - useful while recording macro </p>
-<h3>windows</h3>
+<h3><a href="#windows" id="windows">windows</a></h3>
 <p>vim -o file1.go file2.go  // opens files in windows<br />
 :vs file2.go // open file2.go in new vertically split window<br />
 :sp file2.go // open file2.go in new horizontally split window<br />
@@ -145,7 +145,7 @@ N gg // go to line N
 N k // go up N lines
 N j // go down N lines</p>
 <p>diff -y --suppress-common-lines &lt;(head -500 file2) &lt;(head -500 file2)</p>
-<h3>operations</h3>
+<h3><a href="#operations" id="operations">operations</a></h3>
 <p>gUw //word to upper case
 guw //word to lower case
 ~ //toggle case of character under cursor
@@ -154,7 +154,7 @@ guw //word to lower case
 μ=m<em> 
 ω=w</em> Ω=W*
 ±=+-</p>
-<h2>Misc</h2>
+<h2><a href="#misc" id="misc">Misc</a></h2>
 <p>gedit
 syntax highlighting: /usr/share/gtksourceview-2.0/language-specs/scala.lang </p>
       </div>

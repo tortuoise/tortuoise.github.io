@@ -53,12 +53,18 @@
 <li><a href="#packages">Packages</a>
         * <a href="#async">async</a>
         * <a href="#sort">sort</a>
-        * <a href="#signal">signal</a></li>
+        * <a href="#signal">signal</a>
+        * <a href="#testing">testing</a></li>
 <li><a href="#testing">Testing</a></li>
+<li><a href="#tool">Tool</a></li>
 <li><a href="#gotchas">Gotchas</a></li>
 <li><a href="#references">References</a></li>
 </ul>
 <h2>Overview</h2>
+<ul>
+<li>go build [-i] github.com/user/aclient/cmd/multiget //  (-i installs binary - like running go install) </li>
+<li>go clean [-i] github.com/user/aclient/cmd/multiget // removes object files and executables (-i removes binaries installed with go install) </li>
+</ul>
 <h3>Go+git</h3>
 <p>git clone https://github.com/origin/repo.git OR go get https://github.com/origin/repo</p>
 <p>git remote add fork https://github.com/fork/repo.git
@@ -177,6 +183,37 @@ s = append(s, 6) // Out: [0,0,0,0,0,6]
 + SIGPIPE</p>
 <p>If no channel has been registered to be notified of SIGPIPE, the program will exit if the write is to a file descriptor of type 1 or 2. Write to all other types will cause write to fail with EPIPE error.</p>
 <p>There are precautions while handling signals when calling non-Go programs from Go programs and vice-versa. Check <a href="3">os.signal</a> for details. </p>
+<h3>Testing (#testing){#testing}</h3>
+<p>go test -run Foo github.com/user/project/</p>
+<h3>Tool (#tool){#tool}</h3>
+<ul>
+<li>
+<p>go tool # lists all available tools</p>
+</li>
+<li>
+<p>addr2line</p>
+</li>
+<li>asm</li>
+<li>buildid</li>
+<li>cgo</li>
+<li>compile</li>
+<li>cover</li>
+<li>dist</li>
+<li>doc</li>
+<li>go doc pkg # shows documentation for pkg</li>
+<li>go doc net/http Server.Close # shows documentation for method Close() of Server in net/http</li>
+<li>go doc cmd/<tool> # shows documentation for specific tool</li>
+<li>fix</li>
+<li>link</li>
+<li>nm</li>
+<li>objdump</li>
+<li>pack</li>
+<li>pprof</li>
+<li>test2json</li>
+<li>tour</li>
+<li>trace</li>
+<li>vet</li>
+</ul>
 <h2>Gotchas</h2>
 <h2>References ##</h2>
 <ul>
