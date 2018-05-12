@@ -80,14 +80,12 @@ git push fork</p>
 <p>Sending pull requests from the fork then becomes easy because the package import paths are same as for the origin. </p>
 <p>tldr; don't clone or work on the fork - simply add it as a remote and push changes to it. Anyway in most cases you won't be able to push changes to the origin because you won't have permission. </p>
 <h4><a href="#namedtypes" id="namedtypes">Named types</a></h4>
-<div class="highlight"><pre>```golang
-type StringSlice []string
-```
+<div class="highlight"><pre><span class="kd">type</span> <span class="nx">StringSlice</span> <span class="p">[]</span><span class="kt">string</span>
 </pre></div>
 
 
 <p>Methods can be defined for any named type (except a pointer or an interface); the receiver does not have to be a struct. So:</p>
-<div class="highlight"><pre>```golang
+<div class="highlight"><pre>```
 func (s *StringSlice) Len() int {
   return len(s)
 }

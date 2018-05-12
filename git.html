@@ -63,160 +63,165 @@
 </ul>
 <h3><a href="#core" id="core">Concepts</a></h3>
 <p>The main git objects are commits, trees and blobs. A git repository (repo) is a list of commits. A commit consists of a tree which in turn consists of blobs.</p>
-<ul>
-<li>find ./.git/object -type f | sort</li>
-</ul>
+<div class="highlight"><pre>find ./.git/object -type f | sort
+</pre></div>
+
+
 <p>Each object is referenced by first 6-7 digits/letters of it's hash. The directory name under .git/object is part of the hash name. For instance </p>
-<ul>
-<li>./.git/objects/46/3c1628ca10b51cab62ef3983f9e15119db56bc  // hash is 463c16...</li>
-</ul>
+<div class="highlight"><pre>./.git/objects/46/3c1628ca10b51cab62ef3983f9e15119db56bc  // hash is 463c16...
+</pre></div>
+
+
 <p>View the type of object using:</p>
-<ul>
-<li>git cat-file -t \&lt;hash> // outputs blob, tree or commit</li>
-</ul>
+<div class="highlight"><pre>git cat-file -t &lt;hash&gt; // outputs blob, tree or commit
+</pre></div>
+
+
 <h4><a href="#blobs" id="blobs">blobs</a></h4>
 <p>A blob is the SHA1 hash of the file contents. </p>
-<ul>
-<li>git hash-object <filename|dirname></li>
-<li>git cat-file blob <blob_hash> // outputs file contents</li>
-<li>git ls-files</li>
-</ul>
+<div class="highlight"><pre>git hash-object &lt;filename|dirname&gt;
+git cat-file blob &lt;blob_hash&gt; // outputs file contents
+git ls-files
+</pre></div>
+
+
 <h4><a href="#trees" id="trees">trees</a></h4>
 <p>A tree is a collection of blobs</p>
-<ul>
-<li>git ls-tree [-r]  <commit_hash> // lists the blobs and sub-trees (-r recurses into subtrees) in the tree associated with commit_hash</li>
-</ul>
+<div class="highlight"><pre>git ls-tree [-r]  &lt;commit_hash&gt; // lists the blobs and sub-trees (-r recurses into subtrees) in the tree associated with commit_hash
+</pre></div>
+
+
 <h4><a href="#commits" id="commits">commits</a></h4>
 <p>A commit is a snapshot of a working tree at some point in time.</p>
 <p>HEAD defines what's currently checked out. </p>
-<ul>
-<li>git rev-parse HEAD // outputs the hash of HEAD</li>
-<li>git rev-list --all &lt;--header&gt; // list all commits in all branches --header for details about commit</li>
-<li>git rev-list --max-count=2 <commit> // list the commit and it's parent</li>
-</ul>
+<div class="highlight"><pre>git rev-parse HEAD // outputs the hash of HEAD
+git rev-list --all &lt;--header&gt; // list all commits in all branches --header for details about commit
+git rev-list --max-count=2 &lt;commit&gt; // list the commit and it&#39;s parent
+</pre></div>
+
+
 <h5><a href="#branch" id="branch">branch</a></h5>
 <p>A branch is a named reference to a commit. </p>
-<ul>
-<li>git branch -v // lists branches in repository</li>
-<li>git branch b1 // creates a new branch called b1</li>
-<li>git checkout b1 // switches to branch b1</li>
-</ul>
+<div class="highlight"><pre>git branch -v // lists branches in repository
+git branch b1 // creates a new branch called b1
+git checkout b1 // switches to branch b1
+</pre></div>
+
+
 <p>If you checkout a previous commit (which isn't a branch), make some changes and commit, that commit is considered detached from HEAD and will be lost unless you convert that commit to a branch:</p>
-<ul>
-<li>
-<p>git checkout -b b11</p>
-</li>
-<li>
-<p>git show-branch</p>
-</li>
-</ul>
+<div class="highlight"><pre>git checkout -b b11
+
+git show-branch
+</pre></div>
+
+
 <h3><a href="#config" id="config">config</a></h3>
-<ul>
-<li>git config -l</li>
-<li>git config --global user.name "Firstname Lastname"</li>
-<li>git config --global user.email "email@gmail.com"</li>
-<li>git config --global github.user github_username</li>
-<li>git config --global github.token <token></li>
-</ul>
+<div class="highlight"><pre>git config -l
+git config --global user.name &quot;Firstname Lastname&quot;
+git config --global user.email &quot;email@gmail.com&quot;
+git config --global github.user github_username
+git config --global github.token &lt;token&gt;
+</pre></div>
+
+
 <h4><a href="#github" id="github">github config</a></h4>
-<ul>
-<li>ssh-keygen -t rsa -C 'email' pwd </li>
-<li>Copy contents of id_rsa.pub to github</li>
-<li>mv ~/.ssh/id_rsa ~/.ssh/github_rsa</li>
-<li>mv ~/.ssh/id_rsa.pub ~/.ssh/github_rsa.pub</li>
-<li>ssh-agent s</li>
-<li>eval "$(ssh-agent -s)"</li>
-<li>ssh-add ~/.ssh/github_rsa</li>
-<li>ssh -T git@githhub.com</li>
-</ul>
+<div class="highlight"><pre>ssh-keygen -t rsa -C &#39;email&#39; pwd 
+// Copy contents of id_rsa.pub to github
+mv ~/.ssh/id_rsa ~/.ssh/github_rsa
+mv ~/.ssh/id_rsa.pub ~/.ssh/github_rsa.pub
+ssh-agent s
+eval &quot;$(ssh-agent -s)&quot;
+ssh-add ~/.ssh/github_rsa
+ssh -T git@githhub.com
+</pre></div>
+
+
 <h3><a href="#flow" id="flow">workflow</a></h3>
-<ul>
-<li>git init [project-name] OR</li>
-<li>cd directory</li>
-<li>git init</li>
-<li>git status</li>
-<li>git diff</li>
-<li>git diff --staged</li>
-<li>git diff HEAD</li>
-<li>git diff --color-words</li>
-</ul>
+<div class="highlight"><pre>git init [project-name] OR
+cd directory
+git init
+git status
+git diff
+git diff --staged
+git diff HEAD
+git diff --color-words
+</pre></div>
+
+
 <p>Typical workflows always begin with a branch, no matter how small or grand the level of effort might be or the number of commits involved.</p>
-<ul>
-<li>git branch    // list branches, identify current branch</li>
-<li>git branch [name] // create a new branch from current branch</li>
-<li>git checkout [name] // switch to a different branch</li>
-<li>git branch -m [current-name] [new-name] // rename any branch</li>
-<li>git branch -d [name] // delete a <em>reachable</em> branch</li>
-<li>git branch -D [name] // delete whether or not reachable</li>
-<li>
-<p>git merge [branch] // the final step to bringing the history of a branch into the current one is performed by merging it. Integrate history of specified branch into current one</p>
-</li>
-<li>
-<p>git add <filename>     // -u adds all files which have been updated</p>
-</li>
-<li>git add .</li>
-<li>git add -u             // update already tracked files</li>
-<li>git reset <filename>   // undoes add for single file</li>
-<li>git reset              // unstages all files which have been added</li>
-<li>git commit -m "message"</li>
-<li>git remote add origin git@github.com:github-user/repo.git</li>
-<li>git push <origin> <master> // origin is remote repo master branch</li>
-</ul>
+<div class="highlight"><pre>git branch    // list branches, identify current branch
+git branch [name] // create a new branch from current branch
+git checkout [name] // switch to a different branch
+git branch -m [current-name] [new-name] // rename any branch
+git branch -d [name] // delete a *reachable* branch
+git branch -D [name] // delete whether or not reachable
+git merge [branch] // the final step to bringing the history of a branch into the current one is performed by merging it. Integrate history of specified branch into current one
+
+git add &lt;filename&gt;     // -u adds all files which have been updated
+git add .
+git add -u             // update already tracked files
+git reset &lt;filename&gt;   // undoes add for single file
+git reset              // unstages all files which have been added
+git commit -m &quot;message&quot;
+git remote add origin git@github.com:github-user/repo.git
+git push &lt;origin&gt; &lt;master&gt; // origin is remote repo master branch
+</pre></div>
+
+
 <h3><a href="#rebase" id="rebase">rebase</a></h3>
-<ul>
-<li>git checkout b1</li>
-<li>git rebase <commit_hash> // rebases the point where b1 branches to <commit_hash></li>
-</ul>
+<div class="highlight"><pre>git checkout b1
+git rebase &lt;commit_hash&gt; // rebases the point where b1 branches to &lt;commit_hash&gt;
+</pre></div>
+
+
 <h3><a href="#stash" id="stash">stash</a></h3>
-<ul>
-<li>git stash                // same as "git stash save" stashes away changes without adding to index or committing </li>
-<li>git stash save "message" // </li>
-<li>git stash list           // lists blobs in stash</li>
-<li>
-<p>git apply|pop <stash_ref>// pops </p>
-</li>
-<li>
-<p>git diff --name-only da8152d 2032f7 // get changed filenames between 2 commits</p>
-</li>
-<li>
-<p>git diff da8152d 2032f7 -- filename // get diffs between same file across 2 commits</p>
-</li>
-<li>
-<p>git rm -r --cached <dir> //removes from git index - doesn't delete from file system</p>
-</li>
-<li>git rm -r -n dir/   // -n to only simulate -r for recursive removal. doesn't delete from file system</li>
-<li>git clean dir/     // deletes from file system altogether</li>
-</ul>
+<div class="highlight"><pre>git stash                // same as &quot;git stash save&quot; stashes away changes without adding to index or committing 
+git stash save &quot;message&quot; // 
+git stash list           // lists blobs in stash
+git apply|pop &lt;stash_ref&gt;// pops 
+
+git diff --name-only da8152d 2032f7 // get changed filenames between 2 commits
+git diff da8152d 2032f7 -- filename // get diffs between same file across 2 commits
+
+git rm -r --cached &lt;dir&gt; //removes from git index - doesn&#39;t delete from file system
+git rm -r -n dir/   // -n to only simulate -r for recursive removal. doesn&#39;t delete from file system
+git clean dir/     // deletes from file system altogether
+</pre></div>
+
+
 <h3><a href="#log" id="log">log</a></h3>
-<ul>
-<li>git log</li>
-<li>git ref log // git can look back at the history of each commit to see when a change took place, who made the change, or what the change contained. Some simple option flag additions to the log command can make the output more concise.</li>
-<li>git log --oneline // simple commit summaries</li>
-<li>git log --patch --color-words // if displaying the full contents of the change and word-level comparisons are helpful, there are option switches for that too. Option switches common with <code>diff</code></li>
-</ul>
+<div class="highlight"><pre>git log
+git ref log // git can look back at the history of each commit to see when a change took place, who made the change, or what the change contained. Some simple option flag additions to the log command can make the output more concise.
+git log --oneline // simple commit summaries
+git log --patch --color-words // if displaying the full contents of the change and word-level comparisons are helpful, there are option switches for that too. Option switches common with `diff`
+</pre></div>
+
+
 <h3><a href="#reset" id="reset">reset</a></h3>
-<ul>
-<li>git reset --soft HEAD^</li>
-<li>git reset --hard      // get rid of all changes made since last commit / checkout - use sparingly</li>
-<li>git reset --hard <commit> // Resets the index and working tree. Any changes to tracked files in the working tree since <commit> are discarded.</li>
-<li>git reset HEAD <file>... // unstages <file></li>
-<li>git checkout -- <file> // re-instates <file> after git rm <file>, i.e. discards changes in working directory</li>
-</ul>
+<div class="highlight"><pre>git reset --soft HEAD^
+git reset --hard      // get rid of all changes made since last commit / checkout - use sparingly
+git reset --hard &lt;commit&gt; // Resets the index and working tree. Any changes to tracked files in the working tree since &lt;commit&gt; are discarded.
+git reset HEAD &lt;file&gt;... // unstages &lt;file&gt;
+git checkout -- &lt;file&gt; // re-instates &lt;file&gt; after git rm &lt;file&gt;, i.e. discards changes in working directory
+</pre></div>
+
+
 <h3><a href="#sync" id="sync">syncing with upstream</a></h3>
-<ul>
-<li>git clone https://github.com/tortuoise/pelican-themes</li>
-<li>git remote -v //lists remote repos</li>
-<li>origin  https://github.com/tortuoise/pelican-themes (fetch)</li>
-<li>origin  https://github.com/tortuoise/pelican-themes (push)</li>
-<li>git remote add upstream https://github.com/getpelican/pelican-themes.git</li>
-<li>upstream        https://github.com/getpelican/pelican-themes.git (fetch)</li>
-<li>upstream        https://github.com/getpelican/pelican-themes.git (push)</li>
-<li>git fetch upstream</li>
-<li>git checkout master // presumably origin master</li>
-<li>git reset --hard //get rid of all local uncommitted changes</li>
-<li>git merge upstream/master //merges with upstream/master</li>
-<li>git push origin master //pushes origin/master</li>
-</ul>
+<div class="highlight"><pre>git clone https://github.com/tortuoise/pelican-themes
+git remote -v //lists remote repos
+  * origin  https://github.com/tortuoise/pelican-themes (fetch)
+  * origin  https://github.com/tortuoise/pelican-themes (push)
+git remote add upstream https://github.com/getpelican/pelican-themes.git
+  * upstream        https://github.com/getpelican/pelican-themes.git (fetch)
+  * upstream        https://github.com/getpelican/pelican-themes.git (push)
+git fetch upstream
+git checkout master // presumably origin master
+git reset --hard //get rid of all local uncommitted changes
+git merge upstream/master //merges with upstream/master
+git push origin master //pushes origin/master
+</pre></div>
+
+
 <h3><a href="#refs" id="refs">References</a></h3>
 <ul>
 <li><a href="https://git-scm.com/book/en/v2">Git Book</a></li>
