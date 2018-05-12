@@ -70,10 +70,8 @@
 <li><a href="#refs">References</a></li>
 </ul>
 <h3><a href="#overview" id="overview">Overview</a></h3>
-<ul>
-<li>go build [-i] github.com/user/aclient/cmd/multiget //  (-i installs binary - like running go install) </li>
-<li>go clean [-i] github.com/user/aclient/cmd/multiget // removes object files and executables (-i removes binaries installed with go install) </li>
-</ul>
+<p>go build [-i] github.com/user/aclient/cmd/multiget //  (-i installs binary - like running go install) </p>
+<p>go clean [-i] github.com/user/aclient/cmd/multiget // removes object files and executables (-i removes binaries installed with go install) </p>
 <h4><a href="#go+git" id="go+git">Go+git</a></h4>
 <p>git clone https://github.com/origin/repo.git OR go get https://github.com/origin/repo</p>
 <p>git remote add fork https://github.com/fork/repo.git
@@ -82,14 +80,18 @@ git push fork</p>
 <p>Sending pull requests from the fork then becomes easy because the package import paths are same as for the origin. </p>
 <p>tldr; don't clone or work on the fork - simply add it as a remote and push changes to it. Anyway in most cases you won't be able to push changes to the origin because you won't have permission. </p>
 <h4><a href="#namedtypes" id="namedtypes">Named types</a></h4>
-<div class="highlight"><pre>type StringSlice []string
+<div class="highlight"><pre>```golang
+type StringSlice []string
+```
 </pre></div>
 
 
 <p>Methods can be defined for any named type (except a pointer or an interface); the receiver does not have to be a struct. So:</p>
-<div class="highlight"><pre>func (s \*StringSlice) Len() int {
+<div class="highlight"><pre>```golang
+func (s *StringSlice) Len() int {
   return len(s)
 }
+```
 </pre></div>
 
 
