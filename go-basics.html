@@ -67,7 +67,7 @@
 <li><a href="#testing">Testing</a></li>
 <li><a href="#tool">Tool</a></li>
 <li><a href="#gotchas">Gotchas</a></li>
-<li><a href="#refs" id="refs">References</a></li>
+<li><a href="#refs">References</a></li>
 </ul>
 <h3><a href="#overview" id="overview">Overview</a></h3>
 <ul>
@@ -98,42 +98,42 @@ git push fork</p>
 <h5><a href="#channels" id="channels">channels</a></h5>
 <ul>
 <li>
-<p>Read channel:
-    var ch &lt;-chan int
-    ch := make(&lt;-chan int)</p>
+<p>Read channel:  </p>
+<p>var ch &lt;-chan int
+ch := make(&lt;-chan int)</p>
 </li>
 <li>
-<p>Write channel
-    var ch chan&lt;- int
-    ch := make(chan&lt;- int)</p>
+<p>Write channel</p>
+<p>var ch chan&lt;- int
+ch := make(chan&lt;- int)</p>
 </li>
 <li>
-<p>Channels are usually declared bidirectional. Read/write channels are useful as arguments / return values from functions. So for instance:
-    func returnReadChannel() &lt;-chan {
-      ch := make(chan int, 1)
-      go func() {
-        defer close(ch)
-        //do something else
-      }
-      return ch // ch gets converted to a read channel when function returns so caller of function can only read from channel
-    }</p>
+<p>Channels are usually declared bidirectional. Read/write channels are useful as arguments / return values from functions. So for instance:</p>
+<p>func returnReadChannel() &lt;-chan {
+  ch := make(chan int, 1)
+  go func() {
+    defer close(ch)
+    //do something else
+  }
+  return ch // ch gets converted to a read channel when function returns so caller of function can only read from channel
+}</p>
 </li>
 <li>
-<p>Buffered
-    bch := make(chan&lt;- int, 2)</p>
+<p>Buffered</p>
+<p>bch := make(chan&lt;- int, 2)</p>
 </li>
 <li>
-<p>Range over channel (or read channel)  doesn't block if channel is closed. 
-    for x := range ch { // x has zero value of ch type
-      // 
-    }
-    x, _ := &lt;-ch  //doesn't block if ch is closed. x has zero value of ch type</p>
+<p>Range over channel (or read channel)  doesn't block if channel is closed. </p>
+<p>for x := range ch { // x has zero value of ch type
+  // 
+}
+x, _ := &lt;-ch  //doesn't block if ch is closed. x has zero value of ch type</p>
 </li>
 <li>
-<p>Reading from closed channel results in zero value of channel type. Can use the untyped bool value returned to check whether channel closed (false).
-    if val, ok := &lt;-ch; ok {    // ok is false if ch is closed
-      // do something with val
-    }</p>
+<p>Reading from closed channel results in zero value of channel type. Can use the untyped bool value returned to check whether channel closed (false).</p>
+<p>if val, ok := &lt;-ch; ok {    // ok is false if ch is closed
+  // do something with val
+}</p>
 </li>
 <li>
 <p>Sending on closed channel panics.</p>
@@ -191,7 +191,7 @@ s = append(s, 6) // Out: [0,0,0,0,0,6]
 <p>When Go programs write to a broken pipe, kernel will raise signal:
 + SIGPIPE</p>
 <p>If no channel has been registered to be notified of SIGPIPE, the program will exit if the write is to a file descriptor of type 1 or 2. Write to all other types will cause write to fail with EPIPE error.</p>
-<p>There are precautions while handling signals when calling non-Go programs from Go programs and vice-versa. Check <a href="3">os.signal</a> for details. </p>
+<p>There are precautions while handling signals when calling non-Go programs from Go programs and vice-versa. Check <a href="https://golang.org/pkg/os/signal">os.signal</a> for details. </p>
 <h3><a href="#testing" id="testing">Testing</a></h3>
 <p>go test -run Foo github.com/user/project/</p>
 <h3><a href="#tool" id="tool">Tool</a></h3>
@@ -208,10 +208,12 @@ s = append(s, 6) // Out: [0,0,0,0,0,6]
 <li>compile</li>
 <li>cover</li>
 <li>dist</li>
-<li>doc</li>
+<li>doc<ul>
 <li>go doc pkg # shows documentation for pkg</li>
 <li>go doc net/http Server.Close # shows documentation for method Close() of Server in net/http</li>
 <li>go doc cmd/<tool> # shows documentation for specific tool</li>
+</ul>
+</li>
 <li>fix</li>
 <li>link</li>
 <li>nm</li>
@@ -226,7 +228,8 @@ s = append(s, 6) // Out: [0,0,0,0,0,6]
 <h3><a href="#gotchas" id="gotchas">Gotchas</a></h3>
 <h3><a href="#refs" id="refs">References</a></h3>
 <ul>
-<li>[3]: https://golang.org/pkg/os/signal</li>
+<li><a href="https://research.swtch.com/">research!rsc</a></li>
+<li><a href="https://golang.org/pkg/os/signal">os.signal</a></li>
 <li><a href="https://golang.org/doc/effective_go.html">Effective Go</a></li>
 <li><a href="https://golang.org/ref/spec">Language Specification</a> </li>
 </ul>

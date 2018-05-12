@@ -58,7 +58,8 @@
 <li><a href="#rebase">rebase</a></li>
 <li><a href="#stash">stash</a></li>
 <li><a href="#log">log</a></li>
-<li><a href="#refs" id="refs">References</a></li>
+<li><a href="#reset">reset</a></li>
+<li><a href="#refs">References</a></li>
 </ul>
 <h3><a href="#core" id="core">Concepts</a></h3>
 <p>The main git objects are commits, trees and blobs. A git repository (repo) is a list of commits. A commit consists of a tree which in turn consists of blobs.</p>
@@ -159,12 +160,16 @@
 <li>git reset              // unstages all files which have been added</li>
 <li>git commit -m "message"</li>
 <li>git remote add origin git@github.com:github-user/repo.git</li>
-<li>
-<p>git push <origin> <master> // origin is remote repo master branch</p>
-</li>
-<li>
-<p>git stash                // same as "git stash save" stashes away changes without adding to index or committing </p>
-</li>
+<li>git push <origin> <master> // origin is remote repo master branch</li>
+</ul>
+<h3><a href="#rebase" id="rebase">rebase</a></h3>
+<ul>
+<li>git checkout b1</li>
+<li>git rebase <commit_hash> // rebases the point where b1 branches to <commit_hash></li>
+</ul>
+<h3><a href="#stash" id="stash">stash</a></h3>
+<ul>
+<li>git stash                // same as "git stash save" stashes away changes without adding to index or committing </li>
 <li>git stash save "message" // </li>
 <li>git stash list           // lists blobs in stash</li>
 <li>
@@ -182,15 +187,9 @@
 <li>git rm -r -n dir/   // -n to only simulate -r for recursive removal. doesn't delete from file system</li>
 <li>git clean dir/     // deletes from file system altogether</li>
 </ul>
-<h3><a href="#rebase" id="rebase">rebase</a></h3>
+<h3><a href="#log" id="log">log</a></h3>
 <ul>
-<li>git checkout b1</li>
-<li>
-<p>git rebase <commit_hash> // rebases the point where b1 branches to <commit_hash></p>
-</li>
-<li>
-<p>git log</p>
-</li>
+<li>git log</li>
 <li>git ref log // git can look back at the history of each commit to see when a change took place, who made the change, or what the change contained. Some simple option flag additions to the log command can make the output more concise.</li>
 <li>git log --oneline // simple commit summaries</li>
 <li>git log --patch --color-words // if displaying the full contents of the change and word-level comparisons are helpful, there are option switches for that too. Option switches common with <code>diff</code></li>
