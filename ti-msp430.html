@@ -44,21 +44,21 @@
       <div class="post-content"> 
         <p>Installation is straight forward : apt-get install nginx  </p>
 <p>Main configuration file is /etc/nginx/nginx.conf which is has includes to other config files such as /etc/nginx/sites-enabled/default. Added the proxy_pass entry in the location block to the first server and added the second server block to have nginx listen on 8080. So the first server listening at 80 is a proxy for the second listening at 8080 (or vice versa ?)  </p>
-<p>http {<br />
-  server {<br />
-    #server_name localhost;<br />
-    location / {<br />
-      proxy_pass http://localhost:8080;<br />
-    }<br />
-  }<br />
-  server {<br />
-    server_name www.hostname.com;<br />
-    listen 8080;<br />
-    root /path/to/root/dir;<br />
-    location /{<br />
-    }  <br />
-  }<br />
-...  <br />
+<p>http {<br>
+  server {<br>
+    #server_name localhost;<br>
+    location / {<br>
+      proxy_pass http://localhost:8080;<br>
+    }<br>
+  }<br>
+  server {<br>
+    server_name www.hostname.com;<br>
+    listen 8080;<br>
+    root /path/to/root/dir;<br>
+    location /{<br>
+    }  <br>
+  }<br>
+...  <br>
 }  </p>
       </div>
       <footer class="post-footer">
@@ -91,6 +91,7 @@
           <li><a href="/category/misc.html">misc</a></li>
           <li><a href="/category/review.html">Review</a></li>
           <li><a href="/category/setup.html">Setup</a></li>
+          <li><a href="/category/software-encryption.html">software, encryption</a></li>
           <li><a href="/category/teaser.html">Teaser</a></li>
         </ul>
       </nav>

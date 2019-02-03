@@ -59,27 +59,28 @@
 <li><a href="#stash">stash</a></li>
 <li><a href="#log">log</a></li>
 <li><a href="#reset">reset</a></li>
+<li><a href="#gotchas">gotchas</a>]</li>
 <li><a href="#refs">References</a></li>
 </ul>
 <h3><a href="#core" id="core">Concepts</a></h3>
 <p>The main git objects are commits, trees and blobs. A git repository (repo) is a list of commits. A commit consists of a tree which in turn consists of blobs.</p>
-<div class="highlight"><pre>find ./.git/object -type f | sort
+<div class="highlight"><pre><span></span>find ./.git/object -type f | sort
 </pre></div>
 
 
 <p>Each object is referenced by first 6-7 digits/letters of it's hash. The directory name under .git/object is part of the hash name. For instance </p>
-<div class="highlight"><pre>./.git/objects/46/3c1628ca10b51cab62ef3983f9e15119db56bc  // hash is 463c16...
+<div class="highlight"><pre><span></span>./.git/objects/46/3c1628ca10b51cab62ef3983f9e15119db56bc  // hash is 463c16...
 </pre></div>
 
 
 <p>View the type of object using:</p>
-<div class="highlight"><pre>git cat-file -t &lt;hash&gt; // outputs blob, tree or commit
+<div class="highlight"><pre><span></span>git cat-file -t &lt;hash&gt; // outputs blob, tree or commit
 </pre></div>
 
 
 <h4><a href="#blobs" id="blobs">blobs</a></h4>
 <p>A blob is the SHA1 hash of the file contents. </p>
-<div class="highlight"><pre>git hash-object &lt;filename|dirname&gt;
+<div class="highlight"><pre><span></span>git hash-object &lt;filename|dirname&gt;
 git cat-file blob &lt;blob_hash&gt; // outputs file contents
 git ls-files
 </pre></div>
@@ -87,14 +88,14 @@ git ls-files
 
 <h4><a href="#trees" id="trees">trees</a></h4>
 <p>A tree is a collection of blobs</p>
-<div class="highlight"><pre>git ls-tree [-r]  &lt;commit_hash&gt; // lists the blobs and sub-trees (-r recurses into subtrees) in the tree associated with commit_hash
+<div class="highlight"><pre><span></span>git ls-tree [-r]  &lt;commit_hash&gt; // lists the blobs and sub-trees (-r recurses into subtrees) in the tree associated with commit_hash
 </pre></div>
 
 
 <h4><a href="#commits" id="commits">commits</a></h4>
 <p>A commit is a snapshot of a working tree at some point in time.</p>
 <p>HEAD defines what's currently checked out. </p>
-<div class="highlight"><pre>git rev-parse HEAD // outputs the hash of HEAD
+<div class="highlight"><pre><span></span>git rev-parse HEAD // outputs the hash of HEAD
 git rev-list --all &lt;--header&gt; // list all commits in all branches --header for details about commit
 git rev-list --max-count=2 &lt;commit&gt; // list the commit and it&#39;s parent
 </pre></div>
@@ -102,21 +103,21 @@ git rev-list --max-count=2 &lt;commit&gt; // list the commit and it&#39;s parent
 
 <h5><a href="#branch" id="branch">branch</a></h5>
 <p>A branch is a named reference to a commit. </p>
-<div class="highlight"><pre>git branch -v // lists branches in repository
+<div class="highlight"><pre><span></span>git branch -v // lists branches in repository
 git branch b1 // creates a new branch called b1
 git checkout b1 // switches to branch b1
 </pre></div>
 
 
 <p>If you checkout a previous commit (which isn't a branch), make some changes and commit, that commit is considered detached from HEAD and will be lost unless you convert that commit to a branch:</p>
-<div class="highlight"><pre>git checkout -b b11
+<div class="highlight"><pre><span></span>git checkout -b b11
 
 git show-branch
 </pre></div>
 
 
 <h3><a href="#config" id="config">config</a></h3>
-<div class="highlight"><pre>git config -l
+<div class="highlight"><pre><span></span>git config -l
 git config --global user.name &quot;Firstname Lastname&quot;
 git config --global user.email &quot;email@gmail.com&quot;
 git config --global github.user github_username
@@ -124,8 +125,12 @@ git config --global github.token &lt;token&gt;
 </pre></div>
 
 
+<div class="highlight"><pre><span></span>git config --global --unset credential.helper
+</pre></div>
+
+
 <h4><a href="#github" id="github">github config</a></h4>
-<div class="highlight"><pre>ssh-keygen -t rsa -C &#39;email&#39; pwd 
+<div class="highlight"><pre><span></span>ssh-keygen -t rsa -C &#39;email&#39; pwd 
 // Copy contents of id_rsa.pub to github
 mv ~/.ssh/id_rsa ~/.ssh/github_rsa
 mv ~/.ssh/id_rsa.pub ~/.ssh/github_rsa.pub
@@ -137,7 +142,7 @@ ssh -T git@githhub.com
 
 
 <h3><a href="#flow" id="flow">workflow</a></h3>
-<div class="highlight"><pre>git init [project-name] OR
+<div class="highlight"><pre><span></span>git init [project-name] OR
 cd directory
 git init
 git status
@@ -149,7 +154,7 @@ git diff --color-words
 
 
 <p>Typical workflows always begin with a branch, no matter how small or grand the level of effort might be or the number of commits involved.</p>
-<div class="highlight"><pre>git branch    // list branches, identify current branch
+<div class="highlight"><pre><span></span>git branch    // list branches, identify current branch
 git branch [name] // create a new branch from current branch
 git checkout [name] // switch to a different branch
 git branch -m [current-name] [new-name] // rename any branch
@@ -168,20 +173,37 @@ git push &lt;origin&gt; &lt;master&gt; // origin is remote repo master branch
 </pre></div>
 
 
+<p>Can include some more changes to previous commit.</p>
+<div class="highlight"><pre><span></span>git add -u
+git commit --amend
+</pre></div>
+
+
+<p>Can (force) push amended commit to remote.</p>
+<div class="highlight"><pre><span></span>git push -f fork [branch]
+</pre></div>
+
+
 <h3><a href="#rebase" id="rebase">rebase</a></h3>
-<div class="highlight"><pre>git checkout b1
+<div class="highlight"><pre><span></span>git checkout b1
 git rebase &lt;commit_hash&gt; // rebases the point where b1 branches to &lt;commit_hash&gt;
 </pre></div>
 
 
 <h3><a href="#stash" id="stash">stash</a></h3>
-<div class="highlight"><pre>git stash                // same as &quot;git stash save&quot; stashes away changes without adding to index or committing 
+<div class="highlight"><pre><span></span>git stash                // same as &quot;git stash save&quot; stashes away changes without adding to index or committing 
 git stash save &quot;message&quot; // 
 git stash list           // lists blobs in stash
 git apply|pop &lt;stash_ref&gt;// pops 
 
 git diff --name-only da8152d 2032f7 // get changed filenames between 2 commits
 git diff da8152d 2032f7 -- filename // get diffs between same file across 2 commits
+
+git diff stash@{0}^1 stash@{0} -- &lt;filename&gt; // diff between stash and stash&#39;s parent (commit at which changes were stashed away)
+git diff stash@{0}^! -- &lt;filename&gt; // cryptic version of above
+git checkout stash@{0} -- &lt;filename&gt; // checkout single file out of stash
+git show stash@{0}:&lt;full filename&gt;  &gt;  &lt;newfile&gt; // save file from stash as new file
+git show stash@{0}:./&lt;relative filename&gt; &gt; &lt;newfile&gt; // same as above
 
 git rm -r --cached &lt;dir&gt; //removes from git index - doesn&#39;t delete from file system
 git rm -r -n dir/   // -n to only simulate -r for recursive removal. doesn&#39;t delete from file system
@@ -190,7 +212,8 @@ git clean dir/     // deletes from file system altogether
 
 
 <h3><a href="#log" id="log">log</a></h3>
-<div class="highlight"><pre>git log
+<div class="highlight"><pre><span></span>git log
+git log -- &lt;filename&gt; // lists commits with changes to a file
 git ref log // git can look back at the history of each commit to see when a change took place, who made the change, or what the change contained. Some simple option flag additions to the log command can make the output more concise.
 git log --oneline // simple commit summaries
 git log --patch --color-words // if displaying the full contents of the change and word-level comparisons are helpful, there are option switches for that too. Option switches common with `diff`
@@ -198,16 +221,22 @@ git log --patch --color-words // if displaying the full contents of the change a
 
 
 <h3><a href="#reset" id="reset">reset</a></h3>
-<div class="highlight"><pre>git reset --soft HEAD^
+<div class="highlight"><pre><span></span>git reset --soft HEAD^
 git reset --hard      // get rid of all changes made since last commit / checkout - use sparingly
 git reset --hard &lt;commit&gt; // Resets the index and working tree. Any changes to tracked files in the working tree since &lt;commit&gt; are discarded.
 git reset HEAD &lt;file&gt;... // unstages &lt;file&gt;
-git checkout -- &lt;file&gt; // re-instates &lt;file&gt; after git rm &lt;file&gt;, i.e. discards changes in working directory
+git checkout -- &lt;file&gt; // re-instates &lt;file&gt; after git rm &lt;file&gt;, i.e. discards changes in working directory, the -- is merely a separator
+</pre></div>
+
+
+<p>Following allows splitting of an ammended commit into 2 separate commits.</p>
+<div class="highlight"><pre><span></span>git reset --soft HEAD@{1}
+git commit -C HEAD@{1}
 </pre></div>
 
 
 <h3><a href="#sync" id="sync">syncing with upstream</a></h3>
-<div class="highlight"><pre>git clone https://github.com/tortuoise/pelican-themes
+<div class="highlight"><pre><span></span>git clone https://github.com/tortuoise/pelican-themes
 git remote -v //lists remote repos
   * origin  https://github.com/tortuoise/pelican-themes (fetch)
   * origin  https://github.com/tortuoise/pelican-themes (push)
@@ -222,9 +251,52 @@ git push origin master //pushes origin/master
 </pre></div>
 
 
+<h3><a href="#gotchas">gothas</a></h3>
+<p>Error encountered while cloning:</p>
+<div class="highlight"><pre><span></span><span class="nt">git</span> <span class="nt">clone</span> <span class="nt">https</span><span class="o">://</span><span class="nt">github</span><span class="p">.</span><span class="nc">com</span><span class="o">/</span><span class="nt">hashicorp</span><span class="o">/</span><span class="nt">vault</span>
+<span class="nt">error</span><span class="o">:</span> <span class="nt">RPC</span> <span class="nt">failed</span><span class="o">;</span> <span class="nt">curl</span> <span class="nt">56</span> <span class="nt">GnuTLS</span> <span class="nt">recv</span> <span class="nt">error</span> <span class="o">(</span><span class="nt">-9</span><span class="o">):</span> <span class="nt">A</span> <span class="nt">TLS</span> <span class="nt">packet</span> <span class="nt">with</span> <span class="nt">unexpected</span> <span class="nt">length</span> <span class="nt">was</span> <span class="nt">received</span><span class="o">.</span>
+<span class="nt">fatal</span><span class="o">:</span> <span class="nt">The</span> <span class="nt">remote</span> <span class="nt">end</span> <span class="nt">hung</span> <span class="nt">up</span> <span class="nt">unexpectedly</span>
+<span class="nt">fatal</span><span class="o">:</span> <span class="nt">early</span> <span class="nt">EOF</span>
+<span class="nt">fatal</span><span class="o">:</span> <span class="nt">index-pack</span> <span class="nt">failed</span>
+<span class="nt">package</span> <span class="nt">github</span><span class="p">.</span><span class="nc">com</span><span class="o">/</span><span class="nt">hashicorp</span><span class="o">/</span><span class="nt">vault</span><span class="o">:</span> <span class="nt">exit</span> <span class="nt">status</span> <span class="nt">128</span>
+</pre></div>
+
+
+<p>For more verbose output try:</p>
+<div class="highlight"><pre><span></span><span class="nt">GIT_CURL_VERBOSE</span><span class="o">=</span><span class="nt">1</span> <span class="nt">git</span> <span class="nt">clone</span> <span class="nt">https</span><span class="o">://</span><span class="nt">github</span><span class="p">.</span><span class="nc">com</span><span class="o">/</span><span class="nt">hashicorp</span><span class="o">/</span><span class="nt">vault</span>
+<span class="o">*</span> <span class="nt">GnuTLS</span> <span class="nt">recv</span> <span class="nt">error</span> <span class="o">(</span><span class="nt">-110</span><span class="o">):</span> <span class="nt">The</span> <span class="nt">TLS</span> <span class="nt">connection</span> <span class="nt">was</span> <span class="nt">non-properly</span> <span class="nt">terminated</span><span class="p">.</span><span class="nc">816</span><span class="o">/</span><span class="nt">103039</span><span class="o">),</span> <span class="nt">19</span><span class="p">.</span><span class="nc">32</span> <span class="nt">MiB</span> <span class="o">|</span> <span class="nt">1</span><span class="p">.</span><span class="nc">38</span> <span class="nt">MiB</span><span class="o">/</span><span class="nt">s</span>
+<span class="o">*</span> <span class="nt">stopped</span> <span class="nt">the</span> <span class="nt">pause</span> <span class="nt">stream</span><span class="o">!</span>
+<span class="o">*</span> <span class="nt">Closing</span> <span class="nt">connection</span> <span class="nt">0</span>
+<span class="nt">error</span><span class="o">:</span> <span class="nt">RPC</span> <span class="nt">failed</span><span class="o">;</span> <span class="nt">curl</span> <span class="nt">56</span> <span class="nt">GnuTLS</span> <span class="nt">recv</span> <span class="nt">error</span> <span class="o">(</span><span class="nt">-110</span><span class="o">):</span> <span class="nt">The</span> <span class="nt">TLS</span> <span class="nt">connection</span> <span class="nt">was</span> <span class="nt">non-properly</span> <span class="nt">terminated</span><span class="o">.</span>
+<span class="nt">fatal</span><span class="o">:</span> <span class="nt">The</span> <span class="nt">remote</span> <span class="nt">end</span> <span class="nt">hung</span> <span class="nt">up</span> <span class="nt">unexpectedly</span>
+<span class="nt">fatal</span><span class="o">:</span> <span class="nt">early</span> <span class="nt">EOF</span>
+<span class="nt">fatal</span><span class="o">:</span> <span class="nt">index-pack</span> <span class="nt">failed</span>
+</pre></div>
+
+
+<p>Try the following before re-cloning:</p>
+<div class="highlight"><pre><span></span>git config --global http.postBuffer 1048576000
+</pre></div>
+
+
+<p>The below will clone the <code>master</code> branch. See ref to pull other branches.</p>
+<div class="highlight"><pre><span></span>mkdir -p $GOPATH/src/github.com/hashicorp
+cd $GOPATH/src/github.com/hashicorp
+git clone --depth 1
+cd vault
+git fetch --unshallow
+git pull --all
+</pre></div>
+
+
 <h3><a href="#refs" id="refs">References</a></h3>
 <ul>
-<li><a href="https://git-scm.com/book/en/v2">Git Book</a></li>
+<li>
+<p><a href="https://git-scm.com/book/en/v2">Git Book</a></p>
+</li>
+<li>
+<p><a href="https://stackoverflow.com/questions/21277806/fatal-early-eof-fatal-index-pack-failed">Git clone failed early EOF</a></p>
+</li>
 </ul>
       </div>
       <footer class="post-footer">
@@ -257,6 +329,7 @@ git push origin master //pushes origin/master
           <li><a href="/category/misc.html">misc</a></li>
           <li><a href="/category/review.html">Review</a></li>
           <li><a href="/category/setup.html">Setup</a></li>
+          <li><a href="/category/software-encryption.html">software, encryption</a></li>
           <li><a href="/category/teaser.html">Teaser</a></li>
         </ul>
       </nav>

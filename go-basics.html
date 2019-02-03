@@ -70,13 +70,13 @@
 <li><a href="#refs">References</a></li>
 </ul>
 <h3><a href="#overview" id="overview">Overview</a></h3>
-<div class="highlight"><pre>go build [-i] github.com/user/aclient/cmd/multiget //  (-i installs binary - like running go install) 
+<div class="highlight"><pre><span></span>go build [-i] github.com/user/aclient/cmd/multiget //  (-i installs binary - like running go install) 
 go clean [-i] github.com/user/aclient/cmd/multiget // removes object files and executables (-i removes binaries installed with go install) 
 </pre></div>
 
 
 <h4><a href="#go+git" id="go+git">Go+git</a></h4>
-<div class="highlight"><pre>git clone https://github.com/origin/repo.git OR go get https://github.com/origin/repo
+<div class="highlight"><pre><span></span>git clone https://github.com/origin/repo.git OR go get https://github.com/origin/repo
 
 git remote add fork https://github.com/fork/repo.git
 git push fork
@@ -87,12 +87,12 @@ git push fork
 <p>Sending pull requests from the fork then becomes easy because the package import paths are same as for the origin. </p>
 <p>tldr; don't clone or work on the fork - simply add it as a remote and push changes to it. Anyway in most cases you won't be able to push changes to the origin because you won't have permission. </p>
 <h4><a href="#namedtypes" id="namedtypes">Named types</a></h4>
-<div class="highlight"><pre><span class="kd">type</span> <span class="nx">StringSlice</span> <span class="p">[]</span><span class="kt">string</span>
+<div class="highlight"><pre><span></span><span class="kd">type</span> <span class="nx">StringSlice</span> <span class="p">[]</span><span class="kt">string</span>
 </pre></div>
 
 
 <p>Methods can be defined for any named type (except a pointer or an interface); the receiver does not have to be a struct. So:</p>
-<div class="highlight"><pre><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">StringSlice</span><span class="p">)</span> <span class="nx">Len</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">StringSlice</span><span class="p">)</span> <span class="nx">Len</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
   <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
 <span class="p">}</span>
 </pre></div>
@@ -104,7 +104,7 @@ git push fork
 <ul>
 <li>Read channel:  </li>
 </ul>
-<div class="highlight"><pre><span class="kd">var</span> <span class="nx">ch</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kt">int</span>
+<div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">ch</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kt">int</span>
 <span class="nx">ch</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="o">&lt;-</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">)</span>
 </pre></div>
 
@@ -112,7 +112,7 @@ git push fork
 <ul>
 <li>Write channel</li>
 </ul>
-<div class="highlight"><pre><span class="kd">var</span> <span class="nx">ch</span> <span class="kd">chan</span><span class="o">&lt;-</span> <span class="kt">int</span>
+<div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">ch</span> <span class="kd">chan</span><span class="o">&lt;-</span> <span class="kt">int</span>
 <span class="nx">ch</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span><span class="o">&lt;-</span> <span class="kt">int</span><span class="p">)</span>
 </pre></div>
 
@@ -120,7 +120,7 @@ git push fork
 <ul>
 <li>Channels are usually declared bidirectional. Read/write channels are useful as arguments / return values from functions. So for instance:</li>
 </ul>
-<div class="highlight"><pre><span class="kd">func</span> <span class="nx">returnReadChannel</span><span class="p">()</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="kd">func</span> <span class="nx">returnReadChannel</span><span class="p">()</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="p">{</span>
   <span class="nx">ch</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
   <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">defer</span> <span class="nb">close</span><span class="p">(</span><span class="nx">ch</span><span class="p">)</span>
@@ -134,14 +134,14 @@ git push fork
 <ul>
 <li>Buffered</li>
 </ul>
-<div class="highlight"><pre><span class="nx">bch</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span><span class="o">&lt;-</span> <span class="kt">int</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="nx">bch</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span><span class="o">&lt;-</span> <span class="kt">int</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 </pre></div>
 
 
 <ul>
 <li>Range over channel (or read channel)  doesn't block if channel is closed. </li>
 </ul>
-<div class="highlight"><pre><span class="k">for</span> <span class="nx">x</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">ch</span> <span class="p">{</span> <span class="c1">// x has zero value of ch type</span>
+<div class="highlight"><pre><span></span><span class="k">for</span> <span class="nx">x</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">ch</span> <span class="p">{</span> <span class="c1">// x has zero value of ch type</span>
   <span class="c1">// </span>
 <span class="p">}</span>
 <span class="nx">x</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">ch</span>  <span class="c1">//doesn&#39;t block if ch is closed. x has zero value of ch type</span>
@@ -151,7 +151,7 @@ git push fork
 <ul>
 <li>Reading from closed channel results in zero value of channel type. Can use the untyped bool value returned to check whether channel closed (false).</li>
 </ul>
-<div class="highlight"><pre><span class="k">if</span> <span class="nx">val</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">ch</span><span class="p">;</span> <span class="nx">ok</span> <span class="p">{</span>    <span class="c1">// ok is false if ch is closed</span>
+<div class="highlight"><pre><span></span><span class="k">if</span> <span class="nx">val</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">ch</span><span class="p">;</span> <span class="nx">ok</span> <span class="p">{</span>    <span class="c1">// ok is false if ch is closed</span>
   <span class="c1">// do something with val</span>
 <span class="p">}</span>
 </pre></div>
@@ -167,14 +167,14 @@ git push fork
 </ul>
 <h3><a href="#builtin" id="builtin">Builtin</a></h3>
 <h4><a href="#append" id="append">append</a></h4>
-<div class="highlight"><pre><span class="nx">s</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="nx">s</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
 <span class="nx">s</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span> <span class="c1">// Out: [0,0,0,0,0,6]</span>
 </pre></div>
 
 
 <h4><a href="#sort" id="sort">sort</a></h4>
 <p>A type, typically a collection, that satisfies sort.Interface can be sorted by the routines in the sort package. The methods require that the elements of the collection be enumerated by an integer index. </p>
-<div class="highlight"><pre><span class="kd">type</span> <span class="nx">Interface</span> <span class="kd">interface</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="kd">type</span> <span class="nx">Interface</span> <span class="kd">interface</span> <span class="p">{</span>
     <span class="c1">// Len is the number of elements in the collection.</span>
     <span class="nx">Len</span><span class="p">()</span> <span class="kt">int</span>
     <span class="c1">// Less reports whether the element with</span>
@@ -201,7 +201,7 @@ git push fork
 + SIGINT : Control-C (interrupt character) sent - program exits
 + SIGTERM : Control-\ sent - program exits with stack dump</p>
 <p>os.signal.Signal.Notify(chan&lt;- os.Signal, sig ...os.Signal) can be used to over-ride default behaviour and deliver signals over registered channels. Notify must use a buffered channel or risk missing the signal if program isn't ready to receive when the signal is sent because Notify doesn't block and simply drops the signal.</p>
-<div class="highlight"><pre>  <span class="o">//</span> send but do not block <span class="kr">for</span> it
+<div class="highlight"><pre><span></span>  <span class="o">//</span> send but do not block <span class="kr">for</span> it
   select <span class="p">{</span>
     case <span class="kt">c</span> <span class="o">&lt;-</span> sig<span class="o">:</span>
     default<span class="o">:</span>
@@ -216,12 +216,12 @@ git push fork
 <p>If no channel has been registered to be notified of SIGPIPE, the program will exit if the write is to a file descriptor of type 1 or 2. Write to all other types will cause write to fail with EPIPE error.</p>
 <p>There are precautions while handling signals when calling non-Go programs from Go programs and vice-versa. Check <a href="https://golang.org/pkg/os/signal">os.signal</a> for details. </p>
 <h3><a href="#testing" id="testing">Testing</a></h3>
-<div class="highlight"><pre>go test -run Foo github.com/user/project/
+<div class="highlight"><pre><span></span>go test -run Foo github.com/user/project/
 </pre></div>
 
 
 <h3><a href="#tool" id="tool">Tool</a></h3>
-<div class="highlight"><pre>go tool # lists all available tools
+<div class="highlight"><pre><span></span>go tool # lists all available tools
 </pre></div>
 
 
@@ -289,6 +289,7 @@ git push fork
           <li><a href="/category/misc.html">misc</a></li>
           <li><a href="/category/review.html">Review</a></li>
           <li><a href="/category/setup.html">Setup</a></li>
+          <li><a href="/category/software-encryption.html">software, encryption</a></li>
           <li><a href="/category/teaser.html">Teaser</a></li>
         </ul>
       </nav>

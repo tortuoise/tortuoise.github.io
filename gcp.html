@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
         <meta charset="utf-8" />
-    <title>Bellycoo PV LED Study Lamp Kit — Wattwerks</title>
+    <title>GCP — Wattwerks</title>
     <link rel="stylesheet" type="text/css" href="/theme/css/skeleton.css" />
     <link rel="stylesheet" type="text/css" href="/theme/css/main.css" />
     <link rel="shortcut icon" type="text/css" href="/favicon.ico" />
@@ -13,7 +13,7 @@
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no" />
 
     <meta name="author"   content="Sridhar" />
-    <meta name="keywords" content="solar, pv, study lamp" />
+    <meta name="keywords" content="software" />
   </head>
   <body>
     <div class="page">
@@ -26,34 +26,79 @@
       <div class="page-content">
      <article class="post content">
       <header class="post-header">
-        <time datetime="2014-06-15T00:00:00+01:00" pubdate="pubdate">
-          Sun 15 June 2014
+        <time datetime="2018-03-31T00:00:00+01:00" pubdate="pubdate">
+          Sat 31 March 2018
         </time>
         <h1>
           <a rel="bookmark"
-             href="/bellycoo-pv-led-study-lamp-kit.html"
-             title="Lien permanent vers «Bellycoo PV LED Study Lamp Kit»">
-             Bellycoo PV LED Study Lamp Kit
+             href="/gcp.html"
+             title="Lien permanent vers «GCP»">
+             GCP
           </a>
         </h1>
         <div class="meta">
-            In «<a href="/category/events.html">Events</a>» 
+            In «<a href="/category/cheat-sheet.html">Cheat Sheet</a>» 
             by <a href="/author/sridhar.html">Sridhar</a>
         </div>
       </header>
       <div class="post-content"> 
-        <p><strong>Bellycoo PV LED Study Lamp Kit</strong>  </p>
-<p>On Saturday, 30/05/14 conducted a workshop for students and teachers of rural schools around Kanakapura town to assemble their own photovoltaic led study lamps. The idea was to use available materials to create a kit that students and teachers could assemble and learn about the principles of electricity and the photovoltaic effect.  </p>
-<p>The kit consists of a machined white electrical box with holes for the LEDs, 2 PCBs and a 3.7V 1150mAh Lithium ion battery. Moredetails and the manual of the kit are available <a href="bellycoo.pdf">here</a>.  </p>
-<p>The workshop went surprisingly smoothly and many of the participants took to the task with more ease than we had anticipated. A couple of the teams were able to assemble their own PV modules without any breakage! Teams which found the module making too tedious were given pre-made modules to continue the process of soldering the components onto the PCBs and final assembly of the study lamp.  </p>
-<p>Photos of the event are available <a href="https://www.flickr.com/gp/76843644@N02/2mR8GZ/">here</a>. BeLLiku means 'light' in Kannada but Bellycoo is way easier in English so the name has stuck.   </p>
-<p>As the popular saying goes, give a child a study lamp and she can study so long as the lamp works, teach a child to make a study lamp and she's a student for life.   </p>
+        <h2><a href="#contents" id="contents">Contents</a></h2>
+<ul>
+<li><a href="#setup">Setup</a></li>
+<li><a href="#gcloud">gcloud</a></li>
+<li><a href="#compute">compute</a><ul>
+<li><a href="#ssh">ssh</a></li>
+<li><a href="#scp">scp</a></li>
+</ul>
+</li>
+<li><a href="#theory">Theory</a></li>
+<li><a href="#gotchas">Gotchas</a></li>
+<li><a href="#refs">References</a></li>
+</ul>
+<h3><a href="#setup" setup>Setup</a></h3>
+<ul>
+<li>
+<p>Create an environment variable for the correct distribution
+    export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"</p>
+</li>
+<li>
+<p>Add the Cloud SDK distribution URI as a package source
+    echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list</p>
+</li>
+<li>
+<p>Import the Google Cloud Platform public key
+    curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -</p>
+</li>
+<li>
+<p>Update the package list and install the Cloud SDK
+    sudo apt-get update &amp;&amp; sudo apt-get install google-cloud-sdk</p>
+</li>
+</ul>
+<h3><a href="#gcloud" id="gcloud">gcloud</a></h3>
+<ul>
+<li>ssh-keygen -t rsa -f ~/.ssh/gcp -C user@gmail.com</li>
+<li>gcloud init --console-only</li>
+<li>
+<p>gcloud compute ssh locomov --zone europe-west2-c --ssh-key-file=~/.ssh/gcp</p>
+</li>
+<li>
+<p>gcloud compute scp ~/this_file instance:~/there --zone europe-west2-c</p>
+</li>
+</ul>
+<h3><a href="#" id=""></a></h3>
+<h3><a href="#" id=""></a></h3>
+<h3><a href="#refs" id="refs">References</a></h3>
+<ul>
+<li><a href="https://cloud.google.com/sdk/docs/quickstart-debian-ubuntu">Quickstart</a></li>
+<li><a href="https://cloud.google.com/compute/docs/instances/adding-removing-ssh-keys?hl=en_GB">Managing SSH keus</a> </li>
+<li><a href="https://"></a></li>
+</ul>
       </div>
       <footer class="post-footer">
         <div class="meta">
-            In «<a href="/category/events.html">Events</a>» 
+            In «<a href="/category/cheat-sheet.html">Cheat Sheet</a>» 
             by <a href="/author/sridhar.html">Sridhar</a><br />
-            Tags:  #<a href="/tag/solar.html">solar</a> #<a href="/tag/pv.html">pv</a> #<a href="/tag/study-lamp.html">study lamp</a>        </div>
+            Tags:  #<a href="/tag/software.html">software</a>        </div>
       </footer>
     </article>
       </div>

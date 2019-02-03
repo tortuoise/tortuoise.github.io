@@ -43,39 +43,39 @@
       </header>
       <div class="post-content"> 
         <p><strong>Madowatt Meter: a current transformer based internet connected meter</strong>  </p>
-<p>Bill Of Materials:<br />
-1. Atmel ATmega328PU with Arduino Optiboot<br />
-2. Crystal: 1 x 16MHz<br />
-3. Voltage regulators: 1 x LD7805, 1 x <a href="https://www.sparkfun.com/products/526">LD33V</a><br />
-4. Stripboard  <br />
+<p>Bill Of Materials:<br>
+1. Atmel ATmega328PU with Arduino Optiboot<br>
+2. Crystal: 1 x 16MHz<br>
+3. Voltage regulators: 1 x LD7805, 1 x <a href="https://www.sparkfun.com/products/526">LD33V</a><br>
+4. Stripboard  <br>
 5. XBee S2 
 6. XBee USB Adapter 
-7. <a href="https://www.sparkfun.com/products/8276">XBee Module Breakout</a>.<br />
-7. Capacitors: 3 x 10uF, 2 x 22pF<br />
-8. Resistors: 2 x 1.7k, 2 x 2.2k, 2 x 3.3k, 2 x 10k<br />
-9. 12VDC 500mA Power Adapter<br />
-10. LEDs: 2<br />
-11. SCT 030 current transformer<br />
+7. <a href="https://www.sparkfun.com/products/8276">XBee Module Breakout</a>.<br>
+7. Capacitors: 3 x 10uF, 2 x 22pF<br>
+8. Resistors: 2 x 1.7k, 2 x 2.2k, 2 x 3.3k, 2 x 10k<br>
+9. 12VDC 500mA Power Adapter<br>
+10. LEDs: 2<br>
+11. SCT 030 current transformer<br>
 12. <a href="https://www.sparkfun.com/products/11570">TRRS 3.5mm Jack Breakout</a>  </p>
-<p><em>Circuit Diagram</em><br />
+<p><em>Circuit Diagram</em><br>
 The circuit diagram is shown below. Solder all the components onto stripboard. Use a socket for the ATMEGA328-PU and a breadboard adapter for the XBee S2, i.e. don't solder these directly onto the stripboard as they're sensitive devices and may be destroyed while soldering. The rest of the devices can be soldered directly onto the board.  </p>
-<p><img alt="Circuit Diagram" src="mado_meter_circuit.png" />  </p>
+<p><img alt="Circuit Diagram" src="mado_meter_circuit.png">  </p>
 <p>Current transformer circuit: the current transformer circuit is the simplest part of the meter. Simply connect the +ive end of the SCT-030 to A1 on the Uno and the -ive to GND. Then connect a 10kohm resistor and a 10uF capacitor in series from 5V on the Uno to GND on the Uno. Then connect another 10kohm resistor in parallel with the capacitor and in series with the first resistor. See diagram above and prototype below:   </p>
 <p>Atmel / Arduino circuit: an Arduino Uno board can be replicated on stripboard as described <a href="http://www.arduino.cc/en/Main/Standalone">here</a>.   </p>
 <p>XBee circuit: a 5V power supply is used with the Atmel ATMEGA328 while the XBee has a reference voltage of 3.3V. So the connections from the Atmel RX/TX to the XBee Dout/Din have to made using a voltage divider to correspond with the XBee's Vref=3.3V.  </p>
-<p><em>Atmel ATMEGA328PU</em> <br />
-1. Burn bootloader: if the ATMEGA doesn't already have a Arduino bootloader on it it will have to be loaded.<br />
+<p><em>Atmel ATMEGA328PU</em> <br>
+1. Burn bootloader: if the ATMEGA doesn't already have a Arduino bootloader on it it will have to be loaded.<br>
 2. Upload the following sketch (current only) onto the micro-controller using an Arduino Uno. Power is calculated assuming voltage of 230V and written to serial port.  </p>
-<p>#include "EmonLib.h"    // Include Emon Library<br />
-EnergyMonitor emon1;    // Create an instance<br />
-void setup(){<br />
-  Serial.begin(9600);<br />
-  emon1.current(1, 30); // Current: input pin, calibration.<br />
-}<br />
-void loop(){<br />
-  double Irms = emon1.calcIrms(1480);  // Calculate Irms only<br />
-  Serial.println(Irms*230.0);          // Apparent power<br />
-  delay(10000);<br />
+<p>#include "EmonLib.h"    // Include Emon Library<br>
+EnergyMonitor emon1;    // Create an instance<br>
+void setup(){<br>
+  Serial.begin(9600);<br>
+  emon1.current(1, 30); // Current: input pin, calibration.<br>
+}<br>
+void loop(){<br>
+  double Irms = emon1.calcIrms(1480);  // Calculate Irms only<br>
+  Serial.println(Irms*230.0);          // Apparent power<br>
+  delay(10000);<br>
 }  </p>
 <p><em>XBee RF wireless network</em>   </p>
 <ol>
@@ -126,12 +126,12 @@ void loop(){<br />
 <li>If the XBee shield is being used in a production meter then it should be in MICRO mode.  </li>
 <li>Uploading the current sketch: if you want to upload the current sketch without removing the XBee shield, disconnect the Uno+XBee shield from the power supply and switch the XBee shield to MICRO mode. In this mode, you can upload sketches to the ATMega328. Note that in this mode whatever is sent to the ATMega328 is also transmitted by the XBee radio if it's already configured. So you're likely to see a stream of rubbish if there's another XBee radio with the same (or no) PAN ID.   </li>
 </ol>
-<p><img alt="Prototype" src="mado_meter_proto.png" />  </p>
-<p><strong>Madowatt Portal</strong><br />
-1. Client: the MadowattClient connects to the MadowattServer, reads the serial port of the computer and transmits the readings to the MadowattServer. The MadowattClient is run by downloading the jar and running: java -jar Madowatt.jar <meter_id><br />
-2. Server:  The MadowattServer is a multi-threaded Java application which listens for connections from clients on a single port and stores the data the clients send in a postgresql database. Complile and run the server using: <br />
-javac -d . -cp .:postgresql-9.3-1100.jdbc41.jar:c3p0-0.9.1.jar MadowattServer.java MadowattServerThread.java MadowattProtocol.java MadowattData.java<br />
-java -cp .:postgresql-9.3-1100.jdbc41.jar:c3p0-0.9.1.jar madowatt.MadowattServer <br />
+<p><img alt="Prototype" src="mado_meter_proto.png">  </p>
+<p><strong>Madowatt Portal</strong><br>
+1. Client: the MadowattClient connects to the MadowattServer, reads the serial port of the computer and transmits the readings to the MadowattServer. The MadowattClient is run by downloading the jar and running: java -jar Madowatt.jar <meter_id><br>
+2. Server:  The MadowattServer is a multi-threaded Java application which listens for connections from clients on a single port and stores the data the clients send in a postgresql database. Complile and run the server using: <br>
+javac -d . -cp .:postgresql-9.3-1100.jdbc41.jar:c3p0-0.9.1.jar MadowattServer.java MadowattServerThread.java MadowattProtocol.java MadowattData.java<br>
+java -cp .:postgresql-9.3-1100.jdbc41.jar:c3p0-0.9.1.jar madowatt.MadowattServer <br>
 3. Servlet: the ChartServlet is a Java HttpServlet which displays the data sent by the Client to the Server. See <a href="http://meter.madowatt.in">this</a> for instance.  </p>
       </div>
       <footer class="post-footer">
@@ -164,6 +164,7 @@ java -cp .:postgresql-9.3-1100.jdbc41.jar:c3p0-0.9.1.jar madowatt.MadowattServer
           <li><a href="/category/misc.html">misc</a></li>
           <li><a href="/category/review.html">Review</a></li>
           <li><a href="/category/setup.html">Setup</a></li>
+          <li><a href="/category/software-encryption.html">software, encryption</a></li>
           <li><a href="/category/teaser.html">Teaser</a></li>
         </ul>
       </nav>

@@ -44,29 +44,29 @@
       <div class="post-content"> 
         <p>A quick summary of ZeroMQ setup, problems encountered and solutions. </p>
 <h3>libzmq</h3>
-<p>git clone https://github.com/tortuoise/libzmq<br />
-apt-get install libtool<br />
-apt-get install build-essential<br />
-apt-get install uuid-dev<br />
-cd libzmq<br />
-sh autogen.sh<br />
-./configure --without-libsodium<br />
-su root<br />
-make install<br />
+<p>git clone https://github.com/tortuoise/libzmq<br>
+apt-get install libtool<br>
+apt-get install build-essential<br>
+apt-get install uuid-dev<br>
+cd libzmq<br>
+sh autogen.sh<br>
+./configure --without-libsodium<br>
+su root<br>
+make install<br>
 ldconfig  </p>
 <h3>czmq ###</h3>
-<p>git clone git://github.com/zeromq/czmq.git<br />
-cd czmq<br />
-sh autogen.sh<br />
-./configure <br />
-make all<br />
-su root<br />
-make install<br />
+<p>git clone git://github.com/zeromq/czmq.git<br>
+cd czmq<br>
+sh autogen.sh<br>
+./configure <br>
+make all<br>
+su root<br>
+make install<br>
 ldconfig  </p>
 <h3>Problems encountered</h3>
-<p>Setup errors:<br />
+<p>Setup errors:<br>
 zguide/examples/C: Could not find libtool : change libtool to libtoolize in autogen.sh  </p>
-<p>./build all: Cannot find -luuid:  apt-get install uuid-dev<br />
+<p>./build all: Cannot find -luuid:  apt-get install uuid-dev<br>
 apt-cache search libuuid  </p>
 <h3>Why ?</h3>
 <p>The current device that we use for monitoring PV systems sends data to a receiver which is connected to a serial port of a laptop or desktop. The application running on the computer uses Java. The plan is to replace the laptop/desktop with a small device that runs a basic version of linux and something like zeromq, read the serial data arriving from a wireless device (Zigbee/ANT) and transmit it to a server via a direct connection to the router/modem.</p>
@@ -101,6 +101,7 @@ apt-cache search libuuid  </p>
           <li><a href="/category/misc.html">misc</a></li>
           <li><a href="/category/review.html">Review</a></li>
           <li><a href="/category/setup.html">Setup</a></li>
+          <li><a href="/category/software-encryption.html">software, encryption</a></li>
           <li><a href="/category/teaser.html">Teaser</a></li>
         </ul>
       </nav>

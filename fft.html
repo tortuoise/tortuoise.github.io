@@ -46,7 +46,7 @@
 FFT is a divide and conquer algorithm that speeds up matrix multiplication of an input array of size n and an nxn <span class="math">\(M_n(\omega)\)</span> matrix which has (j,k)th entry <span class="math">\(\omega^{jk}\)</span> where 1, <span class="math">\(\omega\)</span>, <span class="math">\(\omega^{2}\)</span>, ..., <span class="math">\(\omega^{n-1}\)</span> are the complex nth roots of unity.</p>
 <p><strong>Continued</strong>
 The code below works (the results are correct) though there's a memory leak. </p>
-<div class="highlight"><pre><span class="sb">``</span>`C
+<div class="highlight"><pre><span></span><span class="sb">``</span>`C
 float <span class="kt">complex</span> <span class="o">*</span>fft<span class="p">(</span>float <span class="kt">complex</span> <span class="o">*</span><span class="kp">in</span><span class="p">,</span> int n<span class="p">,</span> float <span class="kt">complex</span> w<span class="p">)</span> <span class="p">{</span>
   int i<span class="p">,</span>j<span class="p">;</span>
   <span class="kr">if</span><span class="p">(</span>fabs<span class="p">(</span>crealf<span class="p">(</span>w<span class="p">)</span><span class="m">-1.00</span>f<span class="p">)</span><span class="o">&lt;</span><span class="m">.0001</span>f <span class="o">&amp;&amp;</span> fabs<span class="p">(</span>cimagf<span class="p">(</span>w<span class="p">)</span><span class="m">-0.00</span>f<span class="p">)</span><span class="o">&lt;</span><span class="m">0.0001</span>f<span class="p">)</span> <span class="p">{</span>
@@ -94,11 +94,9 @@ float <span class="kt">complex</span> <span class="o">*</span>fft<span class="p"
     }
 
     var mathjaxscript = document.createElement('script');
-    var location_protocol = (false) ? 'https' : document.location.protocol;
-    if (location_protocol !== 'http' && location_protocol !== 'https') location_protocol = 'https:';
     mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
     mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
     mathjaxscript[(window.opera ? "innerHTML" : "text")] =
         "MathJax.Hub.Config({" +
         "    config: ['MMLorHTML.js']," +
@@ -170,6 +168,7 @@ float <span class="kt">complex</span> <span class="o">*</span>fft<span class="p"
           <li><a href="/category/misc.html">misc</a></li>
           <li><a href="/category/review.html">Review</a></li>
           <li><a href="/category/setup.html">Setup</a></li>
+          <li><a href="/category/software-encryption.html">software, encryption</a></li>
           <li><a href="/category/teaser.html">Teaser</a></li>
         </ul>
       </nav>

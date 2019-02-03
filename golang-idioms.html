@@ -51,7 +51,7 @@
 </ul>
 <h3><a href="#funcy" id="funcy">Funcy interface</a></h3>
 <ul>
-<li>Single function interfaces can be supplanted by function types, the  most popluar example being http.Handler &amp; http.HandlerFunc  <div class="highlight"><pre>type Handler interface {
+<li>Single function interfaces can be supplanted by function types, the  most popluar example being http.Handler &amp; http.HandlerFunc  <div class="highlight"><pre><span></span>type Handler interface {
         ServeHTTP(w http.ResponseWriter, r *http.Request)
 }
 
@@ -67,7 +67,7 @@ func (f HandlerFunc) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 </ul>
 <h3><a href="#wrap" id="wrap">Wrapper Adapter</a></h3>
 <ul>
-<li>Wrapping preserves interfaces while adding functionality  <div class="highlight"><pre>func Wrap (h http.Handler) http.Handler {
+<li>Wrapping preserves interfaces while adding functionality  <div class="highlight"><pre><span></span>func Wrap (h http.Handler) http.Handler {
         return &amp;wrapper{ handler: h}
 }
 
@@ -98,7 +98,7 @@ func main() {
 </ul>
 <h3><a href="#limit" id="limit">Limit goroutines</a></h3>
 <ul>
-<li>Use a buffered channel to limit creation of simultaneously active goroutines.<div class="highlight"><pre>var <span class="p">(</span>
+<li>Use a buffered channel to limit creation of simultaneously active goroutines.<div class="highlight"><pre><span></span>var <span class="p">(</span>
         concurrent <span class="o">=</span> <span class="m">5</span>
         limit <span class="o">=</span> make<span class="p">(</span>chan struct<span class="p">{},</span> concurrent<span class="p">)</span>
 <span class="p">)</span>
@@ -132,7 +132,7 @@ func main<span class="p">()</span> <span class="p">{</span>
 </li>
 <li>
 <p>Let the entity do it's own validation by having it implement a Validator interface    </p>
-<div class="highlight"><pre>type Validator interface {
+<div class="highlight"><pre><span></span>type Validator interface {
         func Validate(v ...interface{}) error
 }
 
@@ -150,7 +150,7 @@ func (u *User) Validate(v ...interface{}) error {
 </li>
 <li>
 <p>A function Validate can then select a Validator depending on the type of the interface.</p>
-<div class="highlight"><pre>func Validate(u interface{}, v ...interface{}) error {
+<div class="highlight"><pre><span></span>func Validate(u interface{}, v ...interface{}) error {
         uu := reflect.ValueOf(u)
         err := selectValidatorType(uu.Type())(uu, v...)
         return err
@@ -222,6 +222,7 @@ func errorValidator(u reflect.Value, v ...interface{}) error {
           <li><a href="/category/misc.html">misc</a></li>
           <li><a href="/category/review.html">Review</a></li>
           <li><a href="/category/setup.html">Setup</a></li>
+          <li><a href="/category/software-encryption.html">software, encryption</a></li>
           <li><a href="/category/teaser.html">Teaser</a></li>
         </ul>
       </nav>

@@ -42,44 +42,81 @@
         </div>
       </header>
       <div class="post-content"> 
-        <p><strong>STARTUP</strong>
-GRUB: hold shift key down as soon as bios loads<br />
-/etc/default/grub //for grub settings - tried adding vga=0x0369 to this file to fix boot issues and it hasn't worked.<br />
-sudo update-grub // after making any changes to /etc/default/grub - writes to /boot/grub/grub.cfg  </p>
-<p><strong>STARTUP ON BOOT</strong>
-For non-upstart services:<br />
-sudo update-rc.d tomcat6 enable 2 //changes symlink in /etc/rc2.d/ from K08tomcat6 to S92tomcat6<br />
-sudo update-rc.d tomcat6 disable 2 //changes symlink in /etc/rc2.d/ from S92tomcat6 to K08tomcat6<br />
-For upstart services:<br />
-ls /etc/init/*.conf // lists all upstart services<br />
-/etc/gdm/Init/Default //this is where you 'can' put some xrandr to apply on startup<br />
-/etc/init.d //this folder has start-up scripts<br />
-/etc/default //this folder has default values  </p>
-<p><strong>UPSTART SERVICES</strong> 
-initctl list //lists all services with status <br />
-service --status-all //same as 'ls /etc/init.d' <br />
-start/stop/restart/status <service> // same as initctl start/stop/restart/status <service><br />
-halt/poweroff/shutdown/reboot<br />
+        <h2><a href="#contents" id="contents">Contents</a></h2>
+<ul>
+<li><a href="#startup">Startup</a><ul>
+<li><a href="#nonupstart">Non-upstart</a></li>
+<li><a href="#upstart">Upstart</a></li>
+</ul>
+</li>
+<li><a href="#kernel">Kernel upgrade</a></li>
+<li><a href="#user">User/pswd/admin</a></li>
+<li><a href="#byobu">Byobu</a></li>
+<li><a href="#wacom">Wacom</a></li>
+<li><a href="#refs">References</a></li>
+</ul>
+<h3><a href="#startup">Startup</a></h3>
+<p>GRUB: hold shift key down as soon as bios loads  </p>
+<div class="highlight"><pre><span></span>/etc/default/grub //for grub settings - tried adding vga=0x0369 to this file to fix boot issues and it hasn&#39;t worked.  
+sudo update-grub // after making any changes to /etc/default/grub - writes to /boot/grub/grub.cfg  
+</pre></div>
+
+
+<h4><a href="#nonupstart">Non-Upstart</a></h4>
+<p>For non-upstart services:<br>
+sudo update-rc.d tomcat6 enable 2 //changes symlink in /etc/rc2.d/ from K08tomcat6 to S92tomcat6<br>
+sudo update-rc.d tomcat6 disable 2 //changes symlink in /etc/rc2.d/ from S92tomcat6 to K08tomcat6<br>
+For upstart services:  </p>
+<div class="highlight"><pre><span></span>ls /etc/init/*.conf // lists all upstart services  
+/etc/gdm/Init/Default //this is where you &#39;can&#39; put some xrandr to apply on startup  
+/etc/init.d //this folder has start-up scripts  
+/etc/default //this folder has default values  
+</pre></div>
+
+
+<h4><a href="#upstart">Upstart</a></h4>
+<div class="highlight"><pre><span></span>initctl list //lists all services with status   
+service --status-all //same as &#39;ls /etc/init.d&#39;   
+start/stop/restart/status &lt;service&gt; // same as initctl start/stop/restart/status &lt;service&gt;  
+halt/poweroff/shutdown/reboot  
 shutdown -r -t 20 now // shutdown in 20s with warning now and reboot
 last reboot //info on previous few reboots
-halt -p // when halting the system switch off the power<br />
-/etc/init/mysql.override //edit to contain word 'manual' to override startup instructions in mysql.conf - same for all other startup services<br />
-added cups.override, mysql.override, ssh.override, smbd.override to override startup instructions in respective /etc/init/*.conf files  </p>
-<p><strong>USER/PASSWORD/ADMIN</strong>
-/etc/passwd /etc/groups<br />
-echo $PATH<br />
-export PATH = $PATH:/new_path/to_add/<br />
-adduser chetan<br />
-usermod -g users chetan<br />
-stat chetan<br />
-chmod 0700 chetan/  // rwx------<br />
-chmod u+x <filename> // add exec right to current user</p>
-<p><strong>INSTALLTION/REPOSITORIES</strong>
-/etc/apt/sources.list or /etc/apt/sources.list.d/* //repository list<br />
-sudo add-apt-repository ppa:<repo path><br />
-/home/sridhar/.local/share/Trash // Rubbish<br />
-update-alternatives --config java //then choose number from list<br />
-apt-get --simulate purge popularity-contest //remove popularity-contest and related packages altogether <br />
+halt -p // when halting the system switch off the power  
+/etc/init/mysql.override //edit to contain word &#39;manual&#39; to override startup instructions in mysql.conf - same for all other startup services  
+added cups.override, mysql.override, ssh.override, smbd.override to override startup instructions in respective /etc/init/*.conf files  
+</pre></div>
+
+
+<h3><a href="#kernel">Kernel upgrade</a></h3>
+<div class="highlight"><pre><span></span>wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.4.140/linux-headers-4.4.140-0404140_4.4.140-0404140.201807111137_all.deb 
+wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.4.140/linux-headers-4.4.140-0404140-generic_4.4.140-0404140.201807111137_amd64.deb 
+wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.4.140/linux-image-4.4.140-0404140-generic_4.4.140-0404140.201807111137_amd64.deb 
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>sudo dpkg -i *.deb
+</pre></div>
+
+
+<p>Reboot</p>
+<h3><a href="#user">USER/PASSWORD/ADMIN</a></h3>
+<div class="highlight"><pre><span></span>/etc/passwd /etc/groups  
+echo $PATH  
+export PATH = $PATH:/new_path/to_add/  
+adduser chetan  
+usermod -g users chetan  
+stat chetan  
+chmod 0700 chetan/  // rwx------  
+chmod u+x &lt;filename&gt; // add exec right to current user
+</pre></div>
+
+
+<h3><a href="#install">INSTALLTION/REPOSITORIES</a></h3>
+<div class="highlight"><pre><span></span>/etc/apt/sources.list or /etc/apt/sources.list.d/* //repository list  
+sudo add-apt-repository ppa:&lt;repo path&gt;  
+/home/sridhar/.local/share/Trash // Rubbish  
+update-alternatives --config java //then choose number from list  
+apt-get --simulate purge popularity-contest //remove popularity-contest and related packages altogether   
 apt list --upgradable
 apt-get autoremove --purge // removes old kernels from boot partition to free up disk space
 dpkg -c/i/l/L/r/s  // package manager view contents/install/list/file locations/remove/installed?
@@ -87,139 +124,194 @@ vgdisplay // volume groups
 pvdisplay // physical volumes
 lvresize -r -L -20G /dev/mapper/home
 lvextend -r -L +20G /dev/mapper/root
-lsblk -a /dev/sda // lists blocks on hd</p>
-<p><strong>NETWORK</strong>
-arp -a // find mac address of router<br />
-ifconfig<br />
-/etc/network/interfaces<br />
-ifdown<br />
-ifup<br />
-iptables<br />
-kill -9 pid //find pid of open tcp/udp connection using netstat -atp<br />
-netstat -at //list all tcp connections -au //udp  -ax //unix  -ar //raw <br />
-nmap -v -sS localhost //half-open scanning of localhost<br />
-nmap -v -sS 192.168.0.0/24 //half-open scanning of local network<br />
-traceroute <host><br />
-ufw default deny <br />
-ufw enable  </p>
-<p><strong>MEMORY</strong>
-cat /proc/sys/kernel/threads-max //=62274<br />
-cat /proc/sys/fs/file_max //=401408<br />
-cat /proc/mdstats<br />
+lsblk -a /dev/sda // lists blocks on hd
+</pre></div>
+
+
+<h3><a href="#network">NETWORK</a></h3>
+<div class="highlight"><pre><span></span>arp -a // find mac address of router  
+ifconfig  
+/etc/network/interfaces  
+ifdown  
+ifup  
+iptables  
+kill -9 pid //find pid of open tcp/udp connection using netstat -atp  
+netstat -at //list all tcp connections -au //udp  -ax //unix  -ar //raw   
+nmap -v -sS localhost //half-open scanning of localhost  
+nmap -v -sS 192.168.0.0/24 //half-open scanning of local network  
+traceroute &lt;host&gt;  
+ufw default deny   
+ufw enable  
+</pre></div>
+
+
+<h3><a href="#memory">MEMORY</a></h3>
+<div class="highlight"><pre><span></span>cat /proc/sys/kernel/threads-max //=62274  
+cat /proc/sys/fs/file_max //=401408  
+cat /proc/mdstats  
 du -h | cut -f1 | sort -h | uniq -c | sort -rn | head  //du recursively lists directory and file sizes
 df -h //lists all partitions
 top // lists cpu util
-ulimit -v //for virtual = unlimited<br />
-ulimit -s //for stack = 8192  </p>
-<p><strong>SHORTCUTS</strong>
-Alt-F2 //type xkill and click on hung app<br />
+ulimit -v //for virtual = unlimited  
+ulimit -s //for stack = 8192  
+</pre></div>
+
+
+<h3><a href="#shortcuts">SHORTCUTS</a></h3>
+<div class="highlight"><pre><span></span>Alt-F2 //type xkill and click on hung app  
 Alt-F4 //closes window
-Ctrl-Alt-F1 // go to virtual terminal - can do sudo reboot from there<br />
-.bash_aliases<br />
-alias ssh1='ssh 192.168.0.133' <br />
-alias grepxsvn='grep -r --exclude=*.svn-base'<br />
-alias grephtml='grep -r --include=*.html'  </p>
-<p><strong>UTILITIES</strong>
-. ./.profile  //sources profile file without restart <br />
-acpi -V // battery status <br />
-aplay -L //list of available cards and devices
-apropos -s 1 compare OR apropos "compare" //searches man files for keyword or string
-arch  // possible output is i686 (32 bit) or x86_64 (64 bit)  <br />
-chmod o=rx dir/ OR u=rwx dir/ OR g=rx dir/<br />
-chown -R sridhar dir/ <br />
-chgrp -R sridhar dir/ <br />
-convert -delay 5 -loop 0 <em>.jpg pp.gif //gif creation
-cp -r source_dir/ target_dir/<br />
-cron // user crontabs in /var/spool/cron/crontabs
-curl 'http://www.gnu.org/software/coreutils/manual/coreutils.html' 2&gt;/dev/null |<br />
-    grep 'h3 class' |<br />
-    grep 'class="command"' |<br />
-    sed 's/.</em>class="command"&gt;//' |<br />
-    sed 's|</span></samp>||' |<br />
-    sed 's|</h3>||' |<br />
-    grep ':' |<br />
-    sort<br />
-dmesg  //print kernel ring buffer - can be used for boot up message<br />
-dpkg-reconfigure popularity-contest  //can toggle whether package usage data is sent to debian<br />
-dpkg --add-architecture i386 //allows 32 bit applications to be installed/run
-exec -l $SHELL   //restarts shell<br />
-fdisk -l //list all partitions<br />
-find /path -name file_name -type d/f<br />
-find ./ -type f -name <em>.class -exec rm -rf {} \;            // remove all files recursively named </em>.class under ./<br />
-find ./ -type f -name <em>.class -exec grep -H "string" {} +  // search for string in files recursively named </em>.class under ./ (multi-threaded)<br />
-find ./ -type f -name <em>.class -print0 | xargs -0 -n1 -P8 grep -H "string" //search for string in files recursively named </em>.class under ./ use xargs<br />
-find . -name '<em>.c' | sort | xargs head -1<br />
+Ctrl-Alt-F1 // go to virtual terminal - can do sudo reboot from there  
+.bash_aliases  
+alias ssh1=&#39;ssh 192.168.0.133&#39;   
+alias grepxsvn=&#39;grep -r --exclude=*.svn-base&#39;  
+alias grephtml=&#39;grep -r --include=*.html&#39;  
+</pre></div>
+
+
+<h3><a href="#utils">UTILITIES</a></h3>
+<div class="highlight"><pre><span></span>&gt; // redirects
+&gt;&amp; // redirect stream to another file descriptor
+0 stdin, 1 stdout, 2 stderr // sample file descriptors
+echo doofus &gt; filename // redirect &quot;doofus&quot; into filename. same as ..
+echo doofus 1&gt; filename // same as above
+echo doofus 1&gt;&amp;2 // redirect stdout to stderr
+echo doofus 2&gt;&amp;1 // or vice versa
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="p">.</span> <span class="p">.</span><span class="o">/</span><span class="p">.</span><span class="n">profile</span>  <span class="c1">//sources profile file without restart   </span>
+<span class="n">acpi</span> <span class="o">-</span><span class="n">V</span> <span class="c1">// battery status   </span>
+<span class="n">aplay</span> <span class="o">-</span><span class="n">L</span> <span class="c1">//list of available cards and devices</span>
+<span class="n">apropos</span> <span class="o">-</span><span class="n">s</span> <span class="mi">1</span> <span class="n">compare</span> <span class="n">OR</span> <span class="n">apropos</span> <span class="s">&quot;compare&quot;</span> <span class="c1">//searches man files for keyword or string</span>
+<span class="n">arch</span>  <span class="c1">// possible output is i686 (32 bit) or x86_64 (64 bit)    </span>
+<span class="n">chmod</span> <span class="n">o</span><span class="o">=</span><span class="n">rx</span> <span class="n">dir</span><span class="o">/</span> <span class="n">OR</span> <span class="n">u</span><span class="o">=</span><span class="n">rwx</span> <span class="n">dir</span><span class="o">/</span> <span class="n">OR</span> <span class="n">g</span><span class="o">=</span><span class="n">rx</span> <span class="n">dir</span><span class="o">/</span>  
+<span class="n">chown</span> <span class="o">-</span><span class="n">R</span> <span class="n">sridhar</span> <span class="n">dir</span><span class="o">/</span>   
+<span class="n">chgrp</span> <span class="o">-</span><span class="n">R</span> <span class="n">sridhar</span> <span class="n">dir</span><span class="o">/</span>   
+<span class="n">convert</span> <span class="o">-</span><span class="n">delay</span> <span class="mi">5</span> <span class="o">-</span><span class="n">loop</span> <span class="mi">0</span> <span class="o">*</span><span class="p">.</span><span class="n">jpg</span> <span class="n">pp</span><span class="p">.</span><span class="n">gif</span> <span class="c1">//gif creation</span>
+<span class="n">cp</span> <span class="o">-</span><span class="n">r</span> <span class="n">source_dir</span><span class="o">/</span> <span class="n">target_dir</span><span class="o">/</span>  
+<span class="n">cron</span> <span class="c1">// user crontabs in /var/spool/cron/crontabs</span>
+<span class="n">curl</span> <span class="err">&#39;</span><span class="nl">http</span><span class="p">:</span><span class="c1">//www.gnu.org/software/coreutils/manual/coreutils.html&#39; 2&gt;/dev/null |  </span>
+    <span class="n">grep</span> <span class="err">&#39;</span><span class="n">h3</span> <span class="k">class</span><span class="err">&#39;</span> <span class="o">|</span>  
+    <span class="n">grep</span> <span class="err">&#39;</span><span class="k">class</span><span class="o">=</span><span class="s">&quot;command&quot;</span><span class="err">&#39;</span> <span class="o">|</span>  
+    <span class="n">sed</span> <span class="err">&#39;</span><span class="n">s</span><span class="o">/</span><span class="p">.</span><span class="o">*</span><span class="k">class</span><span class="o">=</span><span class="s">&quot;command&quot;</span><span class="o">&gt;</span><span class="c1">//&#39; |  </span>
+    <span class="n">sed</span> <span class="err">&#39;</span><span class="n">s</span><span class="o">|&lt;/</span><span class="n">span</span><span class="o">&gt;&lt;/</span><span class="n">samp</span><span class="o">&gt;||</span><span class="err">&#39;</span> <span class="o">|</span>  
+    <span class="n">sed</span> <span class="err">&#39;</span><span class="n">s</span><span class="o">|&lt;/</span><span class="n">h3</span><span class="o">&gt;||</span><span class="err">&#39;</span> <span class="o">|</span>  
+    <span class="n">grep</span> <span class="sc">&#39;:&#39;</span> <span class="o">|</span>  
+    <span class="n">sort</span>  
+<span class="n">date</span> <span class="o">-</span><span class="n">d</span> <span class="s">&quot;@4294967295&quot;</span> <span class="c1">// Sun  7 Feb 06:28:15 GMT 2106</span>
+<span class="n">dmesg</span>  <span class="c1">//print kernel ring buffer - can be used for boot up message  </span>
+<span class="n">dpkg</span><span class="o">-</span><span class="n">reconfigure</span> <span class="n">popularity</span><span class="o">-</span><span class="n">contest</span>  <span class="c1">//can toggle whether package usage data is sent to debian  </span>
+<span class="n">dpkg</span> <span class="o">--</span><span class="n">add</span><span class="o">-</span><span class="n">architecture</span> <span class="n">i386</span> <span class="c1">//allows 32 bit applications to be installed/run</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>exec -l $SHELL   //restarts shell  
+fdisk -l //list all partitions  
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>find /path -name file_name -type d/f  
+find ./ -type f -name *.class -exec rm -rf {} \;            // remove all files recursively named *.class under ./  
+find ./ -type f -name *.class -exec grep -H &quot;string&quot; {} \+  // search for string in files recursively named *.class under ./ (multi-threaded)  
+find ./ -type f -name *.class -print0 | xargs -0 -n1 -P8 grep -H &quot;string&quot; //search for string in files recursively named *.class under ./ use xargs  
+find . -name &#39;*.c&#39; | sort | xargs head -1  
 find ./ -type d -newer ~/docs/temp/timestamp -exec rm -rf {} \;  // remove directories newer than timestamp
 find ./ -type d ! -newer ~/docs/temp/timestamp -exec rm -rf {} \;  // remove directories older than timestamp
-grep -r search_term dir/<br />
-grep . /sys/devices/system/cpu/vulnerabilities/</em> 
-gstreamer-properties //multi-media settings<br />
-gunzip &lt; coreutils-8.13.tar.gz | tar -vx<br />
-locate<br />
-ls -a (include hidden) -F (dirs with trailing / and exes with trailing <em>) -l (long listing) -t (sort by time modified) -R (all subdirs)<br />
-ls -1 | wc -l  //counts the number of line entries in ls command <br />
-lspci -v <br />
-lsb_release -rd<br />
-lsof -i -n -P //list all open files &amp; ports <br />
-lsof -i tcp:8888 /// lists services running on 8888 <br />
-lsusb //list usb devices<br />
-ps -ef //list all running processes<br />
-rename -n 's/old/new/' </em>.jpg //bulk rename
-rm -rf ./dir  ///// for dirs with special chars in name<br />
-rsync -anv ./dir sridhar@192.168.0.9:/home/sridhar/dev   //simulate<br />
-rsync -az ./dir sridhar@192.168.0.9:/home/sridhar/dev     //do it for real using compression<br />
-rsync -a --exclude=pattern_to_exclude ./dir sridhar@192.168.0.9:/home/sridhar/dev     //do it for real<br />
-scp -C sridhar@192.168.1.72:/usr/local/bin/iptables /usrlocal/bin/iptables    // need to 'sudo start ssh' on server before trying to connect, always use -C to enable compression
-ssh -C 192.168.1.72 -l sridhar   // ssh on port 22 (tcp)  always use -C to enable compression
-ssh -C sridhar@192.168.1.72   // ssh on port 22 (tcp)  always use -C to enable compression
-screen ctrl-a then c for new terminal. ctrl-a, 0 or 1 to toggle between terminal // not used much since byobu<br />
-speaker-test -Dsysdefault:Intel -c 6 // tests 6 audio channels only first two of which are generally used
-stty -echo // turn off terminal echo
-stty echo // turn it back on
-tail <file> //lists last few entires in file<br />
-tar -xvzf file.tar.gz<br />
-tar xfJ scala-docs-2.10.2.txz<br />
-tar -zvcf file.tar.gz directory/      //compress directory into file.tar.gz<br />
-tee <output_file> //reads from std input and writes to std output and to the named file
-time ./program //real: real time, user: how long program was running on cpu, sys: how long the program was waiting for os to perform tasks for it<br />
-touch -t 201607010000 ~/docs/temp/timestamp
-uname -a     // 32 or 64 bit i686 is 32 bit, x86_64 is 64 bit<br />
-uname -r // prints kernel version
-unrar e file.rar<br />
-wget 'http://ftp.gnu.org/gnu/coreutils/coreutils-8.13.tar.gz'<br />
-whereis<br />
-xxd //make hexdump or reverse hexdump<br />
-xrandr //used to set size, orientation and output for screens  </p>
-<p><strong>Filesystem</strong>
-filenames with space : escape with \
+find -L / -maxdepth 2 -samefile /run/systemd/resolve/resolv.conf // -L follows symlinks to a maxdepth of 2 and finds symlinks which are the same as provided filename
+grep -r search_term dir/  
+grep . /sys/devices/system/cpu/vulnerabilities/* 
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="n">gstreamer</span><span class="o">-</span><span class="n">properties</span> <span class="c1">//multi-media settings  </span>
+<span class="n">gunzip</span> <span class="o">&lt;</span> <span class="n">coreutils</span><span class="o">-</span><span class="mf">8.13</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">gz</span> <span class="o">|</span> <span class="n">tar</span> <span class="o">-</span><span class="n">vx</span>  
+<span class="n">history</span> 
+<span class="o">!</span><span class="mi">25</span> <span class="c1">// runs historical command #25</span>
+<span class="o">!-</span><span class="mi">4</span> <span class="c1">// runs 4th previous command</span>
+<span class="n">locate</span>  
+<span class="n">ls</span> <span class="o">-</span><span class="n">a</span> <span class="p">(</span><span class="n">include</span> <span class="n">hidden</span><span class="p">)</span> <span class="o">-</span><span class="n">F</span> <span class="p">(</span><span class="n">dirs</span> <span class="n">with</span> <span class="n">trailing</span> <span class="o">/</span> <span class="n">and</span> <span class="n">exes</span> <span class="n">with</span> <span class="n">trailing</span> <span class="o">*</span><span class="p">)</span> <span class="o">-</span><span class="n">l</span> <span class="p">(</span><span class="kt">long</span> <span class="n">listing</span><span class="p">)</span> <span class="o">-</span><span class="n">t</span> <span class="p">(</span><span class="n">sort</span> <span class="n">by</span> <span class="n">time</span> <span class="n">modified</span><span class="p">)</span> <span class="o">-</span><span class="n">R</span> <span class="p">(</span><span class="n">all</span> <span class="n">subdirs</span><span class="p">)</span>  <span class="o">--</span><span class="n">full</span><span class="o">-</span><span class="n">time</span> <span class="p">(</span><span class="n">show</span> <span class="n">year</span><span class="p">)</span>
+<span class="n">ls</span> <span class="o">-</span><span class="mi">1</span> <span class="o">|</span> <span class="n">wc</span> <span class="o">-</span><span class="n">l</span>  <span class="c1">//counts the number of line entries in ls command   </span>
+<span class="n">lspci</span> <span class="o">-</span><span class="n">v</span>   
+<span class="n">lsb_release</span> <span class="o">-</span><span class="n">rd</span>  
+<span class="n">lsof</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">n</span> <span class="o">-</span><span class="n">P</span> <span class="c1">//list all open files &amp; ports   </span>
+<span class="n">lsof</span> <span class="o">-</span><span class="n">i</span> <span class="nl">tcp</span><span class="p">:</span><span class="mi">8888</span> <span class="c1">/// lists services running on 8888   </span>
+<span class="n">lsusb</span> <span class="c1">//list usb devices  </span>
+<span class="n">ps</span> <span class="o">-</span><span class="n">ef</span> <span class="c1">//list all running processes  </span>
+<span class="n">rename</span> <span class="o">-</span><span class="n">n</span> <span class="err">&#39;</span><span class="n">s</span><span class="o">/</span><span class="n">old</span><span class="o">/</span><span class="n">new</span><span class="o">/</span><span class="err">&#39;</span> <span class="o">*</span><span class="p">.</span><span class="n">jpg</span> <span class="c1">//bulk rename</span>
+<span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="p">.</span><span class="o">/</span><span class="n">dir</span>  <span class="c1">///// for dirs with special chars in name  </span>
+<span class="n">rsync</span> <span class="o">-</span><span class="n">anv</span> <span class="p">.</span><span class="o">/</span><span class="n">dir</span> <span class="n">sridhar</span><span class="mf">@192.168.0.9</span><span class="o">:/</span><span class="n">home</span><span class="o">/</span><span class="n">sridhar</span><span class="o">/</span><span class="n">dev</span>   <span class="c1">//simulate  </span>
+<span class="n">rsync</span> <span class="o">-</span><span class="n">az</span> <span class="p">.</span><span class="o">/</span><span class="n">dir</span> <span class="n">sridhar</span><span class="mf">@192.168.0.9</span><span class="o">:/</span><span class="n">home</span><span class="o">/</span><span class="n">sridhar</span><span class="o">/</span><span class="n">dev</span>     <span class="c1">//do it for real using compression  </span>
+<span class="n">rsync</span> <span class="o">-</span><span class="n">a</span> <span class="o">--</span><span class="n">exclude</span><span class="o">=</span><span class="n">pattern_to_exclude</span> <span class="p">.</span><span class="o">/</span><span class="n">dir</span> <span class="n">sridhar</span><span class="mf">@192.168.0.9</span><span class="o">:/</span><span class="n">home</span><span class="o">/</span><span class="n">sridhar</span><span class="o">/</span><span class="n">dev</span>     <span class="c1">//do it for real  </span>
+<span class="n">scp</span> <span class="o">-</span><span class="n">C</span> <span class="n">sridhar</span><span class="mf">@192.168.1.72</span><span class="o">:/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">iptables</span> <span class="o">/</span><span class="n">usrlocal</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">iptables</span>    <span class="c1">// need to &#39;sudo start ssh&#39; on server before trying to connect, always use -C to enable compression</span>
+<span class="n">ssh</span> <span class="o">-</span><span class="n">C</span> <span class="mf">192.168.1.72</span> <span class="o">-</span><span class="n">l</span> <span class="n">sridhar</span>   <span class="c1">// ssh on port 22 (tcp)  always use -C to enable compression</span>
+<span class="n">ssh</span> <span class="o">-</span><span class="n">C</span> <span class="n">sridhar</span><span class="mf">@192.168.1.72</span>   <span class="c1">// ssh on port 22 (tcp)  always use -C to enable compression</span>
+<span class="n">screen</span> <span class="n">ctrl</span><span class="o">-</span><span class="n">a</span> <span class="n">then</span> <span class="n">c</span> <span class="k">for</span> <span class="n">new</span> <span class="n">terminal</span><span class="p">.</span> <span class="n">ctrl</span><span class="o">-</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span> <span class="n">or</span> <span class="mi">1</span> <span class="n">to</span> <span class="n">toggle</span> <span class="n">between</span> <span class="n">terminal</span> <span class="c1">// not used much since byobu  </span>
+<span class="n">speaker</span><span class="o">-</span><span class="n">test</span> <span class="o">-</span><span class="nl">Dsysdefault</span><span class="p">:</span><span class="n">Intel</span> <span class="o">-</span><span class="n">c</span> <span class="mi">6</span> <span class="c1">// tests 6 audio channels only first two of which are generally used</span>
+<span class="n">stty</span> <span class="o">-</span><span class="n">echo</span> <span class="c1">// turn off terminal echo</span>
+<span class="n">stty</span> <span class="n">echo</span> <span class="c1">// turn it back on</span>
+<span class="n">tail</span> <span class="o">&lt;</span><span class="n">file</span><span class="o">&gt;</span> <span class="c1">//lists last few entires in file  </span>
+<span class="n">tar</span> <span class="o">-</span><span class="n">xvzf</span> <span class="n">file</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">gz</span>  
+<span class="n">tar</span> <span class="n">xfJ</span> <span class="n">scala</span><span class="o">-</span><span class="n">docs</span><span class="o">-</span><span class="mf">2.10.2</span><span class="p">.</span><span class="n">txz</span>  
+<span class="n">tar</span> <span class="o">-</span><span class="n">zvcf</span> <span class="n">file</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">gz</span> <span class="n">directory</span><span class="o">/</span>      <span class="c1">//compress directory into file.tar.gz  </span>
+<span class="n">tee</span> <span class="o">&lt;</span><span class="n">output_file</span><span class="o">&gt;</span> <span class="c1">//reads from std input and writes to std output and to the named file</span>
+<span class="n">time</span> <span class="p">.</span><span class="o">/</span><span class="n">program</span> <span class="c1">//real: real time, user: how long program was running on cpu, sys: how long the program was waiting for os to perform tasks for it  </span>
+<span class="n">touch</span> <span class="o">-</span><span class="n">t</span> <span class="mi">201607010000</span> <span class="o">~/</span><span class="n">docs</span><span class="o">/</span><span class="n">temp</span><span class="o">/</span><span class="n">timestamp</span>
+<span class="n">uname</span> <span class="o">-</span><span class="n">a</span>     <span class="c1">// 32 or 64 bit i686 is 32 bit, x86_64 is 64 bit  </span>
+<span class="n">uname</span> <span class="o">-</span><span class="n">r</span> <span class="c1">// prints kernel version</span>
+<span class="n">unrar</span> <span class="n">e</span> <span class="n">file</span><span class="p">.</span><span class="n">rar</span>  
+<span class="n">wget</span> <span class="err">&#39;</span><span class="nl">http</span><span class="p">:</span><span class="c1">//ftp.gnu.org/gnu/coreutils/coreutils-8.13.tar.gz&#39;  </span>
+<span class="n">whereis</span>  
+<span class="n">xxd</span> <span class="c1">//make hexdump or reverse hexdump  </span>
+<span class="n">xrandr</span> <span class="c1">//used to set size, orientation and output for screens  </span>
+</pre></div>
+
+
+<h3><a href="#files">Filesystem</a></h3>
+<p>filenames with space : escape with \
 filenames with &amp; or ( or ) : enclose in 'filename'</p>
-<p><strong>APPLICATIONS</strong>
-evince file.pdf<br />
+<h3><a href="#apps">Applications</a></h3>
+<div class="highlight"><pre><span></span>evince file.pdf  
 ffmpeg -f gif -i 585.gif 585.mp4 //converts gif to mp4
 ffmpeg -i 585.mp4 -i 585.mp3 -codec copy -shortest output.mp4 //adds music to mp4
-pdftk in.pdf cat 1-12 14-end output out1.pdf //removes page 13<br />
-pdftk in.pdf cat 1E output out1.pdf //rotates p1 anti-clockwise<br />
-pdftk A=in1.pdf B=in2.pdf cat A1-12 B3 A14-end output out1.pdf //add p3(B) after p12(A) &amp; remove page 13(A)<br />
-pdftohtml file.pdf  //saves html as file.html // lynx file.pdf does the same thing<br />
-pdftotext file.pdf //saves text as file.txt<br />
-display boy.jpg // imagemagick command line tool<br />
-enscript -p foo.ps foo.txt<br />
-ghostscript: ps2pdf foo.ps, pdf2ps foo.pdf<br />
-texi2pdf file.tex  </p>
-<p><strong>Ubuntu One</strong><br />
-u1sdtool --help<br />
-u1sdtool --list-folders<br />
-u1sdtool --waiting<br />
-u1sdtool --current-transfers  </p>
-<p><strong>Byobu</strong>
-F9 for menu<br />
-F12 escape<br />
-byobu-ctrl-a to change behaviour of ctrl-a<br />
-developed in python  </p>
-<p><strong>wacom</strong>
-sudo add-apt-repository ppa:lekensteyn/wacom-tablet<br />
-sudo apt-get update<br />
-sudo apt-get install dkms wacom-dkms  </p>
+pdftk in.pdf cat 1-12 14-end output out1.pdf //removes page 13  
+pdftk in.pdf cat 1E output out1.pdf //rotates p1 anti-clockwise  
+pdftk A=in1.pdf B=in2.pdf cat A1-12 B3 A14-end output out1.pdf //add p3(B) after p12(A) &amp; remove page 13(A)  
+pdftohtml file.pdf  //saves html as file.html // lynx file.pdf does the same thing  
+pdftotext file.pdf //saves text as file.txt  
+display boy.jpg // imagemagick command line tool  
+enscript -p foo.ps foo.txt  
+ghostscript: ps2pdf foo.ps, pdf2ps foo.pdf  
+texi2pdf file.tex  
+</pre></div>
+
+
+<h3><a href="#ubuntuone">Ubuntu One</a></h3>
+<div class="highlight"><pre><span></span>u1sdtool --help  
+u1sdtool --list-folders  
+u1sdtool --waiting  
+u1sdtool --current-transfers  
+</pre></div>
+
+
+<h3><a href="#byobu">Byobu</a></h3>
+<div class="highlight"><pre><span></span>F9 for menu  
+F12 escape  
+byobu-ctrl-a to change behaviour of ctrl-a  
+developed in python  
+</pre></div>
+
+
+<h3><a href="#wacom">Wacom</a></h3>
+<div class="highlight"><pre><span></span>sudo add-apt-repository ppa:lekensteyn/wacom-tablet  
+sudo apt-get update  
+sudo apt-get install dkms wacom-dkms  
+</pre></div>
+
+
+<h3><a href="#refs">References</a></h3>
+<ul>
+<li><a href="https://stackoverflow.com/questions/818255/in-the-shell-what-does-21-mean">Redirection</a></li>
+</ul>
       </div>
       <footer class="post-footer">
         <div class="meta">
@@ -251,6 +343,7 @@ sudo apt-get install dkms wacom-dkms  </p>
           <li><a href="/category/misc.html">misc</a></li>
           <li><a href="/category/review.html">Review</a></li>
           <li><a href="/category/setup.html">Setup</a></li>
+          <li><a href="/category/software-encryption.html">software, encryption</a></li>
           <li><a href="/category/teaser.html">Teaser</a></li>
         </ul>
       </nav>

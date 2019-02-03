@@ -53,6 +53,8 @@
 <li><a href="#ops">operators</a></li>
 </ul>
 </li>
+<li><a href="#emacs">emacs</a></li>
+<li><a href="#tmux">tmux</a></li>
 <li><a href="#misc">Misc</a></li>
 </ul>
 <h3><a href="#utils" id="utils">Utils</a></h3>
@@ -66,16 +68,19 @@ cat order.</em> | sort | grep Patterns | cut -d"," -f2,5       /////  as above +
  -1, 39.99</p>
 <p>cat regex_practice | sed s/"[0-9\:]<em> ([0-9]</em>)\, (.*)"/"\2, '\1'"/        //// sed / regexp / replacement /
 Note the indexes on 'replacement'. Reqd. regexp needs to be surrounded by ( ... ) to be included in the index count</p>
-<p>cat regex_practice | grep "Kindle\|Hardcover" | cut -d"," -f3 | sort | uniq -c           ////// counts the instances of  </p>
+<p>cat regex_practice | grep "Kindle|Hardcover" | cut -d"," -f3 | sort | uniq -c           ////// counts the instances of  </p>
 <p>tail -f orderbook.log   //// automatically
 less orderbook.log  //// can use / for forward search and ? for backward search when in 'less'
 find /home/sridhar -name "filename*"
 find /tmp/folder/ -type d -name keys -exec cp /tmp/a.kool {}\;   ///////// copy a.kool into all sub-directories (direct or not) of /tmp/folder/ called 'keys' 
 find ./ -name build.xml -exec grep "search_string" {} \;          ////// search for search_string in all files called build.xml under ./ 
 find ./ -name build.xml -exec sed -i 's/old_string/new_string/g' {} \;    //// replace with new string all strings found above</p>
-<p>find ./ -name build.xml -exec sed -i 's|version1.5"/&gt;|version1.5"/&gt;--&gt;|' {} \;    <br />
-Couldn't escape backslashes in regexp so best option is to use sed because the arguments in sed s/old/new/ are plain strings w/o the need for surrounding single or double quotes or escaping special characters. So for instance even this is allowed:
-cat build.xml | sed 's|version1.5"/&gt;|version1.5"/&gt;--&gt;|'</p>
+<p>find ./ -name build.xml -exec sed -i 's|version1.5"/&gt;|version1.5"/&gt;--&gt;|' {} \;    <br>
+Couldn't escape backslashes in regexp so best option is to use sed because the arguments in sed s/old/new/ are plain strings w/o the need for surrounding single or double quotes or escaping special characters. So for instance even this is allowed:</p>
+<p>find . -path './*/src/golang.gurusys.co.uk/vendor' -prune -o -type f -exec egrep 'SetAlarm' {} + //ignore directory tree vendor in find/grep</p>
+<p>find /etc/rc<em> -exec echo Arg: {} ';' // executes command separately for each argument
+find /etc/rc</em> -exec echo Arg: {} '+' // executes least possible arguments</p>
+<p>cat build.xml | sed 's|version1.5"/&gt;|version1.5"/&gt;--&gt;|'</p>
 <h3><a href="#markdown" id="markdown">Markdown</a></h3>
 <p>bold:  <strong> text </strong>
 italics:  * text * 
@@ -88,74 +93,217 @@ lists:  -/+/*</p>
 strikethrough:  <s> text </s></p>
 <h3><a href="#vim" id="vim">Vim</a></h3>
 <h4><a href="#basics" id="basics">basics</a></h4>
-<p>vim
-vim file_name
+<p>vim</p>
+<div class="highlight"><pre><span></span>vim file_name
+vim -O file1 file2 file3 // open files in vertically split windows
+vim -o file1 file2 file3 // open files in horizontally split windows
 i to insert
 esc to stop insert
+w/b to move forward/back by a word 
+:e! to refresh file from buffer
 x to delete
 :x to exit/save
-:<command> // : used if in vim, not reqd. if using .vimrc
-:tabe <filename> : opens file in new tab<br />
-:tabn : next tab<br />
-:tabp : previous tab<br />
+dd // delete line
+d$ // delete until end of line
+:&lt;command&gt; // : used if in vim, not reqd. if using .vimrc
+:tabe &lt;filename&gt; : opens file in new tab  
+:tabn : next tab  
+:tabp : previous tab  
 :tabnew : open new unnamed tab
 :tabo : close all other tabs
 :set syn=scala : sets syntax to scala - needs scala.vim in ~/.vim/syntax
 :set spell spelllang=en_gb
 :set shellcmdflag=-ic
-nmap <C-n> :tabn<CR> //set in ~/.vimrc
-nmap <C-p> :tabp<CR> //set in ~/.vimrc
+nmap &lt;C-n&gt; :tabn&lt;CR&gt; //set in ~/.vimrc
+nmap &lt;C-p&gt; :tabp&lt;CR&gt; //set in ~/.vimrc
 :syntax on           //set in ~/.vimrc
-:r <filename> //inserts contents of file below cursor
-:r! <command> //inserts results of command below cursor
-:% !<cmd>  // passes current buffer through command
+:r &lt;filename&gt; //inserts contents of file below cursor
+:r! &lt;command&gt; //inserts results of command below cursor
+:% !&lt;cmd&gt;  // passes current buffer through command
+:% !goimports // adds required imports to a go src file
 :% s/keyword/new_keyword/g //find all instances of keyword and replace with new_keyword
-<em> // find next occurrence of word under cursor
+* // find next occurrence of word under cursor
 100&gt;&gt; //to indent 100 lines
+5k // move 5 lines up 
+5j // move 5 lines down
 set shiftwidth=2 //in ~/.vimrc
-au BufNewFile </em>.go 0r ~/.vim/go.skel | let IndentStyle = "go"
-:w <newfilename> // writes to newfilename but continues with <oldfile>
+au BufNewFile *.go 0r ~/.vim/go.skel | let IndentStyle = &quot;go&quot;
+:w &lt;newfilename&gt; // writes to newfilename but continues with &lt;oldfile&gt;
 :wa //saves all open tabs
 :qa //closes all open tabs
-:sav <newfilename> //writes to newfilename, closes <oldfile> and opens <newfile>
+:sav &lt;newfilename&gt; //writes to newfilename, closes &lt;oldfile&gt; and opens &lt;newfile&gt;
 :w !sudo tee % // saves file if opened without root access
-:grep -r xyz ./ | vim - //pipes results of grep into new file in vim</p>
-<p>//Different tab setting for different files types. 8 for .go, 4 for .java
-au FileType java setl sw=4 sts=4 et
-au FileType go setl sw=8 sts=8 et</p>
+:grep -r xyz ./ | vim - //pipes results of grep into new file in vim
+</pre></div>
+
+
+<p>//Different tab setting for different files types. 8 for .go, 4 for .java</p>
+<div class="highlight"><pre><span></span>au FileType java setl sw=4 sts=4 et
+au FileType go setl sw=8 sts=8 et
+</pre></div>
+
+
 <h4><a href="#macros" id="macros">macros</a></h4>
-<p>qa  // starts recording
+<p>Macros get recorded to registers</p>
+<div class="highlight"><pre><span></span>qa  // starts recording macro into register named &#39;a&#39;
 q   // stops recording
 @a  // repeats macro actions recorded
+&quot;a  // access content of macro - can paste it using &quot;ap
 ^   // goes to end of line - useful while recording macro
-$   // goes to start of line - useful while recording macro </p>
-<h4><a href="#windows" id="windows">windows</a></h4>
-<p>vim -o file1.go file2.go  // opens files in windows<br />
-:vs file2.go // open file2.go in new vertically split window<br />
-:sp file2.go // open file2.go in new horizontally split window<br />
-Ctrl-WW // toggles between windows<br />
-Ctrl-W + // increases size of current window<br />
-Ctrl-W - // decreases size of current window<br />
+$   // goes to start of line - useful while recording macro 
+</pre></div>
+
+
+<p>Can save macro in .vimrc</p>
+<div class="highlight"><pre><span></span>let @r = &#39;8k8yy7jp&#39; // apply macro using @r
+</pre></div>
+
+
+<h3><a href="#registers">registers</a></h3>
+<div class="highlight"><pre><span></span>:reg // list registers
+:reg a b c // filter registers to view
+&quot;0 // latest yanked text
+&quot;9 // oldest yanked text
+</pre></div>
+
+
+<p>So to paste the 5th oldest yanked text type <code>"5p</code> or in insert mode <code>&lt;Ctrl-r&gt;5</code></p>
+<p>4 read-only registers</p>
+<div class="highlight"><pre><span></span>&quot;. // last inserted text
+&quot;% // current file path 
+&quot;: // most recent executed command. can repeat last command using @:
+&quot;# // confusing - maybe last edited file
+&quot;= // expression register
+</pre></div>
+
+
+<p>Ctrl-r (in insert mode) followed by any of the registers will paste register value:</p>
+<div class="highlight"><pre><span></span>Ctrl-r = // activates cmdline with &#39;=&#39; can do arithmetic operaion  like 3*5 will paste 15
+
+#### [windows](#windows){#windows} 
+
+vim -o file1.go file2.go  // opens files in windows  
+:vs file2.go // open file2.go in new vertically split window  
+:sp file2.go // open file2.go in new horizontally split window  
+Ctrl-WW // toggles between windows  
+Ctrl-W +|&gt; // increases height|width of current window  
+Ctrl-W -|&lt; // decreases height|width of current window  
 v // Visual mode where arrow keys can be used to select text
   y //yanks selection in visual mode
-{Visual} "xy // In Visual mode "xy yanks selected text into register x to be pasted later in normal mode
+{Visual} &quot;xy // In Visual mode &quot;xy yanks selected text into register x to be pasted later in normal mode
 zc // folds
 zo // unfolds
 u //undo
 Cntl R //redo
 N gg // go to line N
 N k // go up N lines
-N j // go down N lines</p>
-<p>diff -y --suppress-common-lines &lt;(head -500 file2) &lt;(head -500 file2)</p>
-<h4><a href="#operations" id="operations">operations</a></h4>
-<p>gUw //word to upper case
+N j // go down N lines
+
+diff -y --suppress-common-lines &lt;(head -500 file2) &lt;(head -500 file2)
+
+
+#### [operations](#operations){#operations}
+
+gUw //word to upper case
 guw //word to lower case
 ~ //toggle case of character under cursor
+% // when used on an open parenthesis/brace jumps to the corresponding close 
 :digraph
-<Ctrl>k
-μ=m<em> 
-ω=w</em> Ω=W*
-±=+-</p>
+&lt;Ctrl&gt;k
+μ=m* 
+ω=w* Ω=W*
+±=+-
+
+### [emacs](#emacs){#emacs}
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>C-h C-h : help
+C-g : quit
+C-x b : switch buffers
+C-x right : right-cycle through buffers
+C-x left : left-cycle through buffers
+
+C-x k : kill buffer
+
+C-x 0 : close the active window
+C-x 1 : close all windows except the active window
+C-x 2 : split the active window vertically into two horizontal windows
+C-x 3 : split the active window horizontally into two vertical windows
+
+C-x o : change active window to next window
+
+C-x C-f : open file
+C-x C-s : save file
+
+C-x C-w : save file as
+
+C-space : set region mark
+C-w : kill region
+C-k : kill region between point and end of current line
+M-w : kill region without deleting
+C-y : yank region from kill ring
+M-y : move to previous item in the kill ring
+
+M-Y : move to next item in the kill ring
+
+C-_ : undo
+C-s : search forwards
+C-r : search backwards
+M-% : query replace (‘space’ to replace, ‘n’ to skip, ‘!’ to replace all)
+
+M-q : wrap text
+
+C-left : move one word left
+C-right : move one word right
+C-up : move one paragraph up
+C-down : move one paragraph down
+home : move to the beginning of the line
+end : move to the end of the line
+page up : move up a page
+page down : move down a page
+M- : move to end of buffer
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>### [tmux](#tmux)
+
+Split screen vertically: Ctrlb and Shift5
+Split screen horizontally: Ctrlb and Shift&quot;
+Toggle between panes: Ctrlb and o
+Close current pane: Ctrlb and x
+
+You can achieve more complex layouts by splitting panes. You can also have multiple windows with panes and switch between them.
+
+Create windows: Ctrl-b and c
+Switch to next window: Ctrl-b and n
+Switch to previous window: Ctrl-b and p
+Destroy current window: Ctrl-b and Shift7 // or exit
+
+Remap prefix from &#39;C-b&#39; to &#39;C-a&#39;
+</pre></div>
+
+
+<p>unbind C-b
+set-option -g prefix C-a
+bind-key C-a send-prefix</p>
+<div class="highlight"><pre><span></span>Split panes using | and -
+</pre></div>
+
+
+<p>bind | split-window -h
+bind - split-window -v
+unbind '"'
+unbind %</p>
+<div class="highlight"><pre><span></span>Copy/paste
+</pre></div>
+
+
+<p>C-a,[   // start
+C-space // move to end
+Alt-w   // copy into buffer
+C-a,]   // paste
+```</p>
 <h3><a href="#misc" id="misc">Misc</a></h3>
 <p>gedit
 syntax highlighting: /usr/share/gtksourceview-2.0/language-specs/scala.lang </p>
@@ -190,6 +338,7 @@ syntax highlighting: /usr/share/gtksourceview-2.0/language-specs/scala.lang </p>
           <li><a href="/category/misc.html">misc</a></li>
           <li><a href="/category/review.html">Review</a></li>
           <li><a href="/category/setup.html">Setup</a></li>
+          <li><a href="/category/software-encryption.html">software, encryption</a></li>
           <li><a href="/category/teaser.html">Teaser</a></li>
         </ul>
       </nav>

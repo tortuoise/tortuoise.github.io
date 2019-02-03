@@ -44,12 +44,12 @@
       <div class="post-content"> 
         <h2><a href="#contents" id="contents">Contents</a></h2>
 <ul>
-<li><a href="#device">Device</a><br />
-        * <a href="#components">Components</a><br />
+<li><a href="#device">Device</a><br>
+        * <a href="#components">Components</a><br>
         * <a href="#purchase">Purchase</a>  </li>
-<li><a href="#install">Install</a><br />
-        * <a href="#ubuntu">Ubuntu 16.04.1 LTS</a> <br />
-        * <a href="#lvm">LVM</a><br />
+<li><a href="#install">Install</a><br>
+        * <a href="#ubuntu">Ubuntu 16.04.1 LTS</a> <br>
+        * <a href="#lvm">LVM</a><br>
         * <a href="#ath10k">Qualcomm Atheros</a>  </li>
 <li><a href="#gotchas">Gotchas</a>  </li>
 <li><a href="#references">References</a>  </li>
@@ -86,49 +86,49 @@
 <ul>
 <li>pvdisplay</li>
 </ul>
-<p>--- Physical volume ---<br />
-  PV Name               /dev/MZVLV256HCHP-000XXXXXXXXXXXXXXX-part3<br />
-  VG Name               ubuntu-vg<br />
-  PV Size               237.50 GiB / not usable 0 <br />
-  Allocatable           yes <br />
-  PE Size               4.00 MiB<br />
-  Total PE              60799<br />
-  Free PE               3<br />
+<p>--- Physical volume ---<br>
+  PV Name               /dev/MZVLV256HCHP-000XXXXXXXXXXXXXXX-part3<br>
+  VG Name               ubuntu-vg<br>
+  PV Size               237.50 GiB / not usable 0 <br>
+  Allocatable           yes <br>
+  PE Size               4.00 MiB<br>
+  Total PE              60799<br>
+  Free PE               3<br>
   Allocated PE          60796  </p>
 <ul>
 <li>vgdisplay</li>
 </ul>
-<p>--- Volume group ---<br />
-  VG Name               ubuntu-vg<br />
-  System ID             <br />
-  Format                lvm2<br />
-  Metadata Areas        1<br />
-  Metadata Sequence No  3<br />
-  VG Access             read/write<br />
-  VG Status             resizable<br />
-  MAX LV                0<br />
-  Cur LV                2<br />
-  Open LV               2<br />
-  Max PV                0<br />
-  Cur PV                1<br />
-  Act PV                1<br />
-  VG Size               237.50 GiB<br />
-  PE Size               4.00 MiB<br />
-  Total PE              60799<br />
-  Alloc PE / Size       60796 / 237.48 GiB<br />
+<p>--- Volume group ---<br>
+  VG Name               ubuntu-vg<br>
+  System ID             <br>
+  Format                lvm2<br>
+  Metadata Areas        1<br>
+  Metadata Sequence No  3<br>
+  VG Access             read/write<br>
+  VG Status             resizable<br>
+  MAX LV                0<br>
+  Cur LV                2<br>
+  Open LV               2<br>
+  Max PV                0<br>
+  Cur PV                1<br>
+  Act PV                1<br>
+  VG Size               237.50 GiB<br>
+  PE Size               4.00 MiB<br>
+  Total PE              60799<br>
+  Alloc PE / Size       60796 / 237.48 GiB<br>
   Free  PE / Size       3 / 12.00 MiB  </p>
 <ul>
 <li>df -h</li>
 </ul>
-<p>Filesystem                   Size  Used Avail Use% Mounted on<br />
-udev                         3.9G     0  3.9G   0% /dev<br />
-tmpfs                        788M   82M  707M  11% /run<br />
-/dev/mapper/ubuntu--vg-root  226G  5.6G  209G   3% /<br />
-tmpfs                        3.9G  812K  3.9G   1% /dev/shm<br />
-tmpfs                        5.0M  4.0K  5.0M   1% /run/lock<br />
-tmpfs                        3.9G     0  3.9G   0% /sys/fs/cgroup<br />
-/dev/nvme0n1p2               473M  122M  327M  28% /boot<br />
-/dev/nvme0n1p1               511M  3.6M  508M   1% /boot/efi<br />
+<p>Filesystem                   Size  Used Avail Use% Mounted on<br>
+udev                         3.9G     0  3.9G   0% /dev<br>
+tmpfs                        788M   82M  707M  11% /run<br>
+/dev/mapper/ubuntu--vg-root  226G  5.6G  209G   3% /<br>
+tmpfs                        3.9G  812K  3.9G   1% /dev/shm<br>
+tmpfs                        5.0M  4.0K  5.0M   1% /run/lock<br>
+tmpfs                        3.9G     0  3.9G   0% /sys/fs/cgroup<br>
+/dev/nvme0n1p2               473M  122M  327M  28% /boot<br>
+/dev/nvme0n1p1               511M  3.6M  508M   1% /boot/efi<br>
 tmpfs                        788M  132K  788M   1% /run/user/1000  </p>
 <h3><a href="#ath10k" id="ath10k">ath10k</a></h3>
 <p>The Qualcomm Atheros QCA6174 802.11ac Wireless Network Adapter doesn't work OOTB. An apt-update/upgrade fixes that though. Thankfully the wired network adapter works OOTB. If not, follow instructions found <a href="https://askubuntu.com/questions/607707/ath10k-installation">here</a>.</p>
@@ -178,6 +178,7 @@ tmpfs                        788M  132K  788M   1% /run/user/1000  </p>
           <li><a href="/category/misc.html">misc</a></li>
           <li><a href="/category/review.html">Review</a></li>
           <li><a href="/category/setup.html">Setup</a></li>
+          <li><a href="/category/software-encryption.html">software, encryption</a></li>
           <li><a href="/category/teaser.html">Teaser</a></li>
         </ul>
       </nav>
