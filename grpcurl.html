@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <title>Wattwerks — Articles with the tag « android »</title>
+        <meta charset="utf-8" />
+    <title>grpcurl — Wattwerks</title>
     <link rel="stylesheet" type="text/css" href="/theme/css/skeleton.css" />
     <link rel="stylesheet" type="text/css" href="/theme/css/main.css" />
     <link rel="shortcut icon" type="text/css" href="/favicon.ico" />
@@ -11,6 +11,9 @@
                            href="/" /> 
     <!--[if lte IE 8]><script src="/theme/js/html5shiv.js"></script><![endif]-->
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no" />
+
+    <meta name="author"   content="Sridhar" />
+    <meta name="keywords" content="software, go, grpc" />
   </head>
   <body>
     <div class="page">
@@ -21,40 +24,60 @@
       </header>
 
       <div class="page-content">
-    <section class="content">
-      <h1 id="page-title">Articles with the tag « android » :</h1>
-     
-        
-      <article class="post">
-        <header class="post-header">
-          <time datetime="2017-03-03T00:00:00+00:00" pubdate="pubdate">
-            Fri 03 March 2017
-          </time>
-          <h1>
-            <a rel="bookmark"
-               href="/android-dev-setup.html"
-               title="Lien permanent vers «Android dev setup»">
-               Android dev setup
-            </a>
-          </h1>
-          <div class="meta">
-              In «<a href="/category/setup.html">Setup</a>» 
-              by <a href="/author/sridhar.html">Sridhar</a>
-          </div>
-        </header>
-        <div class="post-content"> 
-        
+     <article class="post content">
+      <header class="post-header">
+        <time datetime="2019-02-19T00:00:00+00:00" pubdate="pubdate">
+          Tue 19 February 2019
+        </time>
+        <h1>
+          <a rel="bookmark"
+             href="/grpcurl.html"
+             title="Lien permanent vers «grpcurl»">
+             grpcurl
+          </a>
+        </h1>
+        <div class="meta">
+            In «<a href="/category/cheatsheet.html">cheatsheet</a>» 
+            by <a href="/author/sridhar.html">Sridhar</a>
         </div>
-        <footer class="post-footer">
-          <a class="readmore" href="/android-dev-setup.html">Read more...</a>
-        </footer>
-      </article>
-      <nav id="pagination">   <!-- <span id="first_page" class="a inactive">&#60;&#60;</span>
-        <span id="first_page" class="a inactive">&#60;</span> -->
-        <span class="a active">1</span>
-   <!-- <span id="next_page" class="a inactive">&#62;</span>
-        <span id="next_page" class="a inactive">&#62;&#62;</span> -->
-</nav>    </section>
+      </header>
+      <div class="post-content"> 
+        <h2><a href="#contents" id="contents">Contents</a></h2>
+<ul>
+<li><a href="#brief">Brief</a></li>
+<li><a href="#imports">Imports</a></li>
+<li><a href="#flow">Flow</a></li>
+<li><a href="#gotchas">Gotchas</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+<h3><a href="#brief" id="brief">Brief</a></h3>
+<div class="highlight"><pre><span></span>go get -d github.com/fullstorydev/grpcurl
+go install github.com/fullstorydev/grpcurl/cmd/grpcurl
+
+grpcurl -v -insecure 192.168.0.11:5001 list registrar.Registry
+
+grpcurl -v -d &#39;{&quot;Payload&quot;: &quot;Doofus&quot;, &quot;SequenceNumber&quot;: 1002}&#39; -insecure 192.168.0.11:10002 echoservice.EchoService/Ping
+</pre></div>
+
+
+<h3><a href="#imports">Imports</a></h3>
+<p>Uses github.com/jhump/protoreflect extensively.</p>
+<h3><a href="#flow">Flow</a></h3>
+<h3><a href="#gotchas" id="gotchas">Gotchas</a></h3>
+<h3><a href="#references" id="references">References</a></h3>
+<ul>
+<li><a href="https://"></a></li>
+<li><a href="https://"></a> </li>
+<li><a href="https://"></a></li>
+</ul>
+      </div>
+      <footer class="post-footer">
+        <div class="meta">
+            In «<a href="/category/cheatsheet.html">cheatsheet</a>» 
+            by <a href="/author/sridhar.html">Sridhar</a><br />
+            Tags:  #<a href="/tag/software.html">software</a> #<a href="/tag/go.html">go</a> #<a href="/tag/grpc.html">grpc</a>        </div>
+      </footer>
+    </article>
       </div>
     <aside class="page-sidebar">
       <nav class="widget">

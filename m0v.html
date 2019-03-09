@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="utf-8" />
+    <title>m0v — Wattwerks</title>
+    <link rel="stylesheet" type="text/css" href="/theme/css/skeleton.css" />
+    <link rel="stylesheet" type="text/css" href="/theme/css/main.css" />
+    <link rel="shortcut icon" type="text/css" href="/favicon.ico" />
+    <link rel="alternate" type="application/atom+xml"
+                           title="Wattwerks — Flux Atom"
+                           href="/" /> 
+    <!--[if lte IE 8]><script src="/theme/js/html5shiv.js"></script><![endif]-->
+    <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no" />
+
+    <meta name="author"   content="Sridhar" />
+    <meta name="keywords" content="hardware, software, tronix" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="page-head">
+        <h1>
+          <a href="/index.html">Wattwerks</a>
+        </h1>
+      </header>
+
+      <div class="page-content">
+     <article class="post content">
+      <header class="post-header">
+        <time datetime="2019-03-06T00:00:00+00:00" pubdate="pubdate">
+          Wed 06 March 2019
+        </time>
+        <h1>
+          <a rel="bookmark"
+             href="/m0v.html"
+             title="Lien permanent vers «m0v»">
+             m0v
+          </a>
+        </h1>
+        <div class="meta">
+            In «<a href="/category/m0v.html">m0v</a>» 
+            by <a href="/author/sridhar.html">Sridhar</a>
+        </div>
+      </header>
+      <div class="post-content"> 
+        <h2>Contents</h2>
+<ul>
+<li><a href="#vision">Vision</a></li>
+<li><a href="#mov">MOV/MBS</a></li>
+<li><a href="#brief">Brief</a></li>
+<li><a href="#powersupply">Power Supply</a></li>
+<li><a href="#hostmcu">Host MCU</a></li>
+<li><a href="#wifi">WiFi</a></li>
+<li><a href="#gps">GPS</a></li>
+<li><a href="#provisioningapp">Provisioning App</a><ul>
+<li><a href="#smartconfig">SmartConfig</a></li>
+</ul>
+</li>
+<li><a href="#server">Server</a></li>
+<li><a href="#future">Future</a></li>
+<li><a href="#gotchas">Gotchas</a></li>
+<li><a href="#refs">References</a></li>
+<li><a href="#appendices">Appendices</a></li>
+</ul>
+<h2><a href="#vision" id="vision">Vision</a></h2>
+<p>Easily configurable/usable hardware, software and data platform for monitoring and control of photo-voltaic systems.</p>
+<p>The following are the priorities in increasing order of difficulty and time to market:</p>
+<ul>
+<li>MOV: surge protection device (SPD) status notifier with storage/notification server (2019)</li>
+<li>MBS: Wired M-Bus (EN1434-3) meter reader with storage/display server  (2019)</li>
+<li>WMB: Wireless M-Bus meter reader (2020)</li>
+<li>Modbus inverter communication / control -&gt; with an eye on making something similar to SMA Fuel Save controller (2021) and general appliance control (2022).</li>
+<li>PLC based module level monitoring -&gt; with an eye on the PV roof tile market (2023).</li>
+</ul>
+<p>The rest of this document focuses on 2019 targets - MOV+MBS but all components should be built incorporating the longer term vision. </p>
+<h2><a href="#mov" id="mov">MOV/MBS</a></h2>
+<h3><a href="#brief" id="brief">Brief</a></h3>
+<p>In brief, a Wifi (802.11) connected metal-oxide varistor (MOV) for PV and other applications requiring surge protection and notifications. Should also have the capability of reading upto 3 M-Bus capable meters. </p>
+<p>Main components of the device are:</p>
+<ul>
+<li>
+<p>An MOV along with serially connected thermal fuse.</p>
+</li>
+<li>
+<p>A Wifi SoC with Android app for initial provisioning. </p>
+</li>
+<li>
+<p>An M-Bus transceiver in master configuration to read data from upto 5 M-Bus capable meters.</p>
+</li>
+<li>
+<p>Display indicators (3 green LEDs). </p>
+</li>
+<li>
+<p>Power supply - this is a mains connected device so doesn't need any batteries. A flyback converter to achieve a range of output DC voltages is required. Something like <a href=""></a></p>
+</li>
+</ul>
+<p>Device periodically sends the following information:</p>
+<ul>
+<li>Temperature</li>
+<li>Voltage</li>
+<li>Frequency?</li>
+<li>Location (needed?)</li>
+<li>Protection status</li>
+<li>Meter Readings</li>
+</ul>
+<h3><a href="#power" id="power">Power Supply</a></h3>
+<p>Mains powered AC converted to DC using something like <a href="http://www.powerpax.co.uk/cables-connectors/3w-to-25w-module-ac-dc/">Powerpax PD05-20BXX</a></p>
+<p>Consider something like <a href="https://uk.farnell.com/xp-power/ih0515s/wandler-dc-dc-2w-15v/dp/8727929">IH0515S</a> as DC-DC converter for range of +/-15V for M-Bus (check whether that suffices or whether a boost converted is really required for +37V). </p>
+<p>Task: Order parts and build prototype</p>
+<h3><a href="#host" id="host">Host MCU</a></h3>
+<p>Will use TI's CC3220S   </p>
+<p>Task: Dust off old development and update tools/platform.</p>
+<h3><a href="#wifi" id="wifi">Wifi</a></h3>
+<p>TI's CC3220S has a TCP/IP stack builtin.</p>
+<p>Task: </p>
+<h3><a href="#gps" id="gps">GPS</a></h3>
+<p>The CC3220S will be connected with a GPS module using I2C/SPI. </p>
+<p>Task: evaluate GPS modules.</p>
+<h3><a href="#provision" id="provision">Provisioning App</a></h3>
+<p>From a user perspective, the following steps should configure the app to</p>
+<ul>
+<li>Download app from Play store</li>
+<li>Manually connect to the device's (Access Point) AP</li>
+<li>App receives device ID from device, </li>
+<li>Enter WAN AP SSID, password and press Configure.</li>
+<li>Configure converts the device's AP to station (STA) and connects to WAN AP with SSID, password entered in previous step, exchanges device ID with server for a token and stores token on device.</li>
+<li>One green indicator on device appears if connection to AP successful. Two green indicators appear if ACK token received from server. Three green indicators if the device is fully configured and sending data to the server.</li>
+</ul>
+<h4><a href="#smartconfig" id="smartconfig">SmartConfig</a></h4>
+<p>The SmartConfig app uses Android 5.0 APIs with targetSdkVersion 21 which has inbuilt support for Apache HTTP client. Android 6.0 (API Level 23) removes support for the Apache HTTP client so using targetSdkVersion higher than 21 will cause compile errors unless the following is added to build.gradle:</p>
+<p>android {
+    useLibrary 'org.apache.http.legacy'
+}</p>
+<p>Task: Convert the SmartConfig app to use Dagger for dependency injection and simultaneouly replace Apache HTTP with okhttp or even GRPC. </p>
+<h3><a href="#server" id="server">Server</a></h3>
+<p>Data is an integral part of the vision - so the platform must be built extensible to the longer term vision. </p>
+<p>Micro-services in Go using GRPC wherever possible. </p>
+<p>Features:
++ OTA 'firmware' updates</p>
+<p>GRPC server with tracks </p>
+<h2><a href="#future" id="future">Future</a></h2>
+<p>At some point an M-Bus transceiver in slave mode will also be needed. When the time comes see <a href="http://www.ti.com/product/TSS721A">TSS721A</a></p>
+<p>Device can optionally include a current sensor for power and power-factor measurements - but this will require different wiring as the current sensor will be in series with the flow of power.</p>
+<p>Device can optionally include a Zigbee radio rather than a Wifi one to</p>
+<h2><a href="#gotchas" id="gotchas">Gotchas</a></h2>
+<p>There are already multiple products in the market which have similar functionality made by much larger companies with much greater resources.</p>
+<ul>
+<li><a href="https://www.zenner.com/files/content/AAA_Dokumente/Montageanleitungen/20170330_Z.RTU1T_1.4_en.pdf">Zenner</a></li>
+<li><a href="https://www.wago.com/global/i-o-systems/m-bus-master/p/753-649">Wago</a></li>
+</ul>
+<p>The probability of failure is almost certain but it's still worth doing.</p>
+<h2><a href="#refs" id="refs">References</a></h2>
+<ul>
+<li><a href="https://developer.android.com/about/versions/marshmallow/android-6.0-changes.html">Android 6.0 API Level 23 Changes</a></li>
+<li><a href="http://www.m-bus.com/mbusdoc/default.php">M-Bus standard</a></li>
+<li><a href="https://github.com/mjung85/iotsys/blob/master/wiki/MBusConnector.md">M-Bus</a></li>
+<li><a href="https://electronics.stackexchange.com/questions/99388/designing-a-m-bus-master-up-to-10-slaves">M-Bus master with MCU</a></li>
+<li><a href="https://www.nxp.com/applications/solutions/internet-of-things/smart-things/power-and-energy/smart-metering-connectivity:SMART-METERING-CONNECTIVITY">NXP Smart Meter Connectivity</a></li>
+<li><a href="https://www.nxp.com/products/wireless/sub-1-ghz-wireless-solutions:SUB-1-GHZ-WIRELESS-SOLUTIONS">NXP Sub 1GHz</a></li>
+<li><a href="https://www.nxp.com/docs/en/application-note/AN11017.pdf">Wireless M-Bus</a></li>
+</ul>
+<h2><a href="#appendices" id="appendices">Appendices</a></h2>
+<p>From <a href="https://electronics.stackexchange.com/questions/99388/designing-a-m-bus-master-up-to-10-slaves">Stackexchange M-Bus Master with MCU</a></p>
+<p>We went for a micro controller based approach (ATMEGA), because it just provides a great deal of control and allowed us to implement some user interface specific things and "under the hood" functions. Overall it just seemed easier to realize that a purely analog approach.</p>
+<p>Receiving: The controller continuously measures the load current on the bus (shunt resistor) to determine how many devices are connected (idle current). Knowing the nominal current, the controller can detect any device communication (current is increased by one or more of the clients). The idle current has to be adjusted accordingly when devices are added/removed to/from the bus. The individual bits are then sampled and the resulting byte is output to one of the UARTS, which interfaces with either RS232 or LAN (the LAN module is optional for our converter).</p>
+<p>Transmitting: As you may already know, the master transmits data by modulating the voltage level on the bus between 24-36V. Thus, the controller must be able to switch between these voltages in a sufficiently fast manner. In a nutshell, we realized this using a linear regulator where we have a Z-diode at the GND pin, which can be switched "on and off", effectively changing the output voltage of the regulator.</p>
+<p>There is actually a lot more involved as it may sound from the short description, but those are more or less the thoughts on our approach when we started engineering. Especially when designing for a lot of M-Bus clients, you required components with sufficient power ratings / switching capability like darlingtons and maybe even a small heat sink for the regulator. Idle current for 100 devices is 100 x 1.5mA, assuming one unit load per device, but worst case current during a search collision is 20mA per device which then result in 2A.</p>
+      </div>
+      <footer class="post-footer">
+        <div class="meta">
+            In «<a href="/category/m0v.html">m0v</a>» 
+            by <a href="/author/sridhar.html">Sridhar</a><br />
+            Tags:  #<a href="/tag/hardware.html">hardware</a> #<a href="/tag/software.html">software</a> #<a href="/tag/tronix.html">tronix</a>        </div>
+      </footer>
+    </article>
+      </div>
+    <aside class="page-sidebar">
+      <nav class="widget">
+      <h3>Site</h3>
+        <ul>
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="/archives.html">Archives</a></li>
+          <li><a href="/tags.html">Tags</a></li>
+        </ul>
+      </nav>
+
+      <nav class="widget">
+        <h3>Categories</h3>
+        <ul>
+          <li><a href="/category/algorithms.html">Algorithms</a></li>
+          <li><a href="/category/chatter.html">Chatter</a></li>
+          <li><a href="/category/cheat-sheet.html">Cheat Sheet</a></li>
+          <li><a href="/category/cheatsheet.html">cheatsheet</a></li>
+          <li><a href="/category/detailed.html">Detailed</a></li>
+          <li><a href="/category/events.html">Events</a></li>
+          <li><a href="/category/m0v.html">m0v</a></li>
+          <li><a href="/category/manual.html">Manual</a></li>
+          <li><a href="/category/misc.html">misc</a></li>
+          <li><a href="/category/review.html">Review</a></li>
+          <li><a href="/category/setup.html">Setup</a></li>
+          <li><a href="/category/software-encryption.html">software, encryption</a></li>
+          <li><a href="/category/teaser.html">Teaser</a></li>
+        </ul>
+      </nav>
+
+      <nav class="widget">
+        <h3>Social</h3>
+        <ul>
+          <li><a href="https://stackoverflow.com/users/1093710/sridhar">SO</a></li>
+          <li><a href="https://github.com/tortuoise">Github</a></li>
+          <li><a href="/" rel="alternate">Flux Atom</a></li>
+        </ul>
+      </nav>
+    </aside> 
+
+      <footer class="page-footer">
+        <p> Powered by <a href="http://pelican.readthedocs.org">Pelican</a></p>
+      </footer>
+    </div>
+  </body>
+</html>

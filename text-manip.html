@@ -101,6 +101,7 @@ i to insert
 esc to stop insert
 w/b to move forward/back by a word 
 :e! to refresh file from buffer
+:set list // view end of line characters
 x to delete
 :x to exit/save
 dd // delete line
@@ -177,133 +178,133 @@ $   // goes to start of line - useful while recording macro
 </pre></div>
 
 
-<p>Ctrl-r (in insert mode) followed by any of the registers will paste register value:</p>
-<div class="highlight"><pre><span></span>Ctrl-r = // activates cmdline with &#39;=&#39; can do arithmetic operaion  like 3*5 will paste 15
+<div class="highlight"><pre><span></span>Ctrl-r (in insert mode) followed by any of the registers will paste register value:
+Ctrl-r = // activates cmdline with &#39;=&#39; can do arithmetic operaion  like 3*5 will paste 15
+</pre></div>
 
-#### [windows](#windows){#windows} 
 
-vim -o file1.go file2.go  // opens files in windows  
-:vs file2.go // open file2.go in new vertically split window  
-:sp file2.go // open file2.go in new horizontally split window  
-Ctrl-WW // toggles between windows  
-Ctrl-W +|&gt; // increases height|width of current window  
-Ctrl-W -|&lt; // decreases height|width of current window  
+<p>Need vim-gtk to use <code>*</code> and <code>+</code> registers:</p>
+<div class="highlight"><pre><span></span>sudo apt-get install vim-gtk
+&quot;+y  // yanks visual mode selection into clipboard which can be pasted using Ctrl-V outside vim
+:%y + // yanks entire buffer into clipboard which can be pasted using Ctrl-V outside vim
+</pre></div>
+
+
+<h4><a href="#windows" id="windows">windows</a></h4>
+<p>vim -o file1.go file2.go  // opens files in windows<br>
+:vs file2.go // open file2.go in new vertically split window<br>
+:sp file2.go // open file2.go in new horizontally split window<br>
+Ctrl-WW // toggles between windows<br>
+Ctrl-W +|&gt; // increases height|width of current window<br>
+Ctrl-W -|&lt; // decreases height|width of current window<br>
 v // Visual mode where arrow keys can be used to select text
   y //yanks selection in visual mode
-{Visual} &quot;xy // In Visual mode &quot;xy yanks selected text into register x to be pasted later in normal mode
+{Visual} "xy // In Visual mode "xy yanks selected text into register x to be pasted later in normal mode
 zc // folds
 zo // unfolds
 u //undo
 Cntl R //redo
 N gg // go to line N
 N k // go up N lines
-N j // go down N lines
-
-diff -y --suppress-common-lines &lt;(head -500 file2) &lt;(head -500 file2)
-
-
-#### [operations](#operations){#operations}
-
-gUw //word to upper case
+N j // go down N lines</p>
+<p>diff -y --suppress-common-lines &lt;(head -500 file2) &lt;(head -500 file2)</p>
+<h4><a href="#operations" id="operations">operations</a></h4>
+<p>gUw //word to upper case
 guw //word to lower case
 ~ //toggle case of character under cursor
 % // when used on an open parenthesis/brace jumps to the corresponding close 
 :digraph
-&lt;Ctrl&gt;k
-μ=m* 
-ω=w* Ω=W*
-±=+-
+<Ctrl>k
+μ=m<em> 
+ω=w</em> Ω=W*
+±=+-</p>
+<h3><a href="#emacs" id="emacs">emacs</a></h3>
+<div class="highlight"><pre><span></span>    C-h C-h : help
+    C-g : quit
+    C-x b : switch buffers
+    C-x right : right-cycle through buffers
+    C-x left : left-cycle through buffers
 
-### [emacs](#emacs){#emacs}
+    C-x k : kill buffer
+
+    C-x 0 : close the active window
+    C-x 1 : close all windows except the active window
+    C-x 2 : split the active window vertically into two horizontal windows
+    C-x 3 : split the active window horizontally into two vertical windows
+
+    C-x o : change active window to next window
+
+    C-x C-f : open file
+    C-x C-s : save file
+
+    C-x C-w : save file as
+
+    C-space : set region mark
+    C-w : kill region
+    C-k : kill region between point and end of current line
+    M-w : kill region without deleting
+    C-y : yank region from kill ring
+    M-y : move to previous item in the kill ring
+
+    M-Y : move to next item in the kill ring
+
+    C-_ : undo
+    C-s : search forwards
+    C-r : search backwards
+    M-% : query replace (‘space’ to replace, ‘n’ to skip, ‘!’ to replace all)
+
+    M-q : wrap text
+
+    C-left : move one word left
+    C-right : move one word right
+    C-up : move one paragraph up
+    C-down : move one paragraph down
+    home : move to the beginning of the line
+    end : move to the end of the line
+    page up : move up a page
+    page down : move down a page
+    M- : move to end of buffer
 </pre></div>
 
 
-<div class="highlight"><pre><span></span>C-h C-h : help
-C-g : quit
-C-x b : switch buffers
-C-x right : right-cycle through buffers
-C-x left : left-cycle through buffers
-
-C-x k : kill buffer
-
-C-x 0 : close the active window
-C-x 1 : close all windows except the active window
-C-x 2 : split the active window vertically into two horizontal windows
-C-x 3 : split the active window horizontally into two vertical windows
-
-C-x o : change active window to next window
-
-C-x C-f : open file
-C-x C-s : save file
-
-C-x C-w : save file as
-
-C-space : set region mark
-C-w : kill region
-C-k : kill region between point and end of current line
-M-w : kill region without deleting
-C-y : yank region from kill ring
-M-y : move to previous item in the kill ring
-
-M-Y : move to next item in the kill ring
-
-C-_ : undo
-C-s : search forwards
-C-r : search backwards
-M-% : query replace (‘space’ to replace, ‘n’ to skip, ‘!’ to replace all)
-
-M-q : wrap text
-
-C-left : move one word left
-C-right : move one word right
-C-up : move one paragraph up
-C-down : move one paragraph down
-home : move to the beginning of the line
-end : move to the end of the line
-page up : move up a page
-page down : move down a page
-M- : move to end of buffer
-</pre></div>
-
-
-<div class="highlight"><pre><span></span>### [tmux](#tmux)
-
-Split screen vertically: Ctrlb and Shift5
-Split screen horizontally: Ctrlb and Shift&quot;
+<h3><a href="#tmux">tmux</a></h3>
+<p>Split screen vertically: Ctrlb and Shift5
+Split screen horizontally: Ctrlb and Shift"
 Toggle between panes: Ctrlb and o
-Close current pane: Ctrlb and x
-
-You can achieve more complex layouts by splitting panes. You can also have multiple windows with panes and switch between them.
-
-Create windows: Ctrl-b and c
+Close current pane: Ctrlb and x</p>
+<p>You can achieve more complex layouts by splitting panes. You can also have multiple windows with panes and switch between them.</p>
+<p>Create windows: Ctrl-b and c
 Switch to next window: Ctrl-b and n
 Switch to previous window: Ctrl-b and p
-Destroy current window: Ctrl-b and Shift7 // or exit
-
-Remap prefix from &#39;C-b&#39; to &#39;C-a&#39;
-</pre></div>
-
-
-<p>unbind C-b
+Destroy current window: Ctrl-b and Shift7 // or exit</p>
+<p>Remap prefix from 'C-b' to 'C-a'</p>
+<div class="highlight"><pre><span></span>unbind C-b
 set-option -g prefix C-a
-bind-key C-a send-prefix</p>
-<div class="highlight"><pre><span></span>Split panes using | and -
+bind-key C-a send-prefix
 </pre></div>
 
 
-<p>bind | split-window -h
+<p>Split panes using | and -</p>
+<div class="highlight"><pre><span></span>bind | split-window -h
 bind - split-window -v
-unbind '"'
-unbind %</p>
-<div class="highlight"><pre><span></span>Copy/paste
+unbind &#39;&quot;&#39;
+unbind %
 </pre></div>
 
 
-<p>C-a,[   // start
+<p>Copy/paste</p>
+<div class="highlight"><pre><span></span>C-a [   // start
 C-space // move to end
 Alt-w   // copy into buffer
-C-a,]   // paste
-```</p>
+C-a ]   // paste works in vim visual mode as well
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>tmux rename-window doofus
+C-a, rename-window
+</pre></div>
+
+
 <h3><a href="#misc" id="misc">Misc</a></h3>
 <p>gedit
 syntax highlighting: /usr/share/gtksourceview-2.0/language-specs/scala.lang </p>
@@ -332,8 +333,10 @@ syntax highlighting: /usr/share/gtksourceview-2.0/language-specs/scala.lang </p>
           <li><a href="/category/algorithms.html">Algorithms</a></li>
           <li><a href="/category/chatter.html">Chatter</a></li>
           <li><a href="/category/cheat-sheet.html">Cheat Sheet</a></li>
+          <li><a href="/category/cheatsheet.html">cheatsheet</a></li>
           <li><a href="/category/detailed.html">Detailed</a></li>
           <li><a href="/category/events.html">Events</a></li>
+          <li><a href="/category/m0v.html">m0v</a></li>
           <li><a href="/category/manual.html">Manual</a></li>
           <li><a href="/category/misc.html">misc</a></li>
           <li><a href="/category/review.html">Review</a></li>
