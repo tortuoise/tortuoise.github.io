@@ -45,9 +45,9 @@
         <h2><a href="#contents" id="contents">Contents</a></h2>
 <ul>
 <li><a href="#vision">Vision</a></li>
+<li><a href="#target">Target market</a></li>
 <li><a href="#mov">MOV/MBS</a><ul>
 <li><a href="#brief">Brief</a></li>
-<li><a href="#target">Target market</a></li>
 <li><a href="#powersupply">Power Supply</a></li>
 <li><a href="#hostmcu">Host MCU</a></li>
 <li><a href="#wifi">WiFi</a></li>
@@ -75,6 +75,9 @@
 <li>PLC based module level monitoring -&gt; with an eye on the PV roof tile market (2023).</li>
 </ul>
 <p>The rest of this document focuses on 2019 targets - MOV+MBS but all components should be built incorporating the longer term vision. </p>
+<h3><a href="#target" id="target">Target market</a></h3>
+<p>Small to medium grid-tied PV systems have become common place. The feed-in-tariffs in various countries over the last many years incentivised installing PV systems. Many were installed without monitoring as it increased the up-front expense. Many of these systems now need upgrades and need to be actively monitored to achieve optimal performance. Monitoring for more recent systems with lower feed-in-tariffs is even more important because downtime due to a fault needs to be minimized to achieve financial viability. </p>
+<p>As the grid becomes more unstable as more renewable sources feed into it and electric vehicles become more prevalent, equipment connected directly to the grid needs better monitoring and pro-active support and maintenance. </p>
 <h2><a href="#mov" id="mov">MOV/MBS</a></h2>
 <h3><a href="#brief" id="brief">Brief</a></h3>
 <p>In brief, a Wifi (802.11) connected metal-oxide varistor (MOV) for PV and other applications requiring surge protection and notifications. Should also have the capability of reading upto 3 M-Bus capable meters. </p>
@@ -98,16 +101,13 @@
 </ul>
 <p>Device periodically sends the following information:</p>
 <ul>
-<li>Temperature</li>
-<li>Voltage</li>
-<li>Frequency?</li>
-<li>Location (needed?)</li>
 <li>Protection status</li>
+<li>Location</li>
 <li>Meter Readings</li>
+<li>Voltage</li>
+<li>Temperature</li>
+<li>Frequency?</li>
 </ul>
-<h3><a href="#target" id="target">Target market</a></h3>
-<p>Small to medium grid-tied PV systems have become common place. The feed-in-tariffs in various countries over the last many years incentivised installing PV systems. Many were installed without monitoring as it added an insignificant percentage to the up-front expense. Many of these systems now need upgrades and need to be actively monitored to achieve optimal performance. Monitoring for more recent systems with lower feed-in-tariffs is even more important because downtime due to a fault needs to be minimized to achieve financial viability. </p>
-<p>As the grid becomes more unstable as more renewable sources feed into it and electric vehicles become more prevalent, equipment connected directly to the grid needs better monitoring and pro-active support and maintenance. </p>
 <h3><a href="#power" id="power">Power Supply</a></h3>
 <p>Mains powered AC converted to DC using something like <a href="http://www.powerpax.co.uk/cables-connectors/3w-to-25w-module-ac-dc/">Powerpax PD05-20BXX</a></p>
 <p>Consider something like <a href="https://uk.farnell.com/xp-power/ih0515s/wandler-dc-dc-2w-15v/dp/8727929">IH0515S</a> as DC-DC converter for range of +/-15V for M-Bus (check whether that suffices or whether a boost converted is really required for +37V). </p>
