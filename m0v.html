@@ -127,7 +127,7 @@
 <p>The CC3220S will be connected with a GPS module using I2C/SPI. </p>
 <p>Task: evaluate GPS modules.</p>
 <h3><a href="#provision" id="provision">Provisioning App</a></h3>
-<p>From a user perspective, the following steps should configure the app to</p>
+<p>From a user perspective, the following steps should be followed using an Android device to configure the device to use. Configuring the device with a smart phone app reduces device production costs.</p>
 <ul>
 <li>Download app from Play store</li>
 <li>Manually connect to the device's (Access Point) AP</li>
@@ -136,7 +136,7 @@
 <li>Configure converts the device's AP to station (STA) and connects to WAN AP with SSID, password entered in previous step, exchanges device ID with server for a token and stores token on device.</li>
 <li>One green indicator on device appears if connection to AP successful. Two green indicators appear if ACK token received from server. Three green indicators if the device is fully configured and sending data to the server.</li>
 </ul>
-<h4><a href="#smartconfig" id="smartconfig">SmartConfig</a></h4>
+<h4><a href="#smartconfig" id="smartconfig">TI SmartConfig</a></h4>
 <p>The SmartConfig app uses Android 5.0 APIs with targetSdkVersion 21 which has inbuilt support for Apache HTTP client. Android 6.0 (API Level 23) removes support for the Apache HTTP client so using targetSdkVersion higher than 21 will cause compile errors unless the following is added to build.gradle:</p>
 <p>android {
     useLibrary 'org.apache.http.legacy'
