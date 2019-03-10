@@ -87,10 +87,13 @@
 <p>An MOV along with serially connected thermal fuse.</p>
 </li>
 <li>
-<p>A Wifi SoC with Android app for initial provisioning. </p>
+<p>A Host MCU with Wifi SoC.</p>
 </li>
 <li>
 <p>An M-Bus transceiver in master configuration to read data from upto 5 M-Bus capable meters.</p>
+</li>
+<li>
+<p>Android app for initial provisioning of Wifi SoC.</p>
 </li>
 <li>
 <p>Display indicators (3 green LEDs). </p>
@@ -112,8 +115,10 @@
 <p>Mains powered AC converted to DC using something like <a href="http://www.powerpax.co.uk/cables-connectors/3w-to-25w-module-ac-dc/">Powerpax PD05-20BXX</a></p>
 <p>Consider something like <a href="https://uk.farnell.com/xp-power/ih0515s/wandler-dc-dc-2w-15v/dp/8727929">IH0515S</a> as DC-DC converter for range of +/-15V for M-Bus (check whether that suffices or whether a boost converted is really required for +37V). </p>
 <p>Task: Order parts and build prototype</p>
+<h3><a href="#mov" id="mov">MOV</a></h3>
+<p>A metal oxide varistor sits in parallel between mains AC line and neutral</p>
 <h3><a href="#host" id="host">Host MCU</a></h3>
-<p>Will use TI's CC3220S   </p>
+<p>The Host MCU is the heart of the monitoring device.  use TI's CC3220S    </p>
 <p>Task: Dust off old development and update tools/platform.</p>
 <h3><a href="#wifi" id="wifi">Wifi</a></h3>
 <p>TI's CC3220S has a TCP/IP stack builtin.</p>
