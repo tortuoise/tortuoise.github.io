@@ -2,24 +2,24 @@
 <html lang="en">
   <head>
         <meta charset="utf-8" />
-    <title>m0v — Wattwerks</title>
+    <title>m0v — m0v</title>
     <link rel="stylesheet" type="text/css" href="/theme/css/skeleton.css" />
     <link rel="stylesheet" type="text/css" href="/theme/css/main.css" />
     <link rel="shortcut icon" type="text/css" href="/favicon.ico" />
     <link rel="alternate" type="application/atom+xml"
-                           title="Wattwerks — Flux Atom"
+                           title="m0v — Flux Atom"
                            href="/" /> 
     <!--[if lte IE 8]><script src="/theme/js/html5shiv.js"></script><![endif]-->
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no" />
 
-    <meta name="author"   content="Sridhar" />
-    <meta name="keywords" content="hardware, software, tronix" />
+    <meta name="author"   content="RCS" />
+    <meta name="keywords" content="cc3220s, mov, m-bus" />
   </head>
   <body>
     <div class="page">
       <header class="page-head">
         <h1>
-          <a href="/index.html">Wattwerks</a>
+          <a href="/index.html">m0v</a>
         </h1>
       </header>
 
@@ -37,8 +37,8 @@
           </a>
         </h1>
         <div class="meta">
-            In «<a href="/category/m0v.html">m0v</a>» 
-            by <a href="/author/sridhar.html">Sridhar</a>
+            In «<a href="/category/plan.html">plan</a>» 
+            by <a href="/author/rcs.html">RCS</a>
         </div>
       </header>
       <div class="post-content"> 
@@ -111,17 +111,25 @@
 <li>Temperature</li>
 <li>Frequency?</li>
 </ul>
+<p>Further optional data about the PV system can be shared during configuration. </p>
+<ul>
+<li>PV System size in KWp</li>
+<li>PV Module brand/model/rating</li>
+<li>Inverter brand/model/rating</li>
+<li>Installer name/contact</li>
+<li>Customer name/contact</li>
+</ul>
 <h3><a href="#power" id="power">Power Supply</a></h3>
 <p>Mains powered AC converted to DC using something like <a href="http://www.powerpax.co.uk/cables-connectors/3w-to-25w-module-ac-dc/">Powerpax PD05-20BXX</a></p>
 <p>Consider something like <a href="https://uk.farnell.com/xp-power/ih0515s/wandler-dc-dc-2w-15v/dp/8727929">IH0515S</a> as DC-DC converter for range of +/-15V for M-Bus (check whether that suffices or whether a boost converted is really required for +37V). </p>
-<p>Task: Order parts and build prototype</p>
+<p>Task: Order parts and build prototype. Evaluate PCB design tools - is Kicad fit for purpose ? </p>
 <h3><a href="#mov" id="mov">MOV</a></h3>
-<p>A metal oxide varistor sits in parallel between mains AC line and neutral</p>
+<p>A metal oxide varistor sits in parallel between mains AC line and neutral and provides a short whenever the voltage between line and neutral spikes above rating. This protects a grid connected PV inverter from voltage spikes which could damage sensitive electronics in the inverter. A thermal fuse sits in series with the varistor which burns out over time (due to short bursts of high current flowing through it) leaving the PV inverter unprotected from future voltage spikes. The status of this thermal fuse is the primary objective of this monitoring device. </p>
 <h3><a href="#host" id="host">Host MCU</a></h3>
-<p>The Host MCU is the heart of the monitoring device.  use TI's CC3220S    </p>
+<p>The Host MCU is the heart of the monitoring device. This device will use TI's CC3220S which has a Wifi SoC in the same package as the MCU. Using the GPIO and ADC of the host MCU, the status of the thermal fuse will be monitored.</p>
 <p>Task: Dust off old development and update tools/platform.</p>
 <h3><a href="#wifi" id="wifi">Wifi</a></h3>
-<p>TI's CC3220S has a TCP/IP stack builtin.</p>
+<p>TI's CC3220S has a Wifi TCP/IP stack builtin.</p>
 <p>Task: </p>
 <h3><a href="#gps" id="gps">GPS</a></h3>
 <p>The CC3220S will be connected with a GPS module using I2C/SPI. </p>
@@ -146,20 +154,19 @@
 <p>Data is an integral part of the vision - so the platform must be built extensible to the longer term vision. </p>
 <p>Micro-services in Go using GRPC wherever possible. </p>
 <p>Features:
-+ OTA 'firmware' updates</p>
-<p>GRPC server with tracks </p>
++ OTA for 'firmware' updates</p>
 <h2><a href="#future" id="future">Future</a></h2>
 <p>At some point an M-Bus transceiver in slave mode will also be needed. When the time comes see <a href="http://www.ti.com/product/TSS721A">TSS721A</a></p>
 <p>Device can optionally include a current sensor for power and power-factor measurements - but this will require different wiring as the current sensor will be in series with the flow of power.</p>
-<p>Device can optionally include a Zigbee radio rather than a Wifi one to</p>
+<p>Device can have a different version with a Zigbee (or other) radio rather than a Wifi one to connect to a Zigbee (or other) gateway.</p>
 <h2><a href="#gotchas" id="gotchas">Gotchas</a></h2>
 <p>There are products in the market which have similar functionality made by much larger companies with much greater resources.</p>
 <ul>
 <li><a href="https://www.zenner.com/files/content/AAA_Dokumente/Montageanleitungen/20170330_Z.RTU1T_1.4_en.pdf">Zenner</a></li>
 <li><a href="https://www.wago.com/global/i-o-systems/m-bus-master/p/753-649">Wago</a></li>
 </ul>
-<p>While the market is very competitive, this product fulfils a niche requirement which is currently missing. Mulitple conversations with mutlple PV installers has suggested there is demand even if it's niche.</p>
-<p>While existing vendors are focussed on selling hardware, data about PV systems is at the heart of this service which could make it very valuable. </p>
+<p>While the market is very competitive, this product fulfils a combination of niche requirements which is currently missing. Mulitple conversations with mutlple PV installers suggests there is demand even if it's niche.</p>
+<p>While existing vendors are focussed on selling hardware, performance data about PV systems is at the heart of this service which could make it very valuable. </p>
 <h2><a href="#refs" id="refs">References</a></h2>
 <ul>
 <li><a href="https://developer.android.com/about/versions/marshmallow/android-6.0-changes.html">Android 6.0 API Level 23 Changes</a></li>
@@ -179,9 +186,9 @@
       </div>
       <footer class="post-footer">
         <div class="meta">
-            In «<a href="/category/m0v.html">m0v</a>» 
-            by <a href="/author/sridhar.html">Sridhar</a><br />
-            Tags:  #<a href="/tag/hardware.html">hardware</a> #<a href="/tag/software.html">software</a> #<a href="/tag/tronix.html">tronix</a>        </div>
+            In «<a href="/category/plan.html">plan</a>» 
+            by <a href="/author/rcs.html">RCS</a><br />
+            Tags:  #<a href="/tag/cc3220s.html">cc3220s</a> #<a href="/tag/mov.html">mov</a> #<a href="/tag/m-bus.html">m-bus</a>        </div>
       </footer>
     </article>
       </div>
@@ -204,9 +211,9 @@
           <li><a href="/category/cheatsheet.html">cheatsheet</a></li>
           <li><a href="/category/detailed.html">Detailed</a></li>
           <li><a href="/category/events.html">Events</a></li>
-          <li><a href="/category/m0v.html">m0v</a></li>
           <li><a href="/category/manual.html">Manual</a></li>
           <li><a href="/category/misc.html">misc</a></li>
+          <li><a href="/category/plan.html">plan</a></li>
           <li><a href="/category/review.html">Review</a></li>
           <li><a href="/category/setup.html">Setup</a></li>
           <li><a href="/category/software-encryption.html">software, encryption</a></li>
