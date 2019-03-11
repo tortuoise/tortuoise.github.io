@@ -47,7 +47,11 @@
 <li><a href="#vision">Vision</a></li>
 <li><a href="#target">Target market</a></li>
 <li><a href="#mov">MOV/MBS</a><ul>
-<li><a href="#brief">Brief</a></li>
+<li><a href="#brief">Brief</a><ul>
+<li><a href="#var">MOV</a></li>
+<li><a href="#mbus">M-Bus</a></li>
+</ul>
+</li>
 <li><a href="#powersupply">Power Supply</a></li>
 <li><a href="#hostmcu">Host MCU</a></li>
 <li><a href="#wifi">WiFi</a></li>
@@ -119,12 +123,15 @@
 <li>Installer name/contact</li>
 <li>Customer name/contact</li>
 </ul>
+<h4><a href="#var" id="var">MOV</a></h4>
+<p>A metal oxide varistor sits in parallel between mains AC line and neutral and provides a short whenever the voltage between line and neutral spikes above rating. This protects a grid connected PV inverter from voltage spikes which could damage sensitive electronics in the inverter. A thermal fuse sits in series with the varistor which burns out over time (due to short bursts of high current flowing through it) leaving the PV inverter unprotected from future voltage spikes. The status of this thermal fuse is the primary objective of this monitoring device. </p>
+<h4><a href="#mbus" id="mbus">M-Bus</a></h4>
+<p><a href="http://www.m-bus.com/mbusdoc/default.php">M-Bus</a> is a European standard protocol for remote reading and configuration of primarily heat/flow meters but has since been used for electricity and water meters as well. </p>
+<p>Legacy PV systems can have multiple meters (production/export). The secondary objective of this monitoring device is to capture the meter readings (and thus measure performance) of the PV system.</p>
 <h3><a href="#power" id="power">Power Supply</a></h3>
 <p>Mains powered AC converted to DC using something like <a href="http://www.powerpax.co.uk/cables-connectors/3w-to-25w-module-ac-dc/">Powerpax PD05-20BXX</a></p>
 <p>Consider something like <a href="https://uk.farnell.com/xp-power/ih0515s/wandler-dc-dc-2w-15v/dp/8727929">IH0515S</a> as DC-DC converter for range of +/-15V for M-Bus (check whether that suffices or whether a boost converted is really required for +37V). </p>
 <p>Task: Order parts and build prototype. Evaluate PCB design tools - is Kicad fit for purpose ? </p>
-<h3><a href="#mov" id="mov">MOV</a></h3>
-<p>A metal oxide varistor sits in parallel between mains AC line and neutral and provides a short whenever the voltage between line and neutral spikes above rating. This protects a grid connected PV inverter from voltage spikes which could damage sensitive electronics in the inverter. A thermal fuse sits in series with the varistor which burns out over time (due to short bursts of high current flowing through it) leaving the PV inverter unprotected from future voltage spikes. The status of this thermal fuse is the primary objective of this monitoring device. </p>
 <h3><a href="#host" id="host">Host MCU</a></h3>
 <p>The Host MCU is the heart of the monitoring device. This device will use TI's CC3220S which has a Wifi SoC in the same package as the MCU. Using the GPIO and ADC of the host MCU, the status of the thermal fuse will be monitored.</p>
 <p>Task: Dust off old development and update tools/platform.</p>
