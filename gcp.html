@@ -84,11 +84,12 @@
 <p>gcloud compute ssh locomov --zone europe-west2-c --ssh-key-file=~/.ssh/gcp</p>
 </li>
 <li>
-<p>gcloud compute scp ~/this_file instance:~/there --zone europe-west2-c</p>
+<p>gcloud compute scp [--recurse] ~/this_file instance:~/there --zone europe-west2-c</p>
 </li>
 </ul>
 <h3><a href="#" id=""></a></h3>
 <div class="highlight"><pre><span></span>gcloud compute firewall-rules create default-allow-smtp-out --direction=OUT --allow tcp:25 --enable-logging
+gcloud compute firewall-rules create --network=default default-allow-ssh --allow tcp:22 --enable-logging
 </pre></div>
 
 
@@ -127,6 +128,7 @@
           <li><a href="/category/cheatsheet.html">cheatsheet</a></li>
           <li><a href="/category/detailed.html">Detailed</a></li>
           <li><a href="/category/events.html">Events</a></li>
+          <li><a href="/category/language.html">language</a></li>
           <li><a href="/category/manual.html">Manual</a></li>
           <li><a href="/category/misc.html">misc</a></li>
           <li><a href="/category/plan.html">plan</a></li>

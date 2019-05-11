@@ -63,8 +63,9 @@
 </ul>
 </li>
 <li><a href="#server">Server</a></li>
-<li><a href="#future">Future</a></li>
+<li><a href="#timeline">Timeline</a></li>
 <li><a href="#gotchas">Gotchas</a></li>
+<li><a href="#future">Future</a></li>
 <li><a href="#refs">References</a></li>
 <li><a href="#appendices">Appendices</a></li>
 </ul>
@@ -120,27 +121,37 @@
 <li>PV System size in KWp</li>
 <li>PV Module brand/model/rating</li>
 <li>Inverter brand/model/rating</li>
-<li>Installer name/contact</li>
 <li>Customer name/contact</li>
+<li>Installer name/contact</li>
+<li>Other maintenance related info - last serviced/cleaned etc.</li>
 </ul>
 <h4><a href="#var" id="var">MOV</a></h4>
 <p>A metal oxide varistor sits in parallel between mains AC line and neutral and provides a short whenever the voltage between line and neutral spikes above rating. This protects a grid connected PV inverter from voltage spikes which could damage sensitive electronics in the inverter. A thermal fuse sits in series with the varistor which burns out over time (due to short bursts of high current flowing through it) leaving the PV inverter unprotected from future voltage spikes. The status of this thermal fuse is the primary objective of this monitoring device. </p>
+<p>Task: Connect SPD to power supply, analyse output and figure out ADC interface circuit (3d) </p>
 <h4><a href="#mbus" id="mbus">M-Bus</a></h4>
 <p><a href="http://www.m-bus.com/mbusdoc/default.php">M-Bus</a> is a European standard protocol for remote reading and configuration of primarily heat/flow meters but has since been used for electricity and water meters as well. </p>
 <p>Legacy PV systems can have multiple meters (production/export). The secondary objective of this monitoring device is to capture the meter readings (and thus measure performance) of the PV system.</p>
+<p>Task: Simlate the M-Bus master with discrete components in LTSpice to help understanding (2d) 
+Task: Build prototype (1w)</p>
 <h3><a href="#power" id="power">Power Supply</a></h3>
 <p>Mains powered AC converted to DC using something like <a href="http://www.powerpax.co.uk/cables-connectors/3w-to-25w-module-ac-dc/">Powerpax PD05-20BXX</a></p>
 <p>Consider something like <a href="https://uk.farnell.com/xp-power/ih0515s/wandler-dc-dc-2w-15v/dp/8727929">IH0515S</a> as DC-DC converter for range of +/-15V for M-Bus (check whether that suffices or whether a boost converted is really required for +37V). </p>
-<p>Task: Order parts and build prototype. Evaluate PCB design tools - is Kicad fit for purpose ? </p>
+<p>Task: Order parts (0.5d)
+Task: Build prototype (2d)
+Task: Evaluate PCB design tools - is Kicad fit for purpose ? (2d)
+Task: Identify and speak with PCB fabricators (2d)</p>
 <h3><a href="#host" id="host">Host MCU</a></h3>
 <p>The Host MCU is the heart of the monitoring device. This device will use TI's CC3220S which has a Wifi SoC in the same package as the MCU. Using the GPIO and ADC of the host MCU, the status of the thermal fuse will be monitored.</p>
-<p>Task: Dust off old development and update tools/platform.</p>
+<p>Task: Dust off old development and update tools/platform (1d)
+Task: Write firmware to process ADC input (1w)</p>
 <h3><a href="#wifi" id="wifi">Wifi</a></h3>
 <p>TI's CC3220S has a Wifi TCP/IP stack builtin.</p>
-<p>Task: </p>
+<p>Task: Write firmware to connect to Wifi and send data to server (1w)</p>
 <h3><a href="#gps" id="gps">GPS</a></h3>
 <p>The CC3220S will be connected with a GPS module using I2C/SPI. </p>
-<p>Task: evaluate GPS modules.</p>
+<p>Task: Evaluate GPS modules (0.5d)
+Task: Purchase a couple (0.5d)
+Task: Write firmware to read I2C/SPI GPS module (3d)</p>
 <h3><a href="#provision" id="provision">Provisioning App</a></h3>
 <p>From a user perspective, the following steps should be followed using an Android device to configure the device to use. Configuring the device with a smart phone app reduces device production costs.</p>
 <ul>
@@ -156,16 +167,29 @@
 <p>android {
     useLibrary 'org.apache.http.legacy'
 }</p>
-<p>Task: Convert the SmartConfig app to use Dagger for dependency injection and simultaneouly replace Apache HTTP with okhttp or even GRPC. </p>
+<p>Task: Customise the SmartConfig app - add grpc client to send exchange config data with server (1w)
+Task: Convert the SmartConfig app to use Dagger for dependency injection and simultaneouly replace Apache HTTP with okhttp or even GRPC. This may be unnecessary and take very long (2w)</p>
+<h3><a href="#view" id="view">Viewing App</a></h3>
+<p>This is the customer facing app where a user can login and view status of SPD and meter reading data.</p>
+<p>Task: Customise trac app to viewing app (1w)</p>
 <h3><a href="#server" id="server">Server</a></h3>
 <p>Data is an integral part of the vision - so the platform must be built extensible to the longer term vision. </p>
 <p>Micro-services in Go using GRPC wherever possible. </p>
 <p>Features:
 + OTA for 'firmware' updates</p>
-<h2><a href="#future" id="future">Future</a></h2>
-<p>At some point an M-Bus transceiver in slave mode will also be needed. When the time comes see <a href="http://www.ti.com/product/TSS721A">TSS721A</a></p>
-<p>Device can optionally include a current sensor for power and power-factor measurements - but this will require different wiring as the current sensor will be in series with the flow of power.</p>
-<p>Device can have a different version with a Zigbee (or other) radio rather than a Wifi one to connect to a Zigbee (or other) gateway.</p>
+<p>Task: Evaluate proxy servers (Envoy?) (2d)
+Task: Configure and set up proxy server. (1d)
+Task: Write the grpc server + http gateway. (5d)
+Task: Investigate firmware updates (ongoing)</p>
+<h2><a href="#timeline" id="timeline">Timeline</a></h2>
+<p>Firmware: 
+    ADC: 1W
+    Wifi: 1W</p>
+<p>Server: 2W</p>
+<p>Provisioning app: 3W</p>
+<p>Board Layout: 4W</p>
+<p>Production + test: 4W</p>
+<p>OTA:</p>
 <h2><a href="#gotchas" id="gotchas">Gotchas</a></h2>
 <p>There are products in the market which have similar functionality made by much larger companies with much greater resources.</p>
 <ul>
@@ -184,6 +208,10 @@
 <li><a href="https://www.nxp.com/products/wireless/sub-1-ghz-wireless-solutions:SUB-1-GHZ-WIRELESS-SOLUTIONS">NXP Sub 1GHz</a></li>
 <li><a href="https://www.nxp.com/docs/en/application-note/AN11017.pdf">Wireless M-Bus</a></li>
 </ul>
+<h2><a href="#future" id="future">Future</a></h2>
+<p>At some point an M-Bus transceiver in slave mode will also be needed. When the time comes see <a href="http://www.ti.com/product/TSS721A">TSS721A</a></p>
+<p>Device can optionally include a current sensor for power and power-factor measurements - but this will require different wiring as the current sensor will be in series with the flow of power.</p>
+<p>Device can have a different version with a Zigbee (or other) radio rather than a Wifi one to connect to a Zigbee (or other) gateway.</p>
 <h2><a href="#appendices" id="appendices">Appendices</a></h2>
 <p>From <a href="https://electronics.stackexchange.com/questions/99388/designing-a-m-bus-master-up-to-10-slaves">Stackexchange M-Bus Master with MCU</a></p>
 <p>We went for a micro controller based approach (ATMEGA), because it just provides a great deal of control and allowed us to implement some user interface specific things and "under the hood" functions. Overall it just seemed easier to realize that a purely analog approach.</p>
@@ -218,6 +246,7 @@
           <li><a href="/category/cheatsheet.html">cheatsheet</a></li>
           <li><a href="/category/detailed.html">Detailed</a></li>
           <li><a href="/category/events.html">Events</a></li>
+          <li><a href="/category/language.html">language</a></li>
           <li><a href="/category/manual.html">Manual</a></li>
           <li><a href="/category/misc.html">misc</a></li>
           <li><a href="/category/plan.html">plan</a></li>

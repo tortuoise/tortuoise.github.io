@@ -52,18 +52,56 @@
 <li><a href="#settings">settings.gradle</a></li>
 <li><a href="#plugins">plugins</a></li>
 <li><a href="#gradlew">gradlew</a></li>
+<li><a href="#grpc-java">grpc-java</a></li>
+<li><a href="#gmaps">googlemaps</a></li>
 <li><a href="#gotchas">Gotchas</a></li>
 <li><a href="#references">References</a></li>
 </ul>
 <h2>Brief</h2>
 <p>Setup Android &amp; Gradle for development without IDE. </p>
 <h2>Download</h2>
+<div class="highlight"><pre><span></span>tools/android/sdk // brings up sdk manager to install platform, build-tools and support libraries.
+</pre></div>
+
+
 <h2>Create</h2>
 <p>The following command creates a new android project named trackgrpc with package name org.trackgrpc.app with path ./trackgrpc with an Activity called Track using Android Gradle Plugin version 2.3.0 (which requires minimum Gradle version 3.3) for a target Android SDK version 25.  </p>
-<p>tools/android create project -n trackgrpc -k org.trackgrpc.app -p trackgrpc -a Track -g -v 2.3.0 -t android-25 
-For more information on Android create try:</p>
-<p>tools/android [global options] create [action options]
-tools/android create -h // HELP!!</p>
+<div class="highlight"><pre><span></span>tools/android create project -n tracapp -k org.trac.app -p ./tracapp -a Trac -g -v 3.3.0 -t android-28 
+</pre></div>
+
+
+<p>For more information on Android create try:</p>
+<div class="highlight"><pre><span></span><span class="n">tools</span><span class="o">/</span><span class="n">android</span> <span class="p">[</span><span class="n">global</span> <span class="n">options</span><span class="p">]</span> <span class="n">create</span> <span class="p">[</span><span class="n">action</span> <span class="n">options</span><span class="p">]</span>
+<span class="n">tools</span><span class="o">/</span><span class="n">android</span> <span class="n">create</span> <span class="o">-</span><span class="n">h</span> <span class="c1">// HELP!!</span>
+</pre></div>
+
+
+<p>Need to add Google's maven repo to build.gradle like so:</p>
+<div class="highlight"><pre><span></span>allprojects {
+      repositories {
+         google()
+         jcenter()
+      }
+  }
+</pre></div>
+
+
+<p>See <a href="https://stackoverflow.com/questions/50279792/could-not-find-com-android-tools-buildaapt23-2-0">Google's maven repo</a></p>
+<p>Comment out <code>sdk.dir</code> in <code>local.properties</code>.</p>
+<p>Offline:
+maven-metadata.xml</p>
+<div class="highlight"><pre><span></span>    &gt; Failed to list versions for io.grpc:grpc-core.
+         &gt; Unable to load Maven meta-data from https://jcenter.bintray.com/io/grpc/grpc-core/maven-metadata.xml.
+            &gt; Could not HEAD &#39;https://jcenter.bintray.com/io/grpc/grpc-core/maven-metadata.xml&#39;.
+               &gt; jcenter.bintray.com
+    &gt; Failed to list versions for io.grpc:grpc-core.
+         &gt; Unable to load Maven meta-data from https://dl.google.com/dl/android/maven2/io/grpc/grpc-core/maven-metadata.xml.
+            &gt; Could not get resource &#39;https://dl.google.com/dl/android/maven2/io/grpc/grpc-core/maven-metadata.xml&#39;.
+               &gt; Could not GET &#39;https://dl.google.com/dl/android/maven2/io/grpc/grpc-core/maven-metadata.xml&#39;.
+                  &gt; dl.google.com
+</pre></div>
+
+
 <h2>Gradle</h2>
 <h3>settings.gradle</h3>
 <p>Include sub-projects in the build using an entry in settings.gradle:
@@ -85,21 +123,75 @@ tools/android create -h // HELP!!</p>
 }</p>
 <p>apply plugin: 'me.tatarka.retrolambda'</p>
 <h3>gradlew</h3>
-<p>./gradlew assembleDebug
+<p>./gradlew -v // looks at ./gradle/wrapper/gradle-wrapper.properties for distributionURL field - will download if not already in cache ~/.gradle/wrapper/dists/
+./gradlew assembleDebug
 ./gradlew assembleBuild</p>
+<p>./gradlew build -PskipCodegen=true -p okhttp/
+./gradlew build -p protobuf-lite/
+./gradlew build -p grpc-stub/</p>
 <h3>gomobile</h3>
 <p>go get golang.org/x/mobile/cmd/gomobile
 gomobile init --ndk=/home/sridhar/dev/android/ndk-bundle
 gomobile build -target=android golang.org/x/mobile/example/basic</p>
 <p>~/dev/android/platform-tools/adb install -rsg basic.apk</p>
+<h2>grpc-java</h2>
+<div class="highlight"><pre><span></span>git clone github.com/grpc/grpc-java
+git checkout v1.19.0 // release tag - matches with grpc releases
+./gradlew build // use --stacktrace option to diagnose errors
+cd examples/android/routeguide
+./gradlew build // creates generated files and apk
+
+Generated files:
+app/build/generated/source/proto/debug/grpc/io/grpc/routeguideexample/
+</pre></div>
+
+
+<p>Must use java-8 as java-11 will throw this error: </p>
+<p>A problem occurred configuring project ':app'.</p>
+<blockquote>
+<p>Failed to notify project evaluation listener.
+Could not initialize class com.android.sdklib.repository.AndroidSdkHandler</p>
+</blockquote>
+<p>when trying to run:</p>
+<div class="highlight"><pre><span></span>cd examples/android/routeguide
+../../gradlew build
+</pre></div>
+
+
+<p>Changing to java-8 will fix this problem:</p>
+<div class="highlight"><pre><span></span>echo $JAVA_HOME // /usr/lib/jvm/java-8-openjdk-amd64
+</pre></div>
+
+
+<p>examples/android/routeguide/app/build.gradle lists compileSdkVersion / targetSdkVersion 27 but needs Android SDK Build Tools 26.0.2. Since Android Gradle plugin 3.0.0 onwards the buidtools version is automatically selected. If you don't have the automatically selected version of buildtools, may get error:</p>
+<blockquote>
+<p>You have not accepted the license agreements of the following SDK components:
+  [Android SDK Build-Tools 26.0.2].</p>
+</blockquote>
+<p>Once above errors are rectified, output app-debug.apk can be found in examples/android/routeguide/build/outputs/apk/debug</p>
+<h2>gmaps</h2>
+<p>In <code>src/main/AndroidManifest.xml</code>:</p>
+<div class="highlight"><pre><span></span>
+</pre></div>
+
+
 <h2>Gotchas</h2>
+<p>The protobuf runtime (protobuf-java) should never be older than the protoc version. Old generated code works with newer protobuf runtimes, but newer generated code may use features not present in old protobuf runtimes.</p>
+<p><a href="https://stackoverflow.com/questions/49837344/program-type-already-present-android-support-v4-app-backstackrecord/49837806">Duplicate dependencies</a></p>
 <h2>References ##</h2>
 <ul>
 <li><a href="https://developer.android.com/studio/releases/gradle-plugin.html">Gradle plugin for Android</a></li>
 <li><a href="https://developer.android.com/studio/build/shrink-code.html">Proguard shrink code</a> </li>
 <li>[Gradle organzing build]((https://docs.gradle.org/current/userguide/organizing_build_logic.html#sec:build_script_external_dependencies)</li>
 <li><a href="https:/https://docs.gradle.org/current/userguide/multi_project_builds.html/">Gradle multi-project builds</a></li>
+<li><a href="https://developer.android.com/topic/libraries/support-library/setup">Android Support Library</a></li>
+<li><a href="https://developer.android.com/studio/releases/gradle-plugin">Android Gradle Plugin</a></li>
 </ul>
+<h2>Version Table</h2>
+<p>App | Java | Gradle | Android Gradle Plugin | Android Build Tools | Android Platform | Protobuf Gradle Plugin</p>
+<p>routeguide | java-10 | 4.9.0 | 3.0.1 | 26.0.2 | 27 | 0.8.5
+simplelink | java-10 | 4.6.0 | 3.1.4 | 28.0.3 | 26
+trac | java-10 | 4.9 | 3.0.1 | 26.0.2 | 27 | 0.8.5</p>
       </div>
       <footer class="post-footer">
         <div class="meta">
@@ -128,6 +220,7 @@ gomobile build -target=android golang.org/x/mobile/example/basic</p>
           <li><a href="/category/cheatsheet.html">cheatsheet</a></li>
           <li><a href="/category/detailed.html">Detailed</a></li>
           <li><a href="/category/events.html">Events</a></li>
+          <li><a href="/category/language.html">language</a></li>
           <li><a href="/category/manual.html">Manual</a></li>
           <li><a href="/category/misc.html">misc</a></li>
           <li><a href="/category/plan.html">plan</a></li>

@@ -64,6 +64,7 @@
 <li><a href="#testing">testing</a></li>
 </ul>
 </li>
+<li><a href="#modules">Modules</a></li>
 <li><a href="#testing">Testing</a></li>
 <li><a href="#tool">Tool</a></li>
 <li><a href="#gotchas">Gotchas</a></li>
@@ -215,6 +216,12 @@ git push fork
 + SIGPIPE</p>
 <p>If no channel has been registered to be notified of SIGPIPE, the program will exit if the write is to a file descriptor of type 1 or 2. Write to all other types will cause write to fail with EPIPE error.</p>
 <p>There are precautions while handling signals when calling non-Go programs from Go programs and vice-versa. Check <a href="https://golang.org/pkg/os/signal">os.signal</a> for details. </p>
+<h3><a href="#modules" id="modules">Modules</a></h3>
+<div class="highlight"><pre><span></span><span class="x">go list -f &#39;</span><span class="cp">{{</span> <span class="nv">.Dir</span> <span class="cp">}}</span><span class="x">&#39; -m all</span>
+<span class="x">go list -f &#39;</span><span class="cp">{{</span> <span class="nv">.Dir</span> <span class="cp">}}</span><span class="x">&#39; -m github.com/golang/protobuf // /home/sridhar/dev/mygo/pkg/mod/github.com/golang/protobuf@v1.2.0</span>
+</pre></div>
+
+
 <h3><a href="#testing" id="testing">Testing</a></h3>
 <div class="highlight"><pre><span></span>go test -run Foo github.com/user/project/
 </pre></div>
@@ -286,6 +293,7 @@ git push fork
           <li><a href="/category/cheatsheet.html">cheatsheet</a></li>
           <li><a href="/category/detailed.html">Detailed</a></li>
           <li><a href="/category/events.html">Events</a></li>
+          <li><a href="/category/language.html">language</a></li>
           <li><a href="/category/manual.html">Manual</a></li>
           <li><a href="/category/misc.html">misc</a></li>
           <li><a href="/category/plan.html">plan</a></li>
