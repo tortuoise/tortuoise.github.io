@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="utf-8" />
+    <title>TI CC3220 — m0v</title>
+    <link rel="stylesheet" type="text/css" href="/theme/css/skeleton.css" />
+    <link rel="stylesheet" type="text/css" href="/theme/css/main.css" />
+    <link rel="shortcut icon" type="text/css" href="/favicon.ico" />
+    <link rel="alternate" type="application/atom+xml"
+                           title="m0v — Flux Atom"
+                           href="/" /> 
+    <!--[if lte IE 8]><script src="/theme/js/html5shiv.js"></script><![endif]-->
+    <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no" />
+
+    <meta name="author"   content="RCS" />
+    <meta name="keywords" content="hardware, software, tronix" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="page-head">
+        <h1>
+          <a href="/index.html">m0v</a>
+        </h1>
+      </header>
+
+      <div class="page-content">
+     <article class="post content">
+      <header class="post-header">
+        <time datetime="2017-11-03T00:00:00+00:00" pubdate="pubdate">
+          Fri 03 November 2017
+        </time>
+        <h1>
+          <a rel="bookmark"
+             href="/ti-cc3220.html"
+             title="Lien permanent vers «TI CC3220»">
+             TI CC3220
+          </a>
+        </h1>
+        <div class="meta">
+            In «<a href="/category/manual.html">manual</a>» 
+            by <a href="/author/rcs.html">RCS</a>
+        </div>
+      </header>
+      <div class="post-content"> 
+        <h2>Contents</h2>
+<ul>
+<li><a href="#brief">Brief</a><ul>
+<li><a href="#ootb">OOTB</a></li>
+<li><a href="#err">Errata</a></li>
+</ul>
+</li>
+<li><a href="#brief">Download</a></li>
+<li><a href="#components">Components</a><ul>
+<li><a href="#empty">Empty</a></li>
+<li><a href="#adc">ADC</a></li>
+<li><a href="#networking">Networking</a><ul>
+<li><a href="#wifi">Wifi</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#minicom">Minicom</a></li>
+<li><a href="#uniflash">Uniflash</a></li>
+<li><a href="#gotchas">Gotchas</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+<h2><a href="#brief" id="brief">Brief</a></h2>
+<p><code>TI_RTOS</code> is bundled in <code>Simplelink SDK</code>. No need to download separately.</p>
+<h3><a href="#ootb" id="ootb">OOTB</a></h3>
+<p>swru473.pdf</p>
+<h3><a href="#errata" id="errata">Errata</a></h3>
+<p>6.1.1 Provisioning: Provisioning mode is reflected by a flashing red LED (D10, not D7). 
+6.1.2 CC3220 as AP: AP mode is applied by pressing the SW3 (not SW2) switch on the CC3220 Launchpad.</p>
+<h2><a href="#components" id="components">Components</a></h2>
+<p>Capactive Touch Boosterpack with MSP430G2452IN20
+MSP-EXP430G2
+MSP-EXP430FR2443</p>
+<h3><a href="#adc" id="adc">ADC</a></h3>
+<p>ADC1 = pin 60</p>
+<h3><a href="#networking" id="networking">Networking</a></h3>
+<h4><a href="#wifi" id="wifi">Wifi</a></h4>
+<p>When starting with the <code>empty</code> project and adding in Simplelink, add the <code>Library Path</code> and library<code>ccs/rtos/simplelink.a</code> in the project properties in C/C++ General -&gt; Paths and Symbols. </p>
+<p>Then implement all the required callback functions (<code>SimpleLinkNetAppRequestMemFreeEventHandler</code>, <code>SimpleLinkNetAppRequestEventHandler</code>, <code>SimpleLinkWlanEventHandler</code>, <code>SimpleLinkGeneralEventHandler</code>, etc. etc.).</p>
+<h2>minicom</h2>
+<p>minicom -b 115200 -8 -D /dev/ttyACM0</p>
+<h2>openocd</h2>
+<p>cd ~/ti/cc3200_sdk_1_3_0/CC3200SDK_1.3.0/cc3200-sdk/tools/gcc_scripts
+openocd -f cc3200.cfg</p>
+<p>Open On-Chip Debugger 0.9.0 (2015-09-02-10:42)
+Licensed under GNU GPL v2
+For bug reports, read
+  http://openocd.org/doc/doxygen/bugs.html
+adapter speed: 1000 kHz
+Info : auto-selecting first available session transport "jtag". To override use 'transport select <transport>'.
+cc3200_dbginit
+Info : clock speed 1000 kHz
+Info : JTAG tap: cc3200.jrc tap/device found: 0x0b97c02f (mfg: 0x017, part: 0xb97c, ver: 0x0)
+Info : JTAG tap: cc3200.dap enabled
+Info : cc3200.cpu: hardware has 6 breakpoints, 4 watchpoints</p>
+<h2>cc3200</h2>
+<p>cc3200_sdk_1_3_0/CC3200SDK_1.3.0/tools/gcc_scripts/makedefs_ti_rtos
+cc3200_sdk_1_3_0/CC3200SDK_1.3.0/ti_rtos/ti_rtos_config/gcc/configPkg/compiler.opt
+cc3200_sdk_1_3_0/CC3200SDK_1.3.0/oslib/gcc/Makefile_oslib_tirtos</p>
+<p>malloc (nbytes=76) at ../../../../../../newlib/libc/stdlib/malloc.c:215
+215 ../../../../../../newlib/libc/stdlib/malloc.c: No such file or directory.</p>
+<h2>Uniflash</h2>
+<ul>
+<li><a href="http://www.ti.com/tool/Uniflash">Product page</a></li>
+<li><a href="http://processors.wiki.ti.com/index.php/Category:CCS_UniFlash">Download</a></li>
+</ul>
+<p>Install as root:</p>
+<div class="highlight"><pre><span></span>sudo ./uniflash_sl.4.6.0.2176.run // install to /opt/ti
+</pre></div>
+
+
+<p>Start Uniflash:</p>
+<div class="highlight"><pre><span></span>cd /opt/ti/uniflash_4.6.0
+sudo ./node-webkit/nw
+</pre></div>
+
+
+<h2>Gotchas</h2>
+<p>To run minicom as a non-root user, user has to be part of dialout group. </p>
+<p>Also for CC3200, user has to be added to plugdev group. </p>
+<p>In client mode (<code>TCPClient</code> in <code>socket_cmd.c</code>) if verifying server certificate like so:</p>
+<div class="highlight"><pre><span></span>sl_SetSockOpt(sock,SL_SOL_SOCKET,SL_SO_SECURE_FILES_CA_FILE_NAME, ROOT_CA_CERT_FILE, strlen(ROOT_CA_CERT_FILE));
+</pre></div>
+
+
+<p>then may run into the following error: 688: <code>SL_ERROR_BSD_ESEC_ASN_NO_SIGNER_E</code></p>
+<p>To work around, remove the server cert verification and receive this error (warning) instead: 453: <code>SL_ERROR_BSD_ESECSNOVERIFY</code></p>
+<h3><a href="#networking" id="networking">Networking</a></h3>
+<ul>
+<li>source/ti/driver/net/wifi/errors.h</li>
+</ul>
+<h2>TIRTOS</h2>
+<p>~/ti/tirtos_simplelink_2_13_01_09</p>
+<p>Corresponding xdctools installed at:
+~/ti/xdctools_3_31_01_33_core</p>
+<p>This can be found by checking the install log which strangely has Windows paths:
+./tirtossimplelink_2_13_01_09_install.log:Unpacking C:\ti\xdctools_3_31_01_33_core\jre\bin\dtplugin\deployJava1.dll</p>
+<p>TIRTOS can be rebuit after changing Windows paths to Linux paths in tirtos.mak:
+../xdctools_3_31_01_33_core/gmake -f tirtos.mak all</p>
+<p>Also can choose compiler/linker options (CCS, GCC or IAR) in tirtos.mak</p>
+<h2>Demos</h2>
+<p>wlanconnect -s "M0V" -t WPA/WPA2 -p "53606808"
+send -c 192.168.1.100 -n 1</p>
+<h2>OOB</h2>
+<p>provisioningTask
+linkLocalTask: 
+controlTask: handles button presses etc.
+otaTask</p>
+<h2>Drivers</h2>
+<h3>GPIO</h3>
+<h3>PWM</h3>
+<p>System clock 80MHz
+Timer tick = 1/80Mhz = 12.5ns
+16 bit registers + 8 bit prescalar
+Maximum tick = 2^24-1 = 16777215 
+Max time = (2^24-1) x 12.5ns = 0.209715s</p>
+<h3>I2C</h3>
+<p>Standard bus frequencies are 100/400KHz</p>
+<h2>BIOS Kernel</h2>
+<h2><a href="#gotchas" id="gotchas">Gotchas</a></h2>
+<p>Operation failed: fs_programming error: ret: -10289, ex_err: 2633 - FS_WRONG_SIGNATURE
+Operation failed: fs_programming error: ret: -10287, ex_err: 2633 - FS_ERR_ROOT_CA_IS_UNKOWN</p>
+<p><code>SL_ERROR_BSD_ESEC_ASN_NO_SIGNER_E</code> caused due to incorrect root ca cert on server. </p>
+<p>Ensure thread stack size is sufficient for NWP. </p>
+<div class="highlight"><pre><span></span>#define THREADSTACKSIZE    4096
+</pre></div>
+
+
+<h2>References ##</h2>
+<ul>
+<li><a href="https://www.embedded.com/electronics-blogs/say-what-/4441829/2/Your-very-own-IoT--Digging-deep-on-sensors"></a></li>
+<li><a href="http://www.ti.com/tool/SIMPLELINK-CC32XX-SDK">Simplelink SDK</a> </li>
+<li><a href="http://www.ti.com/tool/download/SIMPLELINK-CC32XX-SDK">Simplelink SDK Download</a></li>
+<li><a href="https://www.ti.com/product/CC3220S/description">CC3220S Description</a></li>
+<li><a href="https://www.ti.com/product/CC3220S/toolssoftware">CC3220S Software</a></li>
+<li><a href="http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/bios/sysbios/index.html">SYS/BIOS Downloads</a></li>
+<li><a href="http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/tirtos/index.html">TI-RTOS</a></li>
+</ul>
+<h2><a href="#useful" id="useful">Useful</a></h2>
+<ul>
+<li><a href="https://gist.github.com/laher/5795578">tls certs</a></li>
+</ul>
+<p>dummy-root-ca-cert
+dummy-trusted-ca-cert
+dummy-trusted-cert</p>
+<p>binary signed with private key dummy-trusted-cert-key and cert file dummy-trusted-cert</p>
+<p>Replace with</p>
+<p>dst_rootca_x3_cert.pem
+letsencrypt-ca-cert.pem
+m0v.in.cert.pem</p>
+<p>turns out, the name of the root ca and trusted ca certs <em>on the simplelink device</em> need to have the file name match the certificate name (all lowercase and spaces are ok). to find the name of your cert, use
+openssl x509 -text -noout -in name_of_cert</p>
+<p>and look for CN in the subject field.</p>
+<p>when adding the mcu image, the -cert option points to the simplelink filename.</p>
+<p>So, if you upload your code signing cert with SL_filename 'my cool cert', then the --cert option would look like
+--cert "my cool cert"</p>
+      </div>
+      <footer class="post-footer">
+        <div class="meta">
+            In «<a href="/category/manual.html">manual</a>» 
+            by <a href="/author/rcs.html">RCS</a><br />
+            Tags:  #<a href="/tag/hardware.html">hardware</a> #<a href="/tag/software.html">software</a> #<a href="/tag/tronix.html">tronix</a>        </div>
+      </footer>
+    </article>
+      </div>
+    <aside class="page-sidebar">
+      <nav class="widget">
+      <h3>Site</h3>
+        <ul>
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="/archives.html">Archives</a></li>
+          <li><a href="/tags.html">Tags</a></li>
+        </ul>
+      </nav>
+
+      <nav class="widget">
+        <h3>Categories</h3>
+        <ul>
+          <li><a href="/category/algorithms.html">Algorithms</a></li>
+          <li><a href="/category/chatter.html">Chatter</a></li>
+          <li><a href="/category/cheat-sheet.html">Cheat Sheet</a></li>
+          <li><a href="/category/cheatsheet.html">cheatsheet</a></li>
+          <li><a href="/category/detailed.html">Detailed</a></li>
+          <li><a href="/category/events.html">Events</a></li>
+          <li><a href="/category/language.html">language</a></li>
+          <li><a href="/category/manual.html">manual</a></li>
+          <li><a href="/category/misc.html">misc</a></li>
+          <li><a href="/category/plan.html">plan</a></li>
+          <li><a href="/category/review.html">Review</a></li>
+          <li><a href="/category/setup.html">Setup</a></li>
+          <li><a href="/category/software-encryption.html">software, encryption</a></li>
+          <li><a href="/category/teaser.html">Teaser</a></li>
+        </ul>
+      </nav>
+
+      <nav class="widget">
+        <h3>Social</h3>
+        <ul>
+          <li><a href="https://stackoverflow.com/users/1093710/sridhar">SO</a></li>
+          <li><a href="https://github.com/tortuoise">Github</a></li>
+          <li><a href="/" rel="alternate">Flux Atom</a></li>
+        </ul>
+      </nav>
+    </aside> 
+
+      <footer class="page-footer">
+        <p> Powered by <a href="http://pelican.readthedocs.org">Pelican</a></p>
+      </footer>
+    </div>
+  </body>
+</html>

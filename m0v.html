@@ -142,6 +142,7 @@ Task: Evaluate PCB design tools - is Kicad fit for purpose ? (2d)
 Task: Identify and speak with PCB fabricators (2d)</p>
 <h3><a href="#host" id="host">Host MCU</a></h3>
 <p>The Host MCU is the heart of the monitoring device. This device will use TI's CC3220S which has a Wifi SoC in the same package as the MCU. Using the GPIO and ADC of the host MCU, the status of the thermal fuse will be monitored.</p>
+<p>See <a href="https://tortuoise.github.io/ti-cc3220.html">TI CC3220S</a> for detailed implementation.</p>
 <p>Task: Dust off old development and update tools/platform (1d)
 Task: Write firmware to process ADC input (1w)</p>
 <h3><a href="#wifi" id="wifi">Wifi</a></h3>
@@ -162,6 +163,7 @@ Task: Write firmware to read I2C/SPI GPS module (3d)</p>
 <li>Configure converts the device's AP to station (STA) and connects to WAN AP with SSID, password entered in previous step, exchanges device ID with server for a token and stores token on device.</li>
 <li>One green indicator on device appears if connection to AP successful. Two green indicators appear if ACK token received from server. Three green indicators if the device is fully configured and sending data to the server.</li>
 </ul>
+<p>See <a href="https://tortuoise.github.io/android-dev-setup.html">Android dev setup</a> for detailed setup.</p>
 <h4><a href="#smartconfig" id="smartconfig">TI SmartConfig</a></h4>
 <p>The SmartConfig app uses Android 5.0 APIs with targetSdkVersion 21 which has inbuilt support for Apache HTTP client. Android 6.0 (API Level 23) removes support for the Apache HTTP client so using targetSdkVersion higher than 21 will cause compile errors unless the following is added to build.gradle:</p>
 <p>android {
@@ -169,6 +171,7 @@ Task: Write firmware to read I2C/SPI GPS module (3d)</p>
 }</p>
 <p>Task: Customise the SmartConfig app - add grpc client to send exchange config data with server (1w)
 Task: Convert the SmartConfig app to use Dagger for dependency injection and simultaneouly replace Apache HTTP with okhttp or even GRPC. This may be unnecessary and take very long (2w)</p>
+<p>See <a href="https://tortuoise.github.io/ti-smartconfig.html">TI SmartConfig</a> for detailed implementation.</p>
 <h3><a href="#view" id="view">Viewing App</a></h3>
 <p>This is the customer facing app where a user can login and view status of SPD and meter reading data.</p>
 <p>Task: Customise trac app to viewing app (1w)</p>
@@ -177,6 +180,7 @@ Task: Convert the SmartConfig app to use Dagger for dependency injection and sim
 <p>Micro-services in Go using GRPC wherever possible. </p>
 <p>Features:
 + OTA for 'firmware' updates</p>
+<p>See <a href="https://tortuoise.github.io/m0v-server.html">m0v server</a> for detailed implementation.</p>
 <p>Task: Evaluate proxy servers (Envoy?) (2d)
 Task: Configure and set up proxy server. (1d)
 Task: Write the grpc server + http gateway. (5d)
@@ -247,7 +251,7 @@ Task: Investigate firmware updates (ongoing)</p>
           <li><a href="/category/detailed.html">Detailed</a></li>
           <li><a href="/category/events.html">Events</a></li>
           <li><a href="/category/language.html">language</a></li>
-          <li><a href="/category/manual.html">Manual</a></li>
+          <li><a href="/category/manual.html">manual</a></li>
           <li><a href="/category/misc.html">misc</a></li>
           <li><a href="/category/plan.html">plan</a></li>
           <li><a href="/category/review.html">Review</a></li>
