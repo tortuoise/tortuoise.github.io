@@ -63,6 +63,30 @@
 <h3><a href="#server" id="server">Server</a></h3>
 <h4><a href="#log" id="log">log</a></h4>
 <h4><a href="#data" id="data">data</a></h4>
+<p>A packet sent from a device (publisher/pub) consists of:</p>
+<div class="highlight"><pre><span></span>Id int64 `json:&quot;id!`
+Timestamp int64 `json:&quot;timestamp,omitempty&quot;`
+Status bool `json:&quot;status&quot;`
+Voltage float64 `json:&quot;voltage&quot;`
+Frequency float64 `json:&quot;freq&quot;`
+//Lat float64 `json:&quot;lat&quot;`
+//Lng float64 `json:&quot;lng&quot;`
+</pre></div>
+
+
+<p><code>Id</code> (should be <code>pub_id</code>) is the id of the pub which is set during configuration with app along with the location and other system info (tbc). </p>
+<p>A packet saved to db is as follows with the <code>Timestamp</code> from the packet used as <code>created_at</code>:</p>
+<div class="highlight"><pre><span></span>pub_id INTEGER NOT NULL REFERENCES pub(pub_id),
+id SERIAL PRIMARY KEY, 
+created_at TIMESTAMPTZ NOT NULL default current_timestamp,
+saved_at TIMESTAMPTZ NOT NULL default current_timestamp,
+voltage REAL,
+frequency REAL,
+protected boolean NOT NULL,
+</pre></div>
+
+
+<p><code>pub_id</code> is in the packet sent from a pub. <code>id</code> is an incrementing id of the packet saved to db. <code>created_at</code> is a timestamp </p>
 <h3><a href="#tls" id="tls">tls</a></h3>
 <p>Let's Encrypt uses DST as root (DST Root CA X3). This root CA (DST) is luckily in the list of common trusted root CAs used by the CC3220S. So download the <a href="https://www.identrust.com/dst-root-ca-x3">root certificate</a> and append it to the chain loaded by server like below (use it as b00m-trusted-root.pem).</p>
 <p>Certificate chains are loaded leaf first. So create a certificate chain in the following order:</p>
