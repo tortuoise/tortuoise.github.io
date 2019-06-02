@@ -55,6 +55,7 @@
 </ul>
 </li>
 <li><a href="#testclient">Test client</a></li>
+<li><a href="#cloudconfirm">Cloud Confirmation</a></li>
 <li><a href="#gotchas">Gotchas</a></li>
 <li><a href="#references">References</a></li>
 </ul>
@@ -114,6 +115,14 @@ config := &amp;tls.Config {
 
 <h3><a href="#testclient" id="testclient">Test client</a></h3>
 <p>The client in <code>b00m_client.go</code> is a Go TCP client which connects to the TCP server with <code>tls.Config{InsecureSkipVerify:false}</code> to verify server certificate. It then posts a json packet and receives a <code>Thank you</code> reply from the server. </p>
+<h3><a href="#cloudconfirm" id="cloudconfirm">Cloud Confirmation</a></h3>
+<p>A second simple tcp+ssl server listening on another port provides the cloud confirmation to the Android (external configuration) app. </p>
+<p>The server accepts tokens from successfully provisioned devices and returns them (when queried) to the external configuration app which generated the tokens in the first place. </p>
+<ul>
+<li>The app connects to the cc3220s and provisions the device with ssid, password and a token. </li>
+<li>The device then connects to the cloud confirmation server and posts the token to confirm successful provisioning. </li>
+<li>The app then queries the cloud confirmation server for the token, upon receiving which the configuratiaon process is complete.  </li>
+</ul>
 <h3><a href="#gotchas" id="gotchas">Gotchas</a></h3>
 <p>The following files are for obvious reasons not part of the respository:</p>
 <div class="highlight"><pre><span></span>b00m.in+rsa

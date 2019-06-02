@@ -52,6 +52,7 @@
 <li><a href="#brief">Download</a></li>
 <li><a href="#components">Components</a><ul>
 <li><a href="#empty">Empty</a></li>
+<li><a href="#mov">MOV</a></li>
 <li><a href="#adc">ADC</a></li>
 <li><a href="#networking">Networking</a><ul>
 <li><a href="#wifi">Wifi</a></li>
@@ -71,10 +72,27 @@
 <h3><a href="#errata" id="errata">Errata</a></h3>
 <p>6.1.1 Provisioning: Provisioning mode is reflected by a flashing red LED (D10, not D7). 
 6.1.2 CC3220 as AP: AP mode is applied by pressing the SW3 (not SW2) switch on the CC3220 Launchpad.</p>
+<h2><a href="#download" id="download">Download</a></h2>
+<ul>
+<li><a href="">Simplelink SDK</a> </li>
+<li><a href="">Uniflash</a></li>
+<li><a href="">CCStudio</a></li>
+</ul>
 <h2><a href="#components" id="components">Components</a></h2>
-<p>Capactive Touch Boosterpack with MSP430G2452IN20
-MSP-EXP430G2
-MSP-EXP430FR2443</p>
+<h3><a href="#empty" id="empty">Empty</a></h3>
+<p>Provisioning using external confirmation/feedback</p>
+<p>From swru455g (16.8.1):</p>
+<p>To use a cloud-based feedback, the external confirmation bit should be set in the provisioning host command flags parameter when the provisioning process is started.</p>
+<div class="highlight"><pre><span></span>sl_WlanProvisioning(SL_WLAN_PROVISIONING_CMD_START_MODE_APSC, ROLE_AP, 600, NULL, SL_WLAN_PROVISIONING_CMD_FLAG_EXTERNAL_CONFIRMATION);
+</pre></div>
+
+
+<p>Can only use the above with <code>ROLE_STA</code> as second argument because it needs to be in station mode and connect to an external server to confirm connection. </p>
+<h3><a href="#mov" id="mov">MOV</a></h3>
+<p>The SPD that the CC3220S will connect has a mechanical relay that gets triggered when the thermal fuse burns out. So the normally open (NO) becomes closed and the normally closed (NC) becomes open. </p>
+<p>A simple continuity check circuit is used to check the state of NO. When the thermal fuse hasn't burned out, the transistor doesn't conduct (as theres no base current as the circuit is open) and the comparator ouputs low as its inverting input is lower. </p>
+<p>When the thermal fuse burns out and NO is now closed, the transistor conducts and the comparator ouputs high as its inverting input is higher. </p>
+<p>The output of the comparator can be fed to either the ADC or GPIO of the CC3220S. </p>
 <h3><a href="#adc" id="adc">ADC</a></h3>
 <p>ADC1 = pin 60</p>
 <h3><a href="#networking" id="networking">Networking</a></h3>
