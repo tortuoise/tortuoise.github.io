@@ -52,6 +52,43 @@
 </ul>
 <h3><a href="#brief" id="brief">Brief</a></h3>
 <h3><a href="#components" id="components">Components</a></h3>
+<h4><a href="#deviceconfig" id="deviceconfig">Device Configuration</a></h4>
+<p>Relvant code path in succesful device configuration :  </p>
+<div class="highlight"><pre><span></span>public class DeviceConfiguration extends Fragment {
+
+    private void confirmResult(final Boolean viaWifi) {
+
+    }
+
+    private AddProfileAsyncTaskCallback mAddProfileAsyncTaskCallback = new AddProfileAsyncTaskCallBack() {
+        public void addProfileCompleted() {
+            connectToWifi (ssidToAdd) ... 
+                public void successfullyConnectedToNetwork(String ssid) {
+                    restartUdp() // in MainActivity
+                }
+        }
+    }
+
+    class GetCFGResult extends AsyncTask&lt;Boolean, Void, String&gt; {
+        ...
+        protected void onPostExecute(String result) {
+            ...
+        }
+        protected void onPostExecute(Device_Type_Enum deviceTypeEnum) {
+            ...
+        }
+    }
+
+    public BroadcastReceiver deviceFoundReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent){
+
+        }
+    }
+
+}
+</pre></div>
+
+
 <h3><a href="#gotchas" id="gotchas">Gotchas</a></h3>
 <h3><a href="#references" id="references">References</a></h3>
 <ul>
