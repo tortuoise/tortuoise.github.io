@@ -99,6 +99,37 @@
 <h4><a href="#wifi" id="wifi">Wifi</a></h4>
 <p>When starting with the <code>empty</code> project and adding in Simplelink, add the <code>Library Path</code> and library<code>ccs/rtos/simplelink.a</code> in the project properties in C/C++ General -&gt; Paths and Symbols. </p>
 <p>Then implement all the required callback functions (<code>SimpleLinkNetAppRequestMemFreeEventHandler</code>, <code>SimpleLinkNetAppRequestEventHandler</code>, <code>SimpleLinkWlanEventHandler</code>, <code>SimpleLinkGeneralEventHandler</code>, etc. etc.).</p>
+<p>The host controls ths provisioning process using one command: </p>
+<div class="highlight"><pre><span></span>_i16 sl_WlanProvisioning(_u8 ProvisioningCmd, _u8 RequestedRoleAfterSuccess, _u16 InactivityTimeoutSec, char *pSmartConfigKey, _u32 Flags);
+</pre></div>
+
+
+<p>RequestedRoleAfterSucess: The desired role (AP or STA) to which the device should switch if provisioning is successful (relevant only if the value of the ProvisioningCmd is 0, 1, 2, or 3).</p>
+<p>InactivityTimeoutSec: Defines the period of time (in seconds) the system waits before it automatically stops the provisioning process when no user activity is detected. Relevant only if the value of the
+ProvisioningCmd command is 0, 1, 2, or 3.</p>
+<p>Flags: Optional configuration conducted by a bitmap.</p>
+<table>
+<thead>
+<tr>
+<th align="center">Command</th>
+<th align="center">Value</th>
+<th align="center">Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">BIT_0</td>
+<td align="center">ENABLE_EXTERNAL_CONFIRMATION</td>
+<td align="center">Defines whether to use external confirmation or not. Relevant only</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">if the value of the ProvisioningCmd command is 0, 1, 2, or 3.</td>
+</tr>
+</tbody>
+</table>
+<p>Example usage: <code>retVal = sl_WlanProvisioning(provisioningCmd, ROLE_STA, PROVISIONING_INACTIVITY_TIMEOUT, NULL, SL_WLAN_PROVISIONING_CMD_FLAG_EXTERNAL_CONFIRMATION)</code></p>
 <h2>minicom</h2>
 <p>minicom -b 115200 -8 -D /dev/ttyACM0</p>
 <h2>openocd</h2>
@@ -197,6 +228,7 @@ Operation failed: fs_programming error: ret: -10287, ex_err: 2633 - FS_ERR_ROOT_
 <li><a href="https://www.ti.com/product/CC3220S/toolssoftware">CC3220S Software</a></li>
 <li><a href="http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/bios/sysbios/index.html">SYS/BIOS Downloads</a></li>
 <li><a href="http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/tirtos/index.html">TI-RTOS</a></li>
+<li><a href="swra513a.pdf">CC3x20 Simplelink Wi-Fi IoC Solution Device Provisioning (Rev. A)</a></li>
 </ul>
 <h2><a href="#useful" id="useful">Useful</a></h2>
 <ul>
