@@ -239,9 +239,20 @@ dummy-trusted-ca-cert
 dummy-trusted-cert</p>
 <p>binary signed with private key dummy-trusted-cert-key and cert file dummy-trusted-cert</p>
 <p>Replace with</p>
-<p>dst_rootca_x3_cert.pem
-letsencrypt-ca-cert.pem
-m0v.in.cert.pem</p>
+<p>dst rootca ca x3
+let's encrypt authority x3
+b00m-trusted-ca-cert
+b00m-trusted-cert</p>
+<p>In <code>Trusted Root-Certificate Catalog</code> replace </p>
+<div class="highlight"><pre><span></span>certificate-playground/certcatalogPlayGround20160911.lst
+certificate-playground/certcatalogPlayGround20160911.lst.signed_3220.bin
+
+certificate-catalog/certcatalog20190217.lst
+certificate-catalog/certcatalog20190217.lst.signed_3220.bin
+</pre></div>
+
+
+<p>Sign the mcuimg.bin with b00m-trusted-cert-key / b00m-trusted-cert</p>
 <p>turns out, the name of the root ca and trusted ca certs <em>on the simplelink device</em> need to have the file name match the certificate name (all lowercase and spaces are ok). to find the name of your cert, use
 openssl x509 -text -noout -in name_of_cert</p>
 <p>and look for CN in the subject field.</p>

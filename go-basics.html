@@ -222,6 +222,12 @@ git push fork
 </pre></div>
 
 
+<div class="highlight"><pre><span></span>cd ~/dev/modgo/src/github.com/agnivade/funnel
+go build -tags &quot;disableelasticsearch disableinfluxdb disablekafka disableredis disables3 disablenats&quot; ./cmd/funnel // outputs funnel binary in pwd
+go install ./cmd/funnel // installs funnel binary in $GOPATH/bin
+</pre></div>
+
+
 <h3><a href="#testing" id="testing">Testing</a></h3>
 <div class="highlight"><pre><span></span>go test -run Foo github.com/user/project/
 </pre></div>

@@ -119,7 +119,10 @@ update-alternatives --config java //then choose number from list
 apt-get --simulate purge popularity-contest //remove popularity-contest and related packages altogether   
 apt list --upgradable
 apt-get autoremove --purge // removes old kernels from boot partition to free up disk space
+apt-cache search killall
+apt-get install psmisc // for killall
 dpkg -c/i/l/L/r/s  // package manager view contents/install/list/file locations/remove/installed?
+dpkg -S /usr/bin/gcc // outputs which package provides a binary
 vgdisplay // volume groups
 pvdisplay // physical volumes
 lvresize -r -L -20G /dev/mapper/home

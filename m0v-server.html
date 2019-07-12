@@ -63,6 +63,12 @@
 <p>A secure (tls) tcp server to receive status/meter readings with postgresql database to store readings which uses acme for auto-generation and renewal of certificates.</p>
 <h3><a href="#server" id="server">Server</a></h3>
 <h4><a href="#log" id="log">log</a></h4>
+<p>Stdout/stderr is piped to a modified version of funnel which writes and rotates log files. </p>
+<div class="highlight"><pre><span></span>./mov-server -stderrthreshold=INFO -secure -dbdb=m0v -dbuser=sridhar -dbpw= 2&gt;&amp;1 | funnel -app=mov &amp;
+./mov-confo-server -stderrthreshold=INFO -secure -dbdb=m0v -dbuser=sridhar -dbpw= 2&gt;&amp;1 | funnel -app=confo &amp;
+</pre></div>
+
+
 <h4><a href="#data" id="data">data</a></h4>
 <p>A packet sent from a device (publisher/pub) consists of:</p>
 <div class="highlight"><pre><span></span>Id int64 `json:&quot;id!`
@@ -96,7 +102,7 @@ protected boolean NOT NULL,
 
 
 <p>And load it like this:</p>
-<div class="highlight"><pre><span></span>b00m, err := tls.LoadX509KeyPair(&quot;b00m-trusted-cert.pem&quot;, &quot;b00m-trusted-cert-key.pem&quot;)
+<div class="highlight"><pre><span></span>b00m, err := tls.LoadX509KeyPair(&quot;b00m-trusted-chain.pem&quot;, &quot;b00m-trusted-cert-key.pem&quot;)
 // handle err
 config := &amp;tls.Config {
         Certificate: []tls.Certificate{b00m},
@@ -116,7 +122,7 @@ config := &amp;tls.Config {
 <h3><a href="#testclient" id="testclient">Test client</a></h3>
 <p>The client in <code>b00m_client.go</code> is a Go TCP client which connects to the TCP server with <code>tls.Config{InsecureSkipVerify:false}</code> to verify server certificate. It then posts a json packet and receives a <code>Thank you</code> reply from the server. </p>
 <h3><a href="#cloudconfirm" id="cloudconfirm">Cloud Confirmation</a></h3>
-<p>A second simple tcp+ssl server listening on another port provides the cloud confirmation to the Android (external configuration) app. </p>
+<p>A second simple tcp+ssl server listening on another port (38979) provides the cloud confirmation to the Android (external configuration) app. </p>
 <p>The server accepts tokens from successfully provisioned devices and returns them (when queried) to the external configuration app which generated the tokens in the first place. </p>
 <ul>
 <li>The app connects to the cc3220s and provisions the device with ssid, password and a token. </li>
