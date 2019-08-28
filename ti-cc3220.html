@@ -88,6 +88,62 @@
 
 
 <p>Can only use the above with <code>ROLE_STA</code> as second argument because it needs to be in station mode and connect to an external server to confirm connection. </p>
+<h3><a href="#provisioning" id="provisioning">Provisioning</a></h3>
+<p>Each of 7 states has 12 event handlers (function pointers) and corresponding next state defined by lookup/transition table <code>const Provisioning_TableEntry_t gTransitionTable[7][12]</code> </p>
+<p>7 AppState(s): </p>
+<div class="highlight"><pre><span></span>STARTING, WAITING_FOR_CONNECTION, WAIT_FOR_IP
+PINGING_GW, PROVISIONING_IN_PROGRESS, PROVISIONING_WAIT_COMPLETE
+ERROR, (MAX)
+</pre></div>
+
+
+<p>12 AppEvent(s):</p>
+<div class="highlight"><pre><span></span>STARTED, CONNECTED, IP_ACQUIRED, DISCONNECT
+PING_COMPLETE, PROVISIONING_STARTED, PROVISIONING_SUCCESS, PROVISIONING_STOPPED, PROVISIONING_WAIT_CONN
+TIMEOUT, ERROR, RESTART, (MAX)
+</pre></div>
+
+
+<p>17 event handlers (function pointers) of the form: </p>
+<div class="highlight"><pre><span></span>typedef int32_t (*fptr_EventHandler)(void); 
+</pre></div>
+
+
+<p>For instance: </p>
+<div class="highlight"><pre><span></span>int32_t ReportError(void);
+int32_t DoNothing(void);
+</pre></div>
+
+
+<p>4 thread are created:</p>
+<div class="highlight"><pre><span></span>RetVal = pthread_create(&amp;gSpawnThread, &amp;pAttrs_spawn, sl_Task, NULL);
+RetVal = pthread_create(&amp;gProvisioningThread, &amp;pAttrs, ProvisioningTask, NULL);
+RetVal = pthread_create(&amp;gDisplayThread, &amp;pAttrs_display, UpdateLedDisplay, NULL);
+RetVal = pthread_create(&amp;gAdcThread, &amp;pAttrs_adc, adcThread, NULL);
+</pre></div>
+
+
+<p>The <code>ProvioningTask</code> thread creates a message queue <code>gProvisioningSMQueue</code> and receives from this queue:</p>
+<div class="highlight"><pre><span></span>gProvisioningSMQueue = mq_open(&quot;SMQueue&quot;, O_CREAT, 0, &amp;attr);
+...
+while(1) {
+    mq_receive(gProvisioningSMQueue, (char *)&amp;event, 1, NULL);
+    ...
+}
+</pre></div>
+
+
+<p>The SL event handlers <code>SimpleLinkWlanEventHandler/SimpleLinkNetAppEventHandler</code> and the application event handlers send to this queue using function <code>SignalEvent</code>. </p>
+<div class="highlight"><pre><span></span>int16_t SignalEvent(AppEvent event) {
+    ...
+    mq_send(gProvisioningSMQueue, &amp;msg, 1, 0);
+    ...
+}
+</pre></div>
+
+
+<p>Both <code>ProvisioningTask &amp; adcThread</code> create timers using sigevent.</p>
+<p>The <code>adcThread</code> also blocks on a semaphore which gets posted to when the timer expires.</p>
 <h3><a href="#mov" id="mov">MOV</a></h3>
 <p>The SPD that the CC3220S will connect has a mechanical relay that gets triggered when the thermal fuse burns out. So the normally open (NO) becomes closed and the normally closed (NC) becomes open. </p>
 <p>A simple continuity check circuit is used to check the state of NO. When the thermal fuse hasn't burned out, the transistor doesn't conduct (as theres no base current as the circuit is open) and the comparator ouputs low as its inverting input is lower. </p>
