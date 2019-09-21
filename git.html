@@ -235,6 +235,11 @@ git commit -C HEAD@{1}
 </pre></div>
 
 
+<p><code>filter-branch</code> may be used to remove a file and all its history from index. Deletes file from working directory and edits/renames commit hashes and tags. Useful to remove files with sensitive information inadvertently added to repo. </p>
+<div class="highlight"><pre><span></span>git filter-branch --force --index-filter &quot;git rm --cached --ignore-unmatch run_confo_server.sh&quot; --prune-empty --tag-name-filter cat -- --all
+</pre></div>
+
+
 <h3><a href="#sync" id="sync">syncing with upstream</a></h3>
 <div class="highlight"><pre><span></span>git clone https://github.com/tortuoise/pelican-themes
 git remote -v //lists remote repos
