@@ -234,6 +234,14 @@ sudo ./node-webkit/nw
 
 <p>then may run into the following error: 688: <code>SL_ERROR_BSD_ESEC_ASN_NO_SIGNER_E</code></p>
 <p>To work around, remove the server cert verification and receive this error (warning) instead: 453: <code>SL_ERROR_BSD_ESECSNOVERIFY</code></p>
+<p>Timestamp issue with CC32XX: the following code doesn't work on CC32XX because of missing time.h implementations.</p>
+<div class="highlight"><pre><span></span>time_t rawtime;
+struct tm * timeinfo;
+time(&amp;rawtime); // time(NULL);
+rawtime = mktime(timeinfo);
+</pre></div>
+
+
 <h3><a href="#networking" id="networking">Networking</a></h3>
 <ul>
 <li>source/ti/driver/net/wifi/errors.h</li>

@@ -60,10 +60,10 @@
 <li><a href="#references">References</a></li>
 </ul>
 <h3><a href="#brief" id="brief">Brief</a></h3>
-<p>A secure (tls) tcp server to receive status/meter readings with postgresql database to store readings which uses acme for auto-generation and renewal of certificates.</p>
-<p>One part of four:</p>
+<p>A secure (tls) tcp server to receive status/meter readings with postgresql database to store readings. Server uses acme for auto-generation and renewal of certificates.</p>
+<p>The server is one part of four:</p>
 <ul>
-<li>Data receipt server - <code>locomov</code></li>
+<li>Data receipt server (this) - <code>locomov</code></li>
 <li>Data retrieval server - <code>finisher</code></li>
 <li>Device firmware - <code>provisioning_CC3220S_LAUNCHXL_tirtos_ccs</code></li>
 <li>Android app software - <code>SimpleLink_WiFi_Provisioning_Android_Source_2.2.257</code></li>
@@ -76,6 +76,7 @@
 </pre></div>
 
 
+<p><code>mov-confo-server has been deprecated by a handler in the data retrieval server</code>finisher<code>because</code>mov-confo-server<code>consisted of only a single https handler for the retrieval of the hash of a newly configured device using</code>device_name<code>and</code>ssid`.</p>
 <h4><a href="#data" id="data">data</a></h4>
 <p>A packet sent from a device (publisher/pub) consists of:</p>
 <div class="highlight"><pre><span></span>Id int64 `json:&quot;id!`
