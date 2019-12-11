@@ -90,6 +90,7 @@
 <h3><a href="#" id=""></a></h3>
 <div class="highlight"><pre><span></span>gcloud compute firewall-rules create default-allow-smtp-out --direction=OUT --allow tcp:25 --enable-logging
 gcloud compute firewall-rules create --network=default default-allow-ssh --allow tcp:22 --enable-logging
+gcloud compute firewall-rules update default-allow-ssh --source-ranges=81.0.0.0/8,167.0.0.0/8,122.166.0.0/16
 </pre></div>
 
 

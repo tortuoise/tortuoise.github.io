@@ -137,6 +137,30 @@ config := &amp;tls.Config {
 <li>The device then connects to the cloud confirmation server and posts the token to confirm successful provisioning. </li>
 <li>The app then queries the cloud confirmation server for the token, upon receiving which the configuratiaon process is complete.  </li>
 </ul>
+<div class="highlight"><pre><span></span>type Confo struct {
+    Devicename string`json:&quot;deviceName&quot;`
+    Timestamp int64 `json:&quot;timestamp,omitempty&quot;`
+    Ssid string `json:&quot;ssid&quot;`
+    Hash int64 `json:&quot;hash,omitempty&quot;`
+    Sub string `json:&quot;email,omitempty&quot;`
+}
+</pre></div>
+
+
+<p>On receiving a confo, the server does the following: 
+- check if <code>Sub</code> is known, i.e. registered email in <code>sub</code>
+    - yes: check if <code>Hash</code> exists in <code>pub</code>
+        - yes: check if <code>Sub.Id</code> == <code>creator</code> in <code>pub</code>
+            - yes - ok save the confo in <code>confo</code> as the <code>sub</code> and <code>pub</code> hash pre-exist. 
+            - no - conflict! save the confo in <code>cconfo</code> (will mean 2 subs have configured same <code>Hash</code> which is an unlikely event, sub will have to be informed to change devicename)
+            - other - if <code>creator</code> in <code>Pub</code> is unpopulated, populate it with <code>Sub.Id</code>
+        - no: create an entry in <code>pub</code> and save the confo in <code>confo</code>
+    - no: save the email in <code>csub</code> table. check if <code>Hash</code> exists in <code>pub</code>
+        - yes: ensure that <code>Sub.Id</code> != <code>creator</code> in <code>pub</code>
+            - yes - ok save the confo
+            - no - we've a problem - see other below. unpopulate <code>creator</code> in <code>pub</code>
+            - other - if <code>creator</code> in <code>Pub</code> is unpopulated, it's left unpopulated (only registered emails in <code>sub</code> can be <code>creator</code>)</p>
+<p>The confo gets saved anyway - either in <code>confo</code> or <code>cconfo</code></p>
 <h3><a href="#gotchas" id="gotchas">Gotchas</a></h3>
 <p>The following files are for obvious reasons not part of the respository:</p>
 <div class="highlight"><pre><span></span>b00m.in+rsa
