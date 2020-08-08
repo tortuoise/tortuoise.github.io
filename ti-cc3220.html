@@ -66,6 +66,7 @@
 <li><a href="#power">Power</a></li>
 <li><a href="#layout">Layout</a></li>
 <li><a href="#gotchas">Gotchas</a></li>
+<li><a href="#todo">Todo</a></li>
 <li><a href="#references">References</a></li>
 </ul>
 <h2><a href="#brief" id="brief">Brief</a></h2>
@@ -94,16 +95,31 @@
 <h3><a href="#provisioning" id="provisioning">Provisioning</a></h3>
 <p>Each of 7 states has 12 event handlers (function pointers) and corresponding next state defined by lookup/transition table <code>const Provisioning_TableEntry_t gTransitionTable[7][12]</code> </p>
 <p>7 AppState(s): </p>
-<div class="highlight"><pre><span></span>STARTING, WAITING_FOR_CONNECTION, WAIT_FOR_IP
-PINGING_GW, PROVISIONING_IN_PROGRESS, PROVISIONING_WAIT_COMPLETE
-ERROR, (MAX)
+<div class="highlight"><pre><span></span>0 STARTING 
+1 WAITING_FOR_CONNECTION
+2 WAIT_FOR_IP
+3 PINGING_GW  
+4 PROVISIONING_IN_PROGRESS 
+5 PROVISIONING_WAIT_COMPLETE
+6 ERROR
+7 MAX
 </pre></div>
 
 
 <p>12 AppEvent(s):</p>
-<div class="highlight"><pre><span></span>STARTED, CONNECTED, IP_ACQUIRED, DISCONNECT
-PING_COMPLETE, PROVISIONING_STARTED, PROVISIONING_SUCCESS, PROVISIONING_STOPPED, PROVISIONING_WAIT_CONN
-TIMEOUT, ERROR, RESTART, (MAX)
+<div class="highlight"><pre><span></span>0 STARTED 
+1 CONNECTED
+2 IP_ACQUIRED 
+3 DISCONNECT
+4 PING_COMPLETE 
+5 PROVISIONING_STARTED 
+6 PROVISIONING_SUCCESS 
+7 PROVISIONING_STOPPED 
+8 PROVISIONING_WAIT_CONN
+9 TIMEOUT 
+10 ERROR 
+11 RESTART
+12 MAX
 </pre></div>
 
 
@@ -113,8 +129,153 @@ TIMEOUT, ERROR, RESTART, (MAX)
 
 
 <p>For instance: </p>
-<div class="highlight"><pre><span></span>int32_t ReportError(void);
-int32_t DoNothing(void);
+<div class="highlight"><pre><span></span>int32_t StartConnection(void);                 // SC
+int32_t HandleWaitForIp(void);                 // HWI
+int32_t ProvisioningStartRequest(void);        // PS
+int32_t ProvisioningRestartRequest(void);      // PRR
+int32_t ReportError(void);                     // RE
+int32_t DoNothing(void);                       // DN
+int32_t CheckLanConnection(void);              // CLC
+int32_t CheckInternetConnection(void);         // CIC
+int32_t HandleProvisioningComplete(void);      // HPC
+int32_t HandleProvisioningTimeout(void);       // HPT
+int32_t HandleUserApplication(void);           // HUA
+int32_t SendPingToGW(void);                    // SPG
+</pre></div>
+
+
+<table>
+<thead>
+<tr>
+<th>State/Event</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>SC-&gt;1</td>
+<td>HWI-&gt;2</td>
+<td>RE-&gt;6</td>
+<td>RE-&gt;6</td>
+<td>RE-&gt;6</td>
+<td>RE-&gt;6</td>
+<td>RE-&gt;6</td>
+<td>RE-&gt;6</td>
+<td>RE-&gt;6</td>
+<td>RE-&gt;6</td>
+<td>RE-&gt;6</td>
+<td>PS-&gt;4</td>
+</tr>
+<tr>
+<td>1</td>
+<td>SC-&gt;1</td>
+<td>HWI-&gt;2</td>
+<td>RE-&gt;6</td>
+<td>SC-&gt;1</td>
+<td>HPC-&gt;3</td>
+<td>PS-&gt;4</td>
+<td>DN-&gt;1</td>
+<td>CLC-&gt;1</td>
+<td>DN-&gt;1</td>
+<td>PS-&gt;4</td>
+<td>PS-&gt;4</td>
+<td>PRR-&gt;1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>PS-&gt;4</td>
+<td>RE-&gt;6</td>
+<td>CLC-&gt;3</td>
+<td>SC-&gt;1</td>
+<td>DN-&gt;2</td>
+<td>PS-&gt;4</td>
+<td>DN-&gt;2</td>
+<td>HPC-&gt;3</td>
+<td>DN-&gt;2</td>
+<td>RE-&gt;6</td>
+<td>RE-&gt;6</td>
+<td>PRR-&gt;1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>DN-&gt;3</td>
+<td>HWI-&gt;2</td>
+<td>CIC-&gt;3</td>
+<td>HD-&gt;1</td>
+<td>DN-&gt;3</td>
+<td>PS-&gt;4</td>
+<td>DN-&gt;3</td>
+<td>HUA-&gt;3</td>
+<td>DN-&gt;3</td>
+<td>SPG-&gt;3</td>
+<td>RE-&gt;6</td>
+<td>PRR-&gt;1</td>
+</tr>
+<tr>
+<td>4</td>
+<td>PSR-&gt;4</td>
+<td>HC-&gt;4</td>
+<td>CIC-&gt;4</td>
+<td>HD-&gt;4</td>
+<td>DN-&gt;4</td>
+<td>DN-&gt;4</td>
+<td>HPC-&gt;5</td>
+<td>HPC-&gt;3</td>
+<td>DN-&gt;1</td>
+<td>PRR-&gt;1</td>
+<td>RE-&gt;6</td>
+<td>PRR-&gt;1</td>
+</tr>
+<tr>
+<td>5</td>
+<td>DN-&gt;5</td>
+<td>DN--&gt;5</td>
+<td>DN-&gt;5</td>
+<td>HD-&gt;5</td>
+<td>DN-&gt;5</td>
+<td>DN-&gt;5</td>
+<td>DN-&gt;5</td>
+<td>HUA-&gt;3</td>
+<td>DN-&gt;1</td>
+<td>HPT-&gt;5</td>
+<td>RE-&gt;6</td>
+<td>PRR-&gt;5</td>
+</tr>
+<tr>
+<td>6</td>
+<td>RE-&gt;1</td>
+<td>RE--&gt;1</td>
+<td>RE-&gt;1</td>
+<td>RE-&gt;1</td>
+<td>RE-&gt;1</td>
+<td>RE-&gt;1</td>
+<td>RE-&gt;1</td>
+<td>RE-&gt;1</td>
+<td>RE-&gt;1</td>
+<td>RE-&gt;1</td>
+<td>RE-&gt;1</td>
+<td>PS-&gt;1</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span>S0-&gt;E0-&gt;SC-&gt;S1
+S1-&gt;E1-&gt;HWI-&gt;S2
+S2-&gt;E2-&gt;CLC-&gt;S3-&gt;E7(from CLC)-&gt;HUA-&gt;3
+OR 
+S2-&gt;E7-&gt;HPC-&gt;S3
+S3-&gt;E9-&gt;SPG-&gt;S3-&gt;E9 ... repeat
 </pre></div>
 
 
@@ -191,8 +352,20 @@ ProvisioningCmd command is 0, 1, 2, or 3.</p>
 <p>Example usage: <code>retVal = sl_WlanProvisioning(provisioningCmd, ROLE_STA, PROVISIONING_INACTIVITY_TIMEOUT, NULL, SL_WLAN_PROVISIONING_CMD_FLAG_EXTERNAL_CONFIRMATION)</code></p>
 <h4><a href="#sntp" id="sntp">sntp</a></h4>
 <p>As per the problem related in [sntp], the service pack needs to be included while using Uniflash to flash the image otherwise a -202 (sntp module error) is encountered.</p>
+<p>Network time issue fixed in 94fb658</p>
+<div class="highlight"><pre><span></span>struct tm netTime;
+...
+status = ClockSync_get(&amp;netTime); // tm&#39;s months run from 0-&gt;11
+SlDateTime_t dateTime = {0};
+...
+dateTime.tm_mon = netTime.tm_mon + 1; // but SlDateTime&#39;s months run from 1-&gt;12
+</pre></div>
+
+
 <h2>minicom</h2>
 <p>minicom -b 115200 -8 -D /dev/ttyACM0</p>
+<p>To run minicom as a non-root user, user has to be part of dialout group. </p>
+<p>Also for CC3200, user has to be added to plugdev group. </p>
 <h2>openocd</h2>
 <p>cd ~/ti/cc3200_sdk_1_3_0/CC3200SDK_1.3.0/cc3200-sdk/tools/gcc_scripts
 openocd -f cc3200.cfg</p>
@@ -230,8 +403,6 @@ sudo ./node-webkit/nw
 
 
 <h3>Uniflash Gotchas</h3>
-<p>To run minicom as a non-root user, user has to be part of dialout group. </p>
-<p>Also for CC3200, user has to be added to plugdev group. </p>
 <p>In client mode (<code>TCPClient</code> in <code>socket_cmd.c</code>) if verifying server certificate like so:</p>
 <div class="highlight"><pre><span></span>sl_SetSockOpt(sock,SL_SOL_SOCKET,SL_SO_SECURE_FILES_CA_FILE_NAME, ROOT_CA_CERT_FILE, strlen(ROOT_CA_CERT_FILE));
 </pre></div>
@@ -310,6 +481,24 @@ Operation failed: fs_programming error: ret: -10287, ex_err: 2633 - FS_ERR_ROOT_
 
 <p>-708
 -111</p>
+<h2><a href="#todos" id="todos">Todos</a></h2>
+<ul>
+<li>Intermittently errors and LED2 (10) stays on - fixed in 5e8e53d3</li>
+</ul>
+<div class="highlight"><pre><span></span>int32_t SendPingToGW(void) {
+    ...
+    ret = TCPClient(...);
+    if (ret != 0) {
+        // ocassionally arrives here, i.e. LED2 doesn&#39;t go off and stays on and errors with either -708 or -111
+    }
+    else {
+        GPIO_write(Board_GPIO_LED2, Board_GPIO_LED_OFF);
+    }
+
+}
+</pre></div>
+
+
 <h2>References ##</h2>
 <ul>
 <li><a href="https://www.embedded.com/electronics-blogs/say-what-/4441829/2/Your-very-own-IoT--Digging-deep-on-sensors"></a></li>

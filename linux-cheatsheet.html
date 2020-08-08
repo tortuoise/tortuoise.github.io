@@ -100,11 +100,14 @@ wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.4.140/linux-image-4.4.140-
 
 <p>Reboot</p>
 <h3><a href="#user">USER/PASSWORD/ADMIN</a></h3>
-<div class="highlight"><pre><span></span>/etc/passwd /etc/groups  
+<div class="highlight"><pre><span></span>/etc/passwd /etc/groups /etc/shadow
+/etc/default/useradd // default settings for new user
 echo $PATH  
 export PATH = $PATH:/new_path/to_add/  
-adduser chetan  
-usermod -g users chetan  
+sudo adduser chetan  
+sudo usermod -g users chetan  
+sudo usermod -s /bin/bash chetan
+sudo passwd chetan // prompts for new password
 stat chetan  
 chmod 0700 chetan/  // rwx------  
 chmod u+x &lt;filename&gt; // add exec right to current user
@@ -123,6 +126,7 @@ apt-cache search killall
 apt-get install psmisc // for killall
 dpkg -c/i/l/L/r/s  // package manager view contents/install/list/file locations/remove/installed?
 dpkg -S /usr/bin/gcc // outputs which package provides a binary
+dpkg --status tzdata|grep Provides|cut -f2 -d&#39;-&#39;
 vgdisplay // volume groups
 pvdisplay // physical volumes
 lvresize -r -L -20G /dev/mapper/home
@@ -214,15 +218,15 @@ fdisk -l //list all partitions
 
 
 <div class="highlight"><pre><span></span>find /path -name file_name -type d/f  
-find ./ -type f -name *.class -exec rm -rf {} \;            // remove all files recursively named *.class under ./  
-find ./ -type f -name *.class -exec grep -H &quot;string&quot; {} \+  // search for string in files recursively named *.class under ./ (multi-threaded)  
-find ./ -type f -name *.class -print0 | xargs -0 -n1 -P8 grep -H &quot;string&quot; //search for string in files recursively named *.class under ./ use xargs  
-find . -name &#39;*.c&#39; | sort | xargs head -1  
+find ./ -type f -name \*.class -exec rm -rf {} \;            // remove all files recursively named \*.class under ./  
+find ./ -type f -name \*.class -exec grep -H &quot;string&quot; {} \+  // search for string in files recursively named \*.class under ./ (multi-threaded)  
+find ./ -type f -name \*.class -print0 | xargs -0 -n1 -P8 grep -H &quot;string&quot; //search for string in files recursively named \*.class under ./ use xargs  
+find . -name &#39;\*.c&#39; | sort | xargs head -1  
 find ./ -type d -newer ~/docs/temp/timestamp -exec rm -rf {} \;  // remove directories newer than timestamp
 find ./ -type d ! -newer ~/docs/temp/timestamp -exec rm -rf {} \;  // remove directories older than timestamp
 find -L / -maxdepth 2 -samefile /run/systemd/resolve/resolv.conf // -L follows symlinks to a maxdepth of 2 and finds symlinks which are the same as provided filename
 grep -r search_term dir/  
-grep . /sys/devices/system/cpu/vulnerabilities/* 
+grep . /sys/devices/system/cpu/vulnerabilities/\* 
 </pre></div>
 
 
@@ -232,16 +236,17 @@ grep . /sys/devices/system/cpu/vulnerabilities/*
 <span class="o">!</span><span class="mi">25</span> <span class="c1">// runs historical command #25</span>
 <span class="o">!-</span><span class="mi">4</span> <span class="c1">// runs 4th previous command</span>
 <span class="n">locate</span>  
-<span class="n">ls</span> <span class="o">-</span><span class="n">a</span> <span class="p">(</span><span class="n">include</span> <span class="n">hidden</span><span class="p">)</span> <span class="o">-</span><span class="n">F</span> <span class="p">(</span><span class="n">dirs</span> <span class="n">with</span> <span class="n">trailing</span> <span class="o">/</span> <span class="n">and</span> <span class="n">exes</span> <span class="n">with</span> <span class="n">trailing</span> <span class="o">*</span><span class="p">)</span> <span class="o">-</span><span class="n">l</span> <span class="p">(</span><span class="kt">long</span> <span class="n">listing</span><span class="p">)</span> <span class="o">-</span><span class="n">t</span> <span class="p">(</span><span class="n">sort</span> <span class="n">by</span> <span class="n">time</span> <span class="n">modified</span><span class="p">)</span> <span class="o">-</span><span class="n">R</span> <span class="p">(</span><span class="n">all</span> <span class="n">subdirs</span><span class="p">)</span>  <span class="o">--</span><span class="n">full</span><span class="o">-</span><span class="n">time</span> <span class="p">(</span><span class="n">show</span> <span class="n">year</span><span class="p">)</span>
+<span class="n">ls</span> <span class="o">-</span><span class="n">a</span> <span class="p">(</span><span class="n">include</span> <span class="n">hidden</span><span class="p">)</span> <span class="o">-</span><span class="n">F</span> <span class="p">(</span><span class="n">dirs</span> <span class="n">with</span> <span class="n">trailing</span> <span class="o">/</span> <span class="n">and</span> <span class="n">exes</span> <span class="n">with</span> <span class="n">trailing</span> <span class="err">\</span><span class="o">*</span><span class="p">)</span> <span class="o">-</span><span class="n">l</span> <span class="p">(</span><span class="kt">long</span> <span class="n">listing</span><span class="p">)</span> <span class="o">-</span><span class="n">t</span> <span class="p">(</span><span class="n">sort</span> <span class="n">by</span> <span class="n">time</span> <span class="n">modified</span><span class="p">)</span> <span class="o">-</span><span class="n">R</span> <span class="p">(</span><span class="n">all</span> <span class="n">subdirs</span><span class="p">)</span>  <span class="o">--</span><span class="n">full</span><span class="o">-</span><span class="n">time</span> <span class="p">(</span><span class="n">show</span> <span class="n">year</span><span class="p">)</span>
 <span class="n">ls</span> <span class="o">-</span><span class="mi">1</span> <span class="o">|</span> <span class="n">wc</span> <span class="o">-</span><span class="n">l</span>  <span class="c1">//counts the number of line entries in ls command   </span>
 <span class="n">find</span> <span class="p">.</span> <span class="o">-</span><span class="n">type</span> <span class="n">f</span> <span class="o">-</span><span class="n">exec</span> <span class="n">ls</span> <span class="o">-</span><span class="n">lrt</span> <span class="p">{}</span> <span class="o">+</span> <span class="c1">// lists files only - latest modified at bottom</span>
+<span class="n">ldconfig</span> <span class="o">-</span><span class="n">p</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">libgdiplus</span>
 <span class="n">lspci</span> <span class="o">-</span><span class="n">v</span>   
 <span class="n">lsb_release</span> <span class="o">-</span><span class="n">rd</span>  
 <span class="n">lsof</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">n</span> <span class="o">-</span><span class="n">P</span> <span class="c1">//list all open files &amp; ports   </span>
 <span class="n">lsof</span> <span class="o">-</span><span class="n">i</span> <span class="nl">tcp</span><span class="p">:</span><span class="mi">8888</span> <span class="c1">/// lists services running on 8888   </span>
 <span class="n">lsusb</span> <span class="c1">//list usb devices  </span>
 <span class="n">ps</span> <span class="o">-</span><span class="n">ef</span> <span class="c1">//list all running processes  </span>
-<span class="n">rename</span> <span class="o">-</span><span class="n">n</span> <span class="err">&#39;</span><span class="n">s</span><span class="o">/</span><span class="n">old</span><span class="o">/</span><span class="n">new</span><span class="o">/</span><span class="err">&#39;</span> <span class="o">*</span><span class="p">.</span><span class="n">jpg</span> <span class="c1">//bulk rename</span>
+<span class="n">rename</span> <span class="o">-</span><span class="n">n</span> <span class="err">&#39;</span><span class="n">s</span><span class="o">/</span><span class="n">old</span><span class="o">/</span><span class="n">new</span><span class="o">/</span><span class="err">&#39;</span> <span class="err">\</span><span class="o">*</span><span class="p">.</span><span class="n">jpg</span> <span class="c1">//bulk rename</span>
 <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="p">.</span><span class="o">/</span><span class="n">dir</span>  <span class="c1">///// for dirs with special chars in name  </span>
 <span class="n">rsync</span> <span class="o">-</span><span class="n">anv</span> <span class="p">.</span><span class="o">/</span><span class="n">dir</span> <span class="n">sridhar</span><span class="mf">@192.168.0.9</span><span class="o">:/</span><span class="n">home</span><span class="o">/</span><span class="n">sridhar</span><span class="o">/</span><span class="n">dev</span>   <span class="c1">//simulate  </span>
 <span class="n">rsync</span> <span class="o">-</span><span class="n">az</span> <span class="p">.</span><span class="o">/</span><span class="n">dir</span> <span class="n">sridhar</span><span class="mf">@192.168.0.9</span><span class="o">:/</span><span class="n">home</span><span class="o">/</span><span class="n">sridhar</span><span class="o">/</span><span class="n">dev</span>     <span class="c1">//do it for real using compression  </span>

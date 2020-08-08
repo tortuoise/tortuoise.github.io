@@ -52,6 +52,7 @@
 <li><a href="#cert">Create cert</a></li>
 <li><a href="#verify">Verify</a></li>
 <li><a href="#deploy">Deploy</a></li>
+<li><a href="#keytool">Keytool</a></li>
 <li><a href="#references">References</a></li>
 </ul>
 <h3><a href="#brief" id="brief">Brief</a></h3>
@@ -87,8 +88,18 @@ openssl rsa -in key.pem -noout -modulus                                  //modul
 <p>Verify cert/key pair
 + openssl x509 -noout -modulus -in server.crt | openssl md5
 + openssl rsa -noout -modulus -in server.key | openssl md5</p>
+<div class="highlight"><pre><span></span>openssl x509 -pubkey -in m0vin-crt.pem -noout | openssl md5
+penssl pkey -pubout -in m0vin-key.pem | openssl md5
+</pre></div>
+
+
 <p>View key size/length (first line of output)</p>
 <div class="highlight"><pre><span></span>openssl rsa -noout -text -inform der -in trusted-cert-key
+</pre></div>
+
+
+<p>Fingerprints:</p>
+<div class="highlight"><pre><span></span>openssl x509 -noout -fingerprint -sha1|sha256 -in crt.pem 
 </pre></div>
 
 
@@ -102,6 +113,11 @@ openssl rsa -in key.pem -noout -modulus                                  //modul
 <ul>
 <li>openssl rsa -in dummy-trusted-cert-key -inform DER -out dummy-trusted-cert-key.pem -outform PEM</li>
 </ul>
+<h3><a href="#keytool" id="keytool">Keytool</a></h3>
+<div class="highlight"><pre><span></span>keytool -list -keystore ~/path.to.keystore
+</pre></div>
+
+
 <h3><a href="#references" id="references">References</a></h3>
 <ul>
 <li><a href="https://jamielinux.com/docs/openssl-certificate-authority/index.html">OpenSSL cert auth</a></li>

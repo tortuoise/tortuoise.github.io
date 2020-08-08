@@ -59,6 +59,8 @@
 <li><a href="#stash">stash</a></li>
 <li><a href="#log">log</a></li>
 <li><a href="#reset">reset</a></li>
+<li><a href="#subtree">subtree</a></li>
+<li><a href="#modules">modules</a></li>
 <li><a href="#gotchas">gotchas</a>]</li>
 <li><a href="#refs">References</a></li>
 </ul>
@@ -256,6 +258,12 @@ git push origin master //pushes origin/master
 </pre></div>
 
 
+<h3><a href="#subtree">subtree</a></h3>
+<div class="highlight"><pre><span></span>git subtree add --prefix=_vendor/github.com/gohugoio/gohugoioTheme/ git@github.com:/gohugoio/gohugoioTheme.git --squash
+</pre></div>
+
+
+<h3><a href="#modules">modules</a></h3>
 <h3><a href="#gotchas">gothas</a></h3>
 <p>Error encountered while cloning:</p>
 <div class="highlight"><pre><span></span><span class="nt">git</span> <span class="nt">clone</span> <span class="nt">https</span><span class="o">://</span><span class="nt">github</span><span class="p">.</span><span class="nc">com</span><span class="o">/</span><span class="nt">hashicorp</span><span class="o">/</span><span class="nt">vault</span>

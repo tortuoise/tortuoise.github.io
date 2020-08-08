@@ -131,6 +131,8 @@ nmap &lt;C-p&gt; :tabp&lt;CR&gt; //set in ~/.vimrc
 5j // move 5 lines down
 set shiftwidth=2 //in ~/.vimrc
 au BufNewFile *.go 0r ~/.vim/go.skel | let IndentStyle = &quot;go&quot;
+:vnew // new vertically split file
+:vnew | r! &lt;command&gt; // output of command in new vertically split file
 :w &lt;newfilename&gt; // writes to newfilename but continues with &lt;oldfile&gt;
 :wa //saves all open tabs
 :qa //closes all open tabs
@@ -202,6 +204,7 @@ Ctrl-W -|&lt; // decreases height|width of current window<br>
 v // Visual mode where arrow keys can be used to select text
   y //yanks selection in visual mode
 {Visual} "xy // In Visual mode "xy yanks selected text into register x to be pasted later in normal mode
+vep // pastes whatever is in buffer to replace word under cursor
 zc // folds
 zo // unfolds
 u //undo
