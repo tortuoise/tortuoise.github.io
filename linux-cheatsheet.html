@@ -227,6 +227,7 @@ find ./ -type d ! -newer ~/docs/temp/timestamp -exec rm -rf {} \;  // remove dir
 find -L / -maxdepth 2 -samefile /run/systemd/resolve/resolv.conf // -L follows symlinks to a maxdepth of 2 and finds symlinks which are the same as provided filename
 grep -r search_term dir/  
 grep . /sys/devices/system/cpu/vulnerabilities/\* 
+grep -r --exclude-dir={examples,docs} search_term
 </pre></div>
 
 
@@ -287,6 +288,7 @@ pdftk in.pdf cat 1E output out1.pdf //rotates p1 anti-clockwise
 pdftk A=in1.pdf B=in2.pdf cat A1-12 B3 A14-end output out1.pdf //add p3(B) after p12(A) &amp; remove page 13(A)  
 pdftohtml file.pdf  //saves html as file.html // lynx file.pdf does the same thing  
 pdftotext file.pdf //saves text as file.txt  
+printf &#39;%x\n&#39; 85  // prints 85 in hex
 display boy.jpg // imagemagick command line tool  
 enscript -p foo.ps foo.txt  
 ghostscript: ps2pdf foo.ps, pdf2ps foo.pdf  

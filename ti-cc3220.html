@@ -59,6 +59,7 @@
 <li><a href="#sntp">sntp</a></li>
 </ul>
 </li>
+<li><a href="#modbus">Modbus</a></li>
 </ul>
 </li>
 <li><a href="#minicom">Minicom</a></li>
@@ -362,6 +363,12 @@ dateTime.tm_mon = netTime.tm_mon + 1; // but SlDateTime&#39;s months run from 1-
 </pre></div>
 
 
+<h3><a href="#modbus" id="modbus">Modbus</a></h3>
+<p>Arm compiler at:</p>
+<div class="highlight"><pre><span></span>~/ti/ccsv8/ccsv8/tools/compiler/ti-cgt-arm_18.1.7.LTS/bin
+</pre></div>
+
+
 <h2>minicom</h2>
 <p>minicom -b 115200 -8 -D /dev/ttyACM0</p>
 <p>To run minicom as a non-root user, user has to be part of dialout group. </p>
@@ -470,6 +477,17 @@ DCDC_ANA2_SW_N (P46)
 </pre></div>
 
 
+<p>CC3220S/F &lt;-&gt; CC3220MODAS</p>
+<div class="highlight"><pre><span></span>Pin55 GPIO1 UART0_TX <span class="o">&lt;-&gt;</span> Pin46
+Pin57 GPIO2 UART0_RX <span class="o">&lt;-&gt;</span> Pin47
+
+Pin07 GPIO16 UART1_TX <span class="o">&lt;-&gt;</span> Pin07
+Pin08 GPIO17 UART1_RX <span class="o">&lt;-&gt;</span> Pin08
+</pre></div>
+
+
+<p>~/ti/ccsv8/simplelink_cc32xx_sdk_3_10_00_04/source/ti/boards/CC3220S_LAUNCHXL/CC3220S_LAUNCHXL.c
+.rxPin = UARTCC32XX_PIN_08_UART1_RX --&gt; .rxPin = UARTCC32XX_PIN_45_UART1_RX</p>
 <h2><a href="#gotchas" id="gotchas">Gotchas</a></h2>
 <p>Operation failed: fs_programming error: ret: -10289, ex_err: 2633 - FS_WRONG_SIGNATURE
 Operation failed: fs_programming error: ret: -10287, ex_err: 2633 - FS_ERR_ROOT_CA_IS_UNKOWN</p>
